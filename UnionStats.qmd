@@ -1,0 +1,59 @@
+---
+title: "UnionStats"
+author: "Fogler"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+union_2023 <- read_csv(here::here("slu_union_2023(Sheet1).csv"))
+union_2024 <- read_csv(here::here("slu_union_2024(Sheet1).csv"))
+
+
+union_all <- rbind(union_2023,union_2024)
+union_all_select <- union_all |>
+  select(
+    YEAR, "PLAY #", DN, DIST, "YARD LN", HASH, "GN/LS", "R/P", HASH, "FORMATION FAMILY", "OFF FORM", BACKFIELD, MOTION, "FORMATION TAG", PROTECTION, "PLAY RESULT", "CARRIER/TARGET", "PLAY DIR" 
+  )
+
+union_all_select
+```
+
+
+```{r}
+yards_plot <- ggplot(data = union_2023,
+                  aes(x = `PLAY #`, y = `GN/LS`, color = `R/P`))+
+ geom_point() +
+  geom_smooth()#method = "lm"
+  
+yards_plot
+```
+
+
+IDEAS FOR HOW TO USE MY DATA FOR BAYESIAN ANALYSIS
+
+IDEA #1: Find tendencies in our play calling by using formations, motions, backfield, formation tag maybe, run pass, and maybe even play result (run pass tendency, formational tendencies, d&d tendencies)
+
+- What would I need to do next?
+    - I would need to start by finding my prior, what am I assuming we do mostly in certain formations, motions,     etc, this would be best done by sitting down with the coaches at some point, asking them what they think their tendencies are in these sorts of situations
+    
+    - Once I have my prior knowledge, then I can begin to add the game film I have downloaded from two games to update our beliefs and make our posterior
+    
+    - Could even use downs, distance, however I think this is harder to analyze because there are common themes from almost all teams in the country whether they run or pass in certain situations
+    
+    - The benefit of this analysis would be to see if we have an obvious pattern in our play calling that maybe we need to adjust to make defenses more unsure of what is coming next
+    
+    
+IDEA #2: Find success rates from certain formations, pass/run, d&d, etc. For example, lets say we have a ton of success from 2&6. We need to do whatever we can on first down to make sure we put ourselves in situations that we have success in 
+
+Idea #3: Drive Efficiency Prediction, using our offensive stats from every game last year and games this year as we progress, I can create a code than continuously updates our probability of scoring based on play results. While we wouldn't be able to use this in game, we may be able to use this to build play scripts to game plan our drives better
+  - This idea seems very tough but if I could figure out how to do this with my data that would be really cool 
+
+
+
+
+
