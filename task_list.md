@@ -1,5 +1,13 @@
 ## Task List
 
+#### For September 18
+
+1. Start on write-up, writing up part of an introduction and maybe giving some exploratory tables and descriptions.
+
+2. Fit a logistic regression model with some candidate predictors and explore interactions. 
+
+3. See if you can visualize the model <https://highamm.github.io/dataviz334/09-logistic.html>.
+
 #### For September 11
 
 1. Download all of 2024 season's games and combine into a single data frame (with a label for each opponent).
