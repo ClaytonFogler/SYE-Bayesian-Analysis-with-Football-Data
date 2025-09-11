@@ -10,8 +10,8 @@ library(tidyverse)
 ```
 
 ```{r}
-union_2023 <- read_csv(here::here("slu_union_2023(Sheet1).csv"))
-union_2024 <- read_csv(here::here("slu_union_2024(Sheet1).csv"))
+union_2023 <- read_csv(here::here("data/union_2023.csv"))
+union_2024 <- read_csv(here::here("data/union_2024.csv"))
 
 
 union_all <- rbind(union_2023,union_2024)
@@ -50,10 +50,13 @@ IDEA #1: Find tendencies in our play calling by using formations, motions, backf
     
 IDEA #2: Find success rates from certain formations, pass/run, d&d, etc. For example, lets say we have a ton of success from 2&6. We need to do whatever we can on first down to make sure we put ourselves in situations that we have success in 
 
+- start with positive yards as successful (could make binary)
+- talk to coaches about certain situations where success may be labeled more than just positive yards
+
 Idea #3: Drive Efficiency Prediction, using our offensive stats from every game last year and games this year as we progress, I can create a code than continuously updates our probability of scoring based on play results. While we wouldn't be able to use this in game, we may be able to use this to build play scripts to game plan our drives better
   - This idea seems very tough but if I could figure out how to do this with my data that would be really cool 
 
 
-
+START WITH IDEA 2: START SIMPLE
 
 

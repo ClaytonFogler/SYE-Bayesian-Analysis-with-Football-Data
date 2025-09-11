@@ -1,0 +1,193 @@
+---
+title: "2024_Season"
+author: "Fogler"
+format: html
+editor: visual
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+_Reading in all of our data._
+
+```{r}
+endicott_2024 <- read_csv(here::here("data/endicott_2024.csv"))
+norwich_2024 <- read_csv(here::here("data/norwich_2024.csv"))
+wne_2024 <- read_csv(here::here("data/wne_2024.csv"))
+union_2024 <- read_csv(here::here("data/union_2024.csv"))
+rpi_2024 <- read_csv(here::here("data/rpi_2024.csv"))
+hobart_2024 <- read_csv(here::here("data/hobart_2024.csv"))
+rochester_2024 <- read_csv(here::here("data/rochester_2024.csv"))
+ithaca_2024 <- read_csv(here::here("data/ithaca_2024.csv"))
+buffstate_2024 <- read_csv(here::here("data/buffstate_2024.csv"))
+```
+
+_Clean up our data in each set before joining them all together._
+
+```{r}
+union_2024 <- union_2024 |>
+  select(-YEAR)
+```
+
+_Add an opponent and year column._
+
+```{r}
+endicott_2024 <- endicott_2024 |>
+  mutate(OPPONENT = "endicott", YEAR = "2024") 
+  
+norwich_2024 <- norwich_2024 |>
+  mutate(OPPONENT = "norwich", YEAR = "2024") 
+
+wne_2024 <- wne_2024 |>
+  mutate(OPPONENT = "wne", YEAR = "2024") 
+
+union_2024 <- union_2024 |>
+  mutate(OPPONENT = "union", YEAR = "2024") 
+
+rpi_2024 <- rpi_2024 |>
+  mutate(OPPONENT = "rpi", YEAR = "2024") 
+
+hobart_2024 <- hobart_2024 |>
+  mutate(OPPONENT = "hobart", YEAR = "2024") 
+
+rochester_2024 <- rochester_2024 |>
+  mutate(OPPONENT = "rochester", YEAR = "2024") 
+
+ithaca_2024 <- ithaca_2024|>
+  mutate(OPPONENT = "ithaca", YEAR = "2024") 
+
+buffstate_2024 <- buffstate_2024 |>
+  mutate(OPPONENT = "buffstate", YEAR = "2024") 
+```
+
+_Combine all of the different data sets into one._
+
+```{r}
+`2024_Season` <- rbind(endicott_2024, norwich_2024, wne_2024, union_2024, rpi_2024, hobart_2024, rochester_2024, ithaca_2024, buffstate_2024)
+```
+
+_Now select the columns we want to keep, at least for now._
+
+```{r}
+`2024_Season` <- `2024_Season` |>
+  select(
+    OPPONENT, YEAR, "PLAY #", DN, DIST, "YARD LN", HASH, "GN/LS", "R/P", HASH, "FORMATION FAMILY", "OFF FORM", BACKFIELD, MOTION, "FORMATION TAG", PROTECTION, "PLAY RESULT"
+  )
+```
+
+_Create our "Success" variable, a binary variable that will be a 1 for successful and a 0 for not successful. A Successful play will be determined as followed:_
+
+_First down play is successful if the offense gains 40% or more of the yards to go. (Gaining 4 yards on 1st and 10 is successful, 3 yards is not)._
+
+_Second down play is successful if the offense gains 60% or more of the yards to go. (Gaining 6 yards on a 2nd and 10 is successful, 5 yards is not)._
+
+_Third and Fourth down plays are successful if the play gains 100% or more of the yards to go. (Gaining 4 yards on a 3rd and 4 is successful, 3 yards is not)._
+
+```{r}
+ `2024_Season` <- `2024_Season` |>
+    mutate(
+      SUCCESSFUL = case_when(
+        DN == 0 & `GN/LS` >= (0.4 * DIST) ~ 1,                     
+        DN == 1 & `GN/LS` >= (0.4 * DIST) ~ 1,
+        DN == 2 & `GN/LS` >= (0.6 * DIST) ~ 1,
+        DN == 3 & `GN/LS` >= (DIST) ~ 1,
+        DN == 4 & `GN/LS` >= (DIST) ~ 1,
+        TRUE ~ 0
+      )
+    )
+```
+
+_We will also create down and distance bins to group the distances to be more usable._
+
+```{r}
+`2024_Season` <- `2024_Season` |>
+  mutate(
+    SITUATION = case_when(
+      DIST <= 3 ~ "Short (1-3)",
+      DIST <= 6 ~ "Medium (4-6)",
+      DIST <= 10 ~ "Long (7-10)",
+      TRUE ~ "Very Long (11+)"
+    )
+  ) 
+```
+
+_Now, time to find tendencies of success, starting with success based on down and distance._
+
+```{r}
+success_by_situation <- `2024_Season` |>
+  group_by(DN, SITUATION) |>
+  summarise(
+    plays = n(),
+    success_rate = mean(SUCCESSFUL, na.rm = TRUE)
+  ) |>
+  arrange(DN, desc(success_rate))
+
+success_by_situation
+```
+
+_Tendencies of success, based on run pass._
+
+```{r}
+success_by_run_pass <- `2024_Season` |>
+  group_by(`R/P`) |>
+  summarise(
+    plays = n(),
+    success_rate = mean(SUCCESSFUL, na.rm = TRUE)
+  ) |>
+  arrange(success_rate)
+
+success_by_run_pass
+```
+
+_Tendencies of success, based on formation._
+
+```{r}
+success_by_formation <- `2024_Season` |>
+  group_by(`FORMATION FAMILY`) |>
+  summarise(
+    plays = n(),
+    success_rate = mean(SUCCESSFUL, na.rm = TRUE)
+  ) |>
+  arrange(success_rate)
+  
+success_by_formation  
+  
+```
+
+_Tendencies of success, based on combining formation and distance
+
+```{r}
+success_by_situation_formation <- `2024_Season` |>
+  group_by(`FORMATION FAMILY`, SITUATION) |>
+  summarise(
+    plays = n(),
+    success_rate = mean(SUCCESSFUL, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(`FORMATION FAMILY`, SITUATION)
+
+success_by_situation_formation
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
