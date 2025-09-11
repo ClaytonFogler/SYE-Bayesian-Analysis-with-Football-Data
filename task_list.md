@@ -8,6 +8,8 @@
 
 3. See if you can visualize the model <https://highamm.github.io/dataviz334/09-logistic.html>.
 
+later: heat map for idea 1.
+
 #### For September 11
 
 1. Download all of 2024 season's games and combine into a single data frame (with a label for each opponent).
