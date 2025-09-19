@@ -1,0 +1,29 @@
+---
+title: "Write Up"
+author: "C.Fogler"
+format: html
+editor: visual
+---
+
+## Introduction
+
+In this decade, we have seen major advancements in the use of analytics in sports. Whether it is used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiencies, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stat keeping is kept on a basic level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
+
+The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics and Bayesian analysis to improve our offensive efficiency. By studying the play by play data from both past seasons and our current one, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations. and potentially develop a program that simulates our drives. Later in the paper, we will define what we call a successful play and go into details about our methods.
+
+This research will directly help the team as identifying our tendencies and efficiencies will tell us our strengths and weaknesses, improving our play designs, playbook, and player development. By using Bayesian methods, along with exploratory statistics, we will be able to build models that can be updated as the season moves on to see if our changes are working. This will help our coaching staff handle uncertainties when trying to game plan for the game.
+
+My project will begin with basic exploratory data analysis based off last years games to get an understanding for the offense and find early trends. Things we will look at include success rates based on formation, play type, situation, and more. We will then use these findings to build some logistic regression models before building our priors for our Bayesian analysis. Finally, we will use data from this years games to update our beliefs and find ways to improve our offensive efficiency.
+
+## Explanatory Tables and Descriptions
+
+Before we can go into the research, we must first understand how we are gathering our data. Like most teams in division 3 football, we use a software called Hudl. It is a subscription-based website in which teams can upload film from games and practices and input data such as down, distance, offensive formation, and more. After recording our plays and updating them to hudl, the coaching staff goes through the film to write down the stats for each play. 
+
+*maybe add a screen shot or two of hudl here to show what it looks like, what the data looks like on hudl*
+
+After downloading the data from hudl as an excel file, all I do is convert it into a csv and load the file into r studio.
+
+After getting the data into r studio, 
+
+
+link for success rates: https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com 

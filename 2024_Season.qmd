@@ -85,6 +85,7 @@ _Second down play is successful if the offense gains 60% or more of the yards to
 
 _Third and Fourth down plays are successful if the play gains 100% or more of the yards to go. (Gaining 4 yards on a 3rd and 4 is successful, 3 yards is not)._
 
+#find my source i used to be able to cite
 ```{r}
  `2024_Season` <- `2024_Season` |>
     mutate(
@@ -156,7 +157,7 @@ success_by_formation
   
 ```
 
-_Tendencies of success, based on combining formation and distance
+_Tendencies of success, based on combining formation and distance._
 
 ```{r}
 success_by_situation_formation <- `2024_Season` |>
@@ -172,17 +173,93 @@ success_by_situation_formation
 ```
 
 
+_Now, lets build a logistic regression
+
+```{r}
+logrun <- glm(SUCCESSFUL ~ `R/P`, data = `2024_Season`, family = binomial)
+
+logsituation <- glm(SUCCESSFUL ~ SITUATION, data = `2024_Season`, family = binomial)
+
+logdn <- glm(SUCCESSFUL ~ factor(DN), data = `2024_Season`, family = binomial)
+
+logformation <- glm(SUCCESSFUL ~ `FORMATION FAMILY`, data = `2024_Season`, family = binomial)
+
+logmodel1 <- glm(SUCCESSFUL ~ factor(`R/P`) + factor(SITUATION) + factor(DN) + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
+logmodel2 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + factor(SITUATION) + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
+logmodel3 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + factor(SITUATION) * factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
+logmodel4 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(`FORMATION FAMILY`) + factor(DN) + factor(SITUATION), data = `2024_Season`, family = binomial)
+
+logmodel5 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(SITUATION) + factor(DN) + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
+```
+
+
+```{r}
+summary(logrun)
+```
+
+
+```{r}
+summary(logsituation)
+```
+
+
+```{r}
+summary(logdn)
+```
+
+
+```{r}
+summary(logformation)
+```
+
+```{r}
+AIC(logrun, logsituation, logdn, logformation, logmodel1, logmodel2)
+```
+
+```{r}
+AIC(logmodel1, logmodel2, logmodel3, logmodel4, logmodel5)
+```
 
 
 
+```{r}
+install.packages("broom")
+```
 
 
 
+```{r}
+library(modelr)
+library(broom)
+
+grid <- `2024_Season` |>
+  data_grid(
+    `R/P` = c("R", "P"),
+    DN = c(0, 1, 2, 3, 4),
+    SITUATION = c("Short (1-3)", "Medium (4-6)", "Long (7-10)", "Very Long (11+)"),
+    `FORMATION FAMILY` = c("EMPTY", "FLEX", "SHOE", "SPIKE", "SPILL", "SPIN", "SPREAD", "SPRINT", "SWEAT", "TAP", "TEX", "TOP", "TRIGGER", "TRIPS", "TUB")
+  )
+
+aug_surv <- augment(logmodel2, newdata = grid,
+                    se_fit = TRUE)
+```
 
 
-
-
-
+```{r}
+ggplot(aug_surv, aes(x = DN, y = .fitted, color = `R/P`)) +
+  geom_line() +
+  facet_grid(SITUATION ~ `FORMATION FAMILY`) +
+  labs(
+    y = "Predicted Probability of Success",
+    x = "Down",
+    color = "Run/Pass"
+  ) +
+  theme_minimal()
+```
 
 
 
