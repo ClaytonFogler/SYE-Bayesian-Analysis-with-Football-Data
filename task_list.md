@@ -1,5 +1,14 @@
 ## Task List
 
+1. Look into the formations more. Combine any that are similar; drop any that don't make sense to include (SPIKE). Add descriptions of each to the write-up.
+
+2. Try out some interaction terms and practice interpreting the interaction terms.
+
+3. Add a count variable onto the heatmap plot.
+
+4. Make some exploratory bar plots of predictors and success and plug in some other variables to the heatmap.
+
+
 #### For September 25
 
 1. Try distance as quantitative and adjust the plot.
