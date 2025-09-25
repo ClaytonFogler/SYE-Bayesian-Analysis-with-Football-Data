@@ -36,7 +36,7 @@ yards_plot
 
 IDEAS FOR HOW TO USE MY DATA FOR BAYESIAN ANALYSIS
 
-IDEA #1: Find tendencies in our play calling by using formations, motions, backfield, formation tag maybe, run pass, and maybe even play result (run pass tendency, formational tendencies, d&d tendencies)
+IDEA #1: Find tendencies in our play calling by using formations, motions, backfield, run/pass, downs (run pass tendency, formational tendencies, d&d tendencies)
 
 - What would I need to do next?
     - I would need to start by finding my prior, what am I assuming we do mostly in certain formations, motions,     etc, this would be best done by sitting down with the coaches at some point, asking them what they think their tendencies are in these sorts of situations

@@ -2,7 +2,7 @@
 
 #### For September 25
 
-1. Distance try as quantitative and adjust the plot.
+1. Try distance as quantitative and adjust the plot.
 
 2. Look into the formations more. Combine any that are similar; drop any that don't make sense to include (SPIKE). Add descriptions of each to the write-up.
 

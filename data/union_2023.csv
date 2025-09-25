@@ -1,0 +1,59 @@
+YEAR,PLAY #,GOOD EXAMPLE / TEACH TAPE,DN,DIST,YARD LN,HASH,GN/LS,R/P,HASH (SLU),O PERS,FORMATION FAMILY,FORMATION,OFF FORM,BACKFIELD,FIB,FORM ADJ,MOTION,FORMATION TAG,OFF PLAY,RUN TYPE,PASS CONCEPT,PASS TYPE,PROTECTION,PLAY RESULT,CARRIER/TARGET,PLAY DIR,TEAM,DC COMMENT,DL COACH COMMENT,LB COACH COMMENT,CB COACH COMMENT,SAF COACH COMMENT,DB COACH COMMENT,PERSONNEL
+2023,2,,0,10,-46,R,4,P,R,,,,SPRINT,,,,Y IN,,,,,,,"PASS, COMP",85,L,Union College,,,,,,,11A
+2023,3,,2,6,50,L,-1,R,L,,,,SPRINT,,,,,,,,,,,RUSH,20,R,Union College,,,,,,,11A
+2023,4,,3,7,-49,M,0,R,RM,,,,SPRINT,,,,Y IN,,,,,,,RUSH,20,R,Union College,,,,,,,11A
+2023,19,,0,10,-31,R,0,P,R,,,,TRIPS,,,,,,,,,,,"PASS, INC",,R,Union College,,,,,,,10
+2023,20,,2,10,-31,R,5,R,R,,,,TOP,,,,,,,,,,,RUSH,18,R,Union College,,,,,,,11A
+2023,21,,3,3,-38,R,-1,R,R,,,,TRIPS,,,,,,,,,,,RUSH,20,L,Union College,,,,,,,11A
+2023,35,,0,10,-17,L,2,P,L,,,,SPRINT,,,,Y ACROSS,,,,,,,"PASS, COMP",14,R,Union College,,,,,,,11A
+2023,36,,2,8,-19,L,0,P,L,,,,SPREAD,,,,,,,,,,,"PASS, INC",19,R,Union College,,,,,,,10
+2023,37,,3,8,-19,L,0,P,L,,,,TRIPS,,,,H OVER,,,,,,,"PASS, INC",86,L,Union College,,,,,,,10
+2023,43,,0,10,-22,M,6,P,RM,,,,TEX,,,,,,,,,,,"PASS, COMP",10,L,Union College,,,,,,,11A
+2023,44,,2,4,-28,L,1,R,LM,,,,SPRINT,,,,Y IN,,,,,,,RUSH,20,L,Union College,,,,,,,11A
+2023,45,,3,3,-29,L,0,P,LM,,,,TOP,,,,,OPEN,,,,,,"PASS, INC",86,L,Union College,,,,,,,11A
+2023,51,,0,10,-11,R,1,R,RM,,,,TRIGGER,,,,,,,,,,,RUSH,20,R,Union College,,,,,,,12
+2023,52,,2,9,-12,R,15,P,R,,,,TRIPS,,,,H OVER,,,,,,,"PASS, COMP",86,L,Union College,,,,,,,10
+2023,53,,1,10,-27,R,-7,P,RM,,,,SPREAD,,,,,H,,,,,,"PASS, SACK",,L,Union College,,,,,,,10
+2023,54,,2,17,-20,R,18,P,RM,,,,TEX,,,,,,,,,,,"PASS, SCRAMBLE",18,L,Union College,,,,,,,11A
+2023,55,,1,10,-38,R,1,R,R,,,,TIN,,,,,,,,,,,RUSH,20,R,Union College,,,,,,,12
+2023,56,,2,9,-39,R,2,P,R,,,,TRIPS,,,,,,,,,,,"PASS, COMP",87,L,Union College,,,,,,,10
+2023,57,,3,7,-41,L,-5,P,L,,,,EMPTY SPRINT,,,,,,,,,,,"PASS, SACK",,R,Union College,,,,,,,1
+2023,64,,0,10,-25,R,0,P,R,,,,SPRINT,,,,,,,,,,CHARGER,"PASS, INC",87,L,Union College,,,,,,,11A
+2023,65,,2,10,-25,R,14,P,R,,,,SPREAD,,,,,,,,,,,"PASS, COMP",86,R,Union College,,,,,,,10
+2023,66,,1,10,-39,R,0,P,R,,,,TEX,,,,,,,,,,,"PASS, INC",20,R,Union College,,,,,,,11B
+2023,67,,2,10,-39,R,0,P,R,,,,TRIPS,,,,,,,,,,,"PASS, INC",87,R,Union College,,,,,,,10
+2023,68,,3,10,-39,R,0,P,R,,,,TOP,,,,Y ACROSS,,,,,,DART,"PASS, INC",85,L,Union College,,,,,,,11A
+2023,86,,0,10,-25,R,5,R,R,,,,TIN,,,,,,,,,,,RUSH,20,L,Union College,,,,,,,12
+2023,87,,1,5,-30,R,12,P,R,,,,SPREAD,,,,H IN,,,,,,,"PASS, SCRAMBLE",18,R,Union College,,,,,,,10
+2023,88,,1,10,-42,R,6,P,R,,,,TRIPS,,,,,,,,,,,"PASS, COMP",20,R,Union College,,,,,,,10
+2023,89,,2,4,-48,R,0,P,R,,,,TRIPS,,,,,,,,,,,"PASS, INC",20,R,Union College,,,,,,,10
+2023,90,,3,4,-48,R,17,P,R,,,,SPREAD,,,,,H,,,,,,"PASS, COMP",86,L,Union College,,,,,,,10
+2023,92,,2,10,35,L,0,P,L,,,,TRIPS,,,,,,,,,,,"PASS, INC",86,R,Union College,,,,,,,10
+2023,93,,3,10,35,L,0,P,L,,,,TRIPS,,,,,,,,,,,"PASS, INT",,R,Union College,,,,,,,10
+2023,99,,0,10,-17,R,0,P,R,,,,TOP,,,,Y IN,,,,,,,"PASS, INC",85,R,Union College,,,,,,,11A
+2023,100,,2,10,-17,R,0,P,R,,,,TEX,,,,,,,,,,,"PASS, INC",,L,Union College,,,,,,,11A
+2023,101,,3,10,-17,R,1,R,R,,,,SPREAD,,,,,,,,,,,RUSH,20,R,Union College,,,,,,,10
+2023,110,,0,10,-30,M,15,P,RM,,,,SPRINT,,,,,,,,,,,"PASS, COMP",87,R,Union College,,,,,,,11A
+2023,111,,1,10,-45,R,3,R,R,,,,TEX,,,,,,,,,,,RUSH,27,L,Union College,,,,,,,11A
+2023,112,,2,7,-48,R,-10,R,RM,,,,TIN,,,,,,,,,,,"RUSH, PENALTY",27,R,Union College,,,,,,,12
+2023,113,,2,17,-38,R,0,P,R,,,,TRIPS,,,,,,,,,,,"PASS, INC",85,R,Union College,,,,,,,10
+2023,114,,3,17,-38,R,0,P,R,,,,TEX,,,,,,,,,,,"PASS, INC",86,L,Union College,,,,,,,11A
+2023,130,,0,10,-31,L,1,R,L,,,,TRIGGER,,,,,,,,,,,RUSH,38,L,Union College,,,,,,,12
+2023,131,,2,9,-32,L,0,P,LM,,,,TOP,,,,,ON,,,,,,"PASS, INC",85,R,Union College,,,,,,,11A
+2023,132,,3,9,-32,L,13,P,LM,,,,TRIPS,,,,H OVER,,,,,,,"PASS, COMP",86,R,Union College,,,,,,,10
+2023,133,,1,10,-45,L,2,R,L,,,,SPIN,,,,,,,,,,,RUSH,38,R,Union College,,,,,,,12
+2023,134,,2,8,-47,L,-9,P,L,,,,SPRINT,,,,Y IN,,,,,,CHARGER,"PASS, SACK",,R,Union College,,,,,,,11A
+2023,135,,3,17,-38,L,0,P,L,,,,SPREAD,,,,,,,,,,,"PASS, INC",19,R,Union College,,,,,,,10
+2023,141,,0,10,-36,R,1,R,R,,,,TOP,,,,,,,,,,,RUSH,27,R,Union College,,,,,,,11A
+2023,143,,3,9,-37,R,15,P,R,,,,SPREAD,,,,,,,,,,,"PASS, INC",5,R,Union College,,,,,,,10
+2023,144,,1,10,-37,R,15,P,R,,,,TEX,,,,,,,,,,,"PASS, INC, PENALTY",2,R,Union College,,,,,,,11A
+2023,145,,2,8,48,R,6,R,R,,,,TIN,,,,,,,,,,,RUSH,27,L,Union College,,,,,,,12
+2023,146,,2,8,40,L,0,P,L,,,,SPRINT,,,,Y IN,,,,,,,"PASS, COMP",19,R,Union College,,,,,,,11A
+2023,147,,4,2,40,L,-1,R,L,,,,TEX,,,,,,,,,,,RUSH,6,,Union College,,,,,,,11A
+2023,148,,4,2,40,L,1,R,L,,,,TEX,,,,,,,,,,,RUSH,6,R,Union College,,,,,,,11A
+2023,153,,0,10,-30,R,0,P,RM,,,,TOP,,,,,,,,,,,"PASS, INC",5,L,Union College,,,,,,,11A
+2023,154,,2,10,-30,R,3,R,RM,,,,TOP,,,,,,,,,,,RUSH,22,R,Union College,,,,,,,11A
+2023,155,,3,7,-33,R,0,P,R,,,,TOP,,,,,OPEN,,,,,,"PASS, COMP",5,L,Union College,,,,,,,11A
+2023,161,,0,10,-34,L,2,R,L,,,,TOP,,,,,,,,,,,RUSH,22,L,Union College,,,,,,,11A
+2023,162,,2,8,-36,M,0,R,M,,,,SPRINT,,,,Y IN,,,,,,,RUSH,22,L,Union College,,,,,,,11A
+2023,163,,3,8,-36,M,0,P,M,,,,TEX,,,,,,,,,,,"PASS, INC",22,R,Union College,,,,,,,11A

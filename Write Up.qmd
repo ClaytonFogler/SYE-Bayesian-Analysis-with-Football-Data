@@ -27,3 +27,30 @@ After getting the data into r studio,
 
 
 link for success rates: https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com 
+
+
+Different Kinds of Formations used in our dataset:
+
+https://www.footballtimes.org/blog/football-offensive-formations
+
+
+
+"EMPTY", "FLEX", "SHOE", "SPIKE", "SPILL", "SPIN", "SPREAD", "SPRINT", "SWEAT", "TAP", "TEX", "TOP", "TRIGGER", "TRIPS", "TUB"
+
+Empty: No running back in the backfield, all eligible wide recievers and tight ends are spread across the field (usually five of them)
+Flex:
+Shoe:
+Spike:
+Spill:
+Spin:
+Spread: Quarterback lines up in shotgun with four of five wide receivers, and no tight ends
+Sprint:
+Sweat:
+Tap:
+Tex:
+Top:
+Trigger:
+Trips:
+Tub:
+
+
