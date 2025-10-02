@@ -73,7 +73,7 @@ _Now select the columns we want to keep, at least for now._
 ```{r}
 `2024_Season` <- `2024_Season` |>
   select(
-    OPPONENT, YEAR, "PLAY #", DN, DIST, "YARD LN", HASH, "GN/LS", "R/P", HASH, "FORMATION FAMILY", "OFF FORM", BACKFIELD, MOTION, "FORMATION TAG", PROTECTION, "PLAY RESULT"
+    OPPONENT, YEAR, "PLAY #", DN, DIST, "YARD LN", HASH, "GN/LS", "R/P", HASH, "FORMATION FAMILY", "OFF FORM", BACKFIELD, MOTION, "FORMATION TAG", PROTECTION, "PLAY RESULT", PERSONNEL
   )
 ```
 
@@ -195,7 +195,9 @@ logmodel3 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + factor(SITUATION) * f
 logmodel4 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(`FORMATION FAMILY`) + factor(DN) + factor(SITUATION), data = `2024_Season`, family = binomial)
 
 logmodel5 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(SITUATION) + factor(DN) + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
 logmodel7 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+#add some sort of interaction to logmodel7
 ```
 
 
@@ -269,6 +271,15 @@ _Instead of using downs on the x, we made a new logmodel, logmodel7 (see above f
 _This new model ended up being slighty better than logmodel2 anyways._
 
 
+
+
+
+
+
+
+
+
+
 ```{r}
 grid2 <- `2024_Season` |>
   #building our potential data for our predictions based off logmodel7
@@ -313,7 +324,7 @@ ggplot(aug_surv3, aes(x = DIST, y = prob, color = `R/P`)) +
   facet_grid( DN ~`FORMATION FAMILY`) +
   labs(
     y = "Probability of Success",
-    x = "Down",
+    x = "Distance",
     color = "Run/Pass"
   ) +
   theme_minimal()
@@ -323,11 +334,15 @@ ggplot(aug_surv3, aes(x = DIST, y = prob, color = `R/P`)) +
 
 
 ```{r}
+#ADD IN A COUNT VARIABLE geom text, also do more heat maps with proportions of failures and successes instead of just success rate
+
 success_map <- `2024_Season` |>
   mutate(DN = as.factor(DN),
          SITUATION = as.factor(SITUATION)) |>
   group_by(DN, SITUATION, .drop = FALSE) |>
-  summarise(SUCCESS = mean(SUCCESSFUL)) |>
+  summarise(
+    SUCCESS = mean(SUCCESSFUL),
+    n = n()) |>
   ungroup() |>
   mutate(
     # recode situation for nicer labels
@@ -341,11 +356,168 @@ success_map <- `2024_Season` |>
   )
 success_map
 # heatmap
-ggplot(data = success_map,
-       aes(x = DN, y = SITUATION, fill = SUCCESS)) +
+ggplot(success_map, aes(x = DN, y = SITUATION, fill = SUCCESS)) +
   geom_tile(colour = "grey") +
-  scale_fill_viridis_c() +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(name = "Success Rate", labels = scales::percent) +
   theme_minimal() +
   scale_x_discrete(position = "top")
+```
+
+```{r}
+failure_map_rp <- `2024_Season` |>
+  mutate(
+    DN = as.factor(DN),
+    RP = as.factor(`R/P`)   # make R/P into a factor
+  ) |>
+  group_by(DN, RP, .drop = FALSE) |>
+  summarise(
+    FAILURE = 1 - mean(SUCCESSFUL, na.rm = TRUE),  # proportion of failures,  # proportion successful
+    n = n()                                    # count of plays
+  ) |>
+  ungroup() |>
+  mutate(
+    # order downs from 1st to 4th
+    DN = fct_relevel(DN, c("0","1","2","3","4"))
+  )
+
+failure_map_rp
+
+ggplot(failure_map_rp, aes(x = DN, y = RP, fill = FAILURE)) +
+  geom_tile(colour = "grey") +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(
+    name = "Failure Rate", 
+    labels = scales::percent
+  ) +
+  theme_minimal() +
+  scale_x_discrete(position = "top") +
+  labs(x = "Down", y = "Run / Pass")
+```
+
+```{r}
+success_map_sit_rp <- `2024_Season` |>
+  mutate(
+    SITUATION = as.factor(SITUATION),
+    RP = as.factor(`R/P`)
+  ) |>
+  group_by(SITUATION, RP, .drop = FALSE) |>
+  summarise(
+    SUCCESS = mean(SUCCESSFUL, na.rm = TRUE),  # proportion of successes
+    n = n()                                    # count of plays
+  ) |>
+  ungroup() |>
+  mutate(
+    # recode situations for nicer labels
+    SITUATION = fct_recode(SITUATION,
+                           "Short (1-3)" = "1",
+                           "Medium (4-6)" = "2",
+                           "Long (7-10)" = "3",
+                           "Very Long (11+)" = "4")
+  )
+
+success_map_sit_rp
+
+ggplot(success_map_sit_rp, aes(x = SITUATION, y = RP, fill = SUCCESS)) +
+  geom_tile(colour = "grey") +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(
+    name = "Success Rate",
+    labels = scales::percent
+  ) +
+  theme_minimal() +
+  scale_x_discrete(position = "top") +
+  labs(x = "Situation", y = "Run / Pass")
+```
+
+
+
+
+
+Exploratory bar plots
+
+```{r}
+# situation, success rate
+ggplot(`2024_Season` |> 
+         group_by(SITUATION) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = SITUATION, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Situation", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# down, success rate
+ggplot(`2024_Season` |> 
+         group_by(DN) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = DN, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Down", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# run/pass, success rate
+ggplot(`2024_Season` |> 
+         group_by(`R/P`) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = `R/P`, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Run/Pass", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# Offensive formation, success rate
+ggplot(`2024_Season` |> 
+         group_by(`OFF FORM`) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = `OFF FORM`, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Offensive Formation", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+```
+
+Some more interaction testing
+
+```{r}
+# the model from way above that we said was our best model so far
+logmodel7 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+# add an interaction with DIST ADN `r/p`
+logmodel8 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST * factor(`R/P`) + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+
+# add an interaction with Formation and `r/p`
+logmodel9 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + factor(`FORMATION FAMILY`) * factor(`R/P`) + DIST, data = `2024_Season`, family = binomial)
+# Interaction between `r/p`, DN, and DIST
+logmodel10 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) * DIST + factor(`FORMATION FAMILY`), data = `2024_Season`, family = binomial)
+logmodel11 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) * DIST,data = `2024_Season`, family = binomial)
+```
+
+```{r}
+AIC(logmodel7, logmodel8, logmodel9, logmodel10, logmodel11)
+```
+
+Exploring Personnels
+
+```{r}
+success_by_personnel <- `2024_Season` |>
+  group_by(`PERSONNEL`) |>
+  summarise(
+    plays = n(),
+    success_rate = mean(SUCCESSFUL, na.rm = TRUE)
+  ) |>
+  arrange(success_rate)
+  
+success_by_personnel
+  
+```
+
+```{r}
+logmodelpersonnel <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor(`PERSONNEL`) + factor(`OFF FORM`), data = `2024_Season`, family = binomial)
+
+```
+
+```{r}
+AIC(logmodel7, logmodelpersonnel)
 ```
 

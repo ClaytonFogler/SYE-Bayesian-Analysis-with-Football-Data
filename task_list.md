@@ -1,12 +1,14 @@
 ## Task List
 
+### For October 2 
+
 1. Look into the formations more. Combine any that are similar; drop any that don't make sense to include (SPIKE). Add descriptions of each to the write-up.
 
-2. Try out some interaction terms and practice interpreting the interaction terms.
+_2. Try out some interaction terms and practice interpreting the interaction terms._
 
-3. Add a count variable onto the heatmap plot.
+_3. Add a count variable onto the heatmap plot._
 
-4. Make some exploratory bar plots of predictors and success and plug in some other variables to the heatmap.
+_4. Make some exploratory bar plots of predictors and success and plug in some other variables to the heatmap._
 
 
 #### For September 25

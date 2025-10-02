@@ -37,10 +37,12 @@ https://www.footballtimes.org/blog/football-offensive-formations
 
 "EMPTY", "FLEX", "SHOE", "SPIKE", "SPILL", "SPIN", "SPREAD", "SPRINT", "SWEAT", "TAP", "TEX", "TOP", "TRIGGER", "TRIPS", "TUB"
 
+_TALK TO COACH PUCK TOMMOROW ABOUT GROUPING THE FORMATIONS_
+
 Empty: No running back in the backfield, all eligible wide recievers and tight ends are spread across the field (usually five of them)
 Flex:
 Shoe:
-Spike:
+Spike: Quarterback spikes the ball after the ball is snapped to him to stop the clock (usually used when a team is out of time outs)
 Spill:
 Spin:
 Spread: Quarterback lines up in shotgun with four of five wide receivers, and no tight ends
