@@ -1,5 +1,17 @@
 ## Task List
 
+### For October 9
+
+1. Learn about classification trees.
+
+<https://stat2labs.sites.grinnell.edu/Handouts/rtutorials/ClassificationTrees.html>
+
+<https://fderyckel.github.io/machinelearningwithr/trees-and-classification.html>
+
+<https://bookdown.org/jhvdz1/ml2/classification-decision-trees.html>
+
+2. Apply a classification tree to your data!
+
 ### For October 2 
 
 1. Look into the formations more. Combine any that are similar; drop any that don't make sense to include (SPIKE). Add descriptions of each to the write-up.
