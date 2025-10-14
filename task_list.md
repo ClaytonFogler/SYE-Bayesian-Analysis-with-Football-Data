@@ -1,6 +1,6 @@
 ## Task List
 
-### For October 9
+### For October 9 (10/14)
 
 1. Learn about classification trees.
 

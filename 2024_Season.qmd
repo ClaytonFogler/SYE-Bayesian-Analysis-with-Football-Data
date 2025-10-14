@@ -469,12 +469,12 @@ ggplot(`2024_Season` |>
 
 # Offensive formation, success rate
 ggplot(`2024_Season` |> 
-         group_by(`OFF FORM`) |> 
+         group_by(`PERSONNEL`) |> 
          summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
-       aes(x = `OFF FORM`, y = success_rate)) +
+       aes(x = PERSONNEL, y = success_rate)) +
   geom_col(fill = "blue") +
   theme_minimal() +
-  labs(x = "Offensive Formation", y = "Success Rate") +
+  labs(x = "Personnel", y = "Success Rate") +
   scale_y_continuous(labels = scales::percent)
 ```
 
@@ -520,4 +520,71 @@ logmodelpersonnel <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor
 ```{r}
 AIC(logmodel7, logmodelpersonnel)
 ```
+
+
+
+
+_Starting a new section or even new project almost, instead of log we are going to do classification trees:
+
+Just for easy access and simplicity, just going to recode the data down here:
+
+```{r}
+install.packages("rpart.plot")
+```
+```{r}
+library(rpart.plot)
+library(rpart)
+```
+
+```{r}
+ `2024_Season` <- `2024_Season` |>
+    mutate(
+      SUCCESSFUL = case_when(
+        DN == 0 & `GN/LS` >= (0.4 * DIST) ~ "YES",                     
+        DN == 1 & `GN/LS` >= (0.4 * DIST) ~ "YES",
+        DN == 2 & `GN/LS` >= (0.6 * DIST) ~ "YES",
+        DN == 3 & `GN/LS` >= (DIST) ~ "YES",
+        DN == 4 & `GN/LS` >= (DIST) ~ "YES",
+        TRUE ~ "NO"
+      )
+    )
+```
+
+
+
+```{r}
+table(`2024_Season`$SUCCESSFUL)
+```
+
+
+```{r}
+`2024_Season` <- `2024_Season` |>
+  mutate(
+    SUCCESSFUL = as.factor(SUCCESSFUL),
+    `R/P` = as.factor(`R/P`),
+    PERSONNEL = as.factor(PERSONNEL),
+    SITUATION = as.factor(SITUATION),
+    DN = as.factor(DN)
+    
+  )
+```
+
+
+
+
+```{r}
+treeall <- rpart(SUCCESSFUL ~ `R/P` + PERSONNEL + SITUATION + DN, data = `2024_Season`, method = "class")
+treeall
+rpart.plot(treeall)
+```
+```{r}
+count.matrix <- table(`2024_Season`$SUCCESSFUL, predict(treeall, type = "class"))
+rownames(count.matrix) <- c("Actual Fails", "Actual Successes")
+colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
+count.matrix
+```
+
+
+
+
 
