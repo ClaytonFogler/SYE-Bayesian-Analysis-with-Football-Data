@@ -1,5 +1,13 @@
 ## Task List
 
+### For October 30
+
+1. Learn about bagging and random forests. <https://bradleyboehmke.github.io/HOML/bagging.html> and <https://bradleyboehmke.github.io/HOML/random-forest.html>
+
+2. Apply bagging and random forests to the football play data!
+
+3. Modify the introduction to incorporate coach conversation (personnel).
+
 ### For October 23
 
 1. Add data from first 5 games.
