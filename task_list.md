@@ -1,5 +1,13 @@
 ## Task List
 
+### For November 6
+
+1. Fix the bagging and random forest to use a character or factor response.
+
+2. Start comparing the four different models: which predictors are best in each? What would you conclude from each?
+
+3. Start incorporating some exploratory graphs into the write-up.
+
 ### For October 30
 
 1.  Learn about bagging and random forests. <https://bradleyboehmke.github.io/HOML/bagging.html> and <https://bradleyboehmke.github.io/HOML/random-forest.html>
