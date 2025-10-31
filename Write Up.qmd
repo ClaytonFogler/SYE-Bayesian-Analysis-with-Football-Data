@@ -17,42 +17,24 @@ My project will begin with basic exploratory data analysis based off last years 
 
 ## Explanatory Tables and Descriptions
 
-Before we can go into the research, we must first understand how we are gathering our data. Like most teams in division 3 football, we use a software called Hudl. It is a subscription-based website in which teams can upload film from games and practices and input data such as down, distance, offensive formation, and more. After recording our plays and updating them to hudl, the coaching staff goes through the film to write down the stats for each play. 
+Before we can go into the research, we must first understand how we are gathering our data. Like most teams in division 3 football, we use a software called Hudl. It is a subscription-based website in which teams can upload film from games and practices and input data such as down, distance, personnel, and more. After recording our plays and updating them to hudl, the coaching staff goes through the film to write down the stats for each play.
 
 *maybe add a screen shot or two of hudl here to show what it looks like, what the data looks like on hudl*
 
 After downloading the data from hudl as an excel file, all I do is convert it into a csv and load the file into r studio.
 
-After getting the data into r studio, 
+After getting the data into r studio,
 
+link for success rates: https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com
 
-link for success rates: https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com 
+Different Kinds of Personnel used in our dataset:
 
+10, 11, 12, 20, 21, 22, ALPHA, BEEF, JET, PIG, PORK, and VICTORY
 
-Different Kinds of Formations used in our dataset:
+With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers. 
 
-https://www.footballtimes.org/blog/football-offensive-formations
+For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field.
 
-
-
-"EMPTY", "FLEX", "SHOE", "SPIKE", "SPILL", "SPIN", "SPREAD", "SPRINT", "SWEAT", "TAP", "TEX", "TOP", "TRIGGER", "TRIPS", "TUB"
-
-_TALK TO COACH PUCK TOMMOROW ABOUT GROUPING THE FORMATIONS_
-
-Empty: No running back in the backfield, all eligible wide recievers and tight ends are spread across the field (usually five of them)
-Flex:
-Shoe:
-Spike: Quarterback spikes the ball after the ball is snapped to him to stop the clock (usually used when a team is out of time outs)
-Spill:
-Spin:
-Spread: Quarterback lines up in shotgun with four of five wide receivers, and no tight ends
-Sprint:
-Sweat:
-Tap:
-Tex:
-Top:
-Trigger:
-Trips:
-Tub:
+With named personnel's, this usually refers to a specific game plan package that is unique to certain players. Maybe talk to puck about what exactly is in ALPHA, BEEF, JET, PIG, PORK, and VICTORY. 
 
 

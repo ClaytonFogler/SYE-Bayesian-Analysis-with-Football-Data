@@ -5,12 +5,11 @@ format: html
 editor: visual
 ---
 
-
 ```{r}
 library(tidyverse)
 ```
 
-_Reading in all of our data._
+*Reading in all of our data.*
 
 ```{r}
 endicott_2024 <- read_csv(here::here("data/endicott_2024.csv"))
@@ -24,14 +23,14 @@ ithaca_2024 <- read_csv(here::here("data/ithaca_2024.csv"))
 buffstate_2024 <- read_csv(here::here("data/buffstate_2024.csv"))
 ```
 
-_Clean up our data in each set before joining them all together._
+*Clean up our data in each set before joining them all together.*
 
 ```{r}
 union_2024 <- union_2024 |>
   select(-YEAR)
 ```
 
-_Add an opponent and year column._
+*Add an opponent and year column.*
 
 ```{r}
 endicott_2024 <- endicott_2024 |>
@@ -62,13 +61,13 @@ buffstate_2024 <- buffstate_2024 |>
   mutate(OPPONENT = "buffstate", YEAR = "2024") 
 ```
 
-_Combine all of the different data sets into one._
+*Combine all of the different data sets into one.*
 
 ```{r}
 `2024_Season` <- rbind(endicott_2024, norwich_2024, wne_2024, union_2024, rpi_2024, hobart_2024, rochester_2024, ithaca_2024, buffstate_2024)
 ```
 
-_Now select the columns we want to keep, at least for now._
+*Now select the columns we want to keep, at least for now.*
 
 ```{r}
 `2024_Season` <- `2024_Season` |>
@@ -77,15 +76,16 @@ _Now select the columns we want to keep, at least for now._
   )
 ```
 
-_Create our "Success" variable, a binary variable that will be a 1 for successful and a 0 for not successful. A Successful play will be determined as followed:_
+*Create our "Success" variable, a binary variable that will be a 1 for successful and a 0 for not successful. A Successful play will be determined as followed:*
 
-_First down play is successful if the offense gains 40% or more of the yards to go. (Gaining 4 yards on 1st and 10 is successful, 3 yards is not)._
+*First down play is successful if the offense gains 40% or more of the yards to go. (Gaining 4 yards on 1st and 10 is successful, 3 yards is not).*
 
-_Second down play is successful if the offense gains 60% or more of the yards to go. (Gaining 6 yards on a 2nd and 10 is successful, 5 yards is not)._
+*Second down play is successful if the offense gains 60% or more of the yards to go. (Gaining 6 yards on a 2nd and 10 is successful, 5 yards is not).*
 
-_Third and Fourth down plays are successful if the play gains 100% or more of the yards to go. (Gaining 4 yards on a 3rd and 4 is successful, 3 yards is not)._
+*Third and Fourth down plays are successful if the play gains 100% or more of the yards to go. (Gaining 4 yards on a 3rd and 4 is successful, 3 yards is not).*
 
 #find my source i used to be able to cite
+
 ```{r}
  `2024_Season` <- `2024_Season` |>
     mutate(
@@ -100,7 +100,7 @@ _Third and Fourth down plays are successful if the play gains 100% or more of th
     )
 ```
 
-_We will also create down and distance bins to group the distances to be more usable._
+*We will also create down and distance bins to group the distances to be more usable.*
 
 ```{r}
 `2024_Season` <- `2024_Season` |>
@@ -114,7 +114,7 @@ _We will also create down and distance bins to group the distances to be more us
   ) 
 ```
 
-_Now, time to find tendencies of success, starting with success based on down and distance._
+*Now, time to find tendencies of success, starting with success based on down and distance.*
 
 ```{r}
 success_by_situation <- `2024_Season` |>
@@ -128,7 +128,7 @@ success_by_situation <- `2024_Season` |>
 success_by_situation
 ```
 
-_Tendencies of success, based on run pass._
+*Tendencies of success, based on run pass.*
 
 ```{r}
 success_by_run_pass <- `2024_Season` |>
@@ -142,7 +142,7 @@ success_by_run_pass <- `2024_Season` |>
 success_by_run_pass
 ```
 
-_Tendencies of success, based on formation._
+*Tendencies of success, based on formation.*
 
 ```{r}
 success_by_formation <- `2024_Season` |>
@@ -157,7 +157,7 @@ success_by_formation
   
 ```
 
-_Tendencies of success, based on combining formation and distance._
+*Tendencies of success, based on combining formation and distance.*
 
 ```{r}
 success_by_situation_formation <- `2024_Season` |>
@@ -172,8 +172,7 @@ success_by_situation_formation <- `2024_Season` |>
 success_by_situation_formation
 ```
 
-
-_Now, lets build a logistic regression
+\_Now, lets build a logistic regression
 
 ```{r}
 # try out using just distance instead factor(situation)
@@ -200,21 +199,17 @@ logmodel7 <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor(`FORMAT
 #add some sort of interaction to logmodel7
 ```
 
-
 ```{r}
 summary(logrun)
 ```
-
 
 ```{r}
 summary(logsituation)
 ```
 
-
 ```{r}
 summary(logdn)
 ```
-
 
 ```{r}
 summary(logformation)
@@ -228,13 +223,9 @@ AIC(logrun, logsituation, logdn, logformation, logmodel1, logmodel2)
 AIC(logmodel1, logmodel2, logmodel3, logmodel4, logmodel5, logmodel7)
 ```
 
-
-
 ```{r}
 install.packages("broom")
 ```
-
-
 
 ```{r}
 library(modelr)
@@ -252,7 +243,6 @@ aug_surv <- augment(logmodel2, newdata = grid,
                     se_fit = TRUE)
 ```
 
-
 ```{r}
 # switch fitted to predicted, make x = distance, down goes on facet
 ggplot(aug_surv, aes(x = DN, y = .fitted, color = `R/P`)) +
@@ -266,19 +256,9 @@ ggplot(aug_surv, aes(x = DN, y = .fitted, color = `R/P`)) +
   theme_minimal()
 ```
 
-_Instead of using downs on the x, we made a new logmodel, logmodel7 (see above for what that model entails)_
+*Instead of using downs on the x, we made a new logmodel, logmodel7 (see above for what that model entails)*
 
-_This new model ended up being slighty better than logmodel2 anyways._
-
-
-
-
-
-
-
-
-
-
+*This new model ended up being slighty better than logmodel2 anyways.*
 
 ```{r}
 grid2 <- `2024_Season` |>
@@ -294,7 +274,6 @@ aug_surv2 <- augment(logmodel7, newdata = grid2,
                     se_fit = TRUE)
 ```
 
-
 ```{r}
 # switch fitted to predicted, make x = distance, down goes on facet
 ggplot(aug_surv2, aes(x = DIST, y = .fitted, color = `R/P`)) +
@@ -308,14 +287,14 @@ ggplot(aug_surv2, aes(x = DIST, y = .fitted, color = `R/P`)) +
   theme_minimal()
 ```
 
-_switch it from log odds to probability_
+*switch it from log odds to probability*
+
 ```{r}
 aug_surv3 <- aug_surv2 %>%
   mutate(
     prob = plogis(.fitted)
   )
 ```
-
 
 ```{r}
 # switch fitted to predicted, make x = distance, down goes on facet
@@ -329,9 +308,6 @@ ggplot(aug_surv3, aes(x = DIST, y = prob, color = `R/P`)) +
   ) +
   theme_minimal()
 ```
-
-
-
 
 ```{r}
 #ADD IN A COUNT VARIABLE geom text, also do more heat maps with proportions of failures and successes instead of just success rate
@@ -430,10 +406,6 @@ ggplot(success_map_sit_rp, aes(x = SITUATION, y = RP, fill = SUCCESS)) +
   labs(x = "Situation", y = "Run / Pass")
 ```
 
-
-
-
-
 Exploratory bar plots
 
 ```{r}
@@ -521,16 +493,14 @@ logmodelpersonnel <- glm(SUCCESSFUL ~ factor(`R/P`) * factor(DN) + DIST + factor
 AIC(logmodel7, logmodelpersonnel)
 ```
 
-
-
-
-_Starting a new section or even new project almost, instead of log we are going to do classification trees:
+\_Starting a new section or even new project almost, instead of log we are going to do classification trees:
 
 Just for easy access and simplicity, just going to recode the data down here:
 
 ```{r}
 install.packages("rpart.plot")
 ```
+
 ```{r}
 library(rpart.plot)
 library(rpart)
@@ -550,12 +520,9 @@ library(rpart)
     )
 ```
 
-
-
 ```{r}
 table(`2024_Season`$SUCCESSFUL)
 ```
-
 
 ```{r}
 `2024_Season` <- `2024_Season` |>
@@ -569,22 +536,19 @@ table(`2024_Season`$SUCCESSFUL)
   )
 ```
 
+```{r}
 
-
+```
 
 ```{r}
 treeall <- rpart(SUCCESSFUL ~ `R/P` + PERSONNEL + SITUATION + DN, data = `2024_Season`, method = "class")
 treeall
-rpart.plot(treeall)
+rpart.plot(treeall, extra = 104)
 ```
+
 ```{r}
 count.matrix <- table(`2024_Season`$SUCCESSFUL, predict(treeall, type = "class"))
 rownames(count.matrix) <- c("Actual Fails", "Actual Successes")
 colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
 count.matrix
 ```
-
-
-
-
-

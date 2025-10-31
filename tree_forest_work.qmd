@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-*Load in the packages the link said I needed
+\*Load in the packages the link said I needed
 
 ```{r}
 # Helper packages
@@ -156,8 +156,7 @@ ithaca_2025 <- ithaca_2025 |>
   ) 
 ```
 
-
-**removing all rows that have NAs in them*
+\*\*removing all rows that have NAs in them\*
 
 ```{r}
 all_seasons <- all_seasons %>%
@@ -169,12 +168,7 @@ all_seasons <- all_seasons %>%
 
 ```
 
-
-
-
-
 *Starting a new section or even new project almost, instead of log we are going to do classification trees:*
-
 
 ```{r}
 library(rpart.plot)
@@ -211,12 +205,10 @@ table(`all_seasons`$SUCCESSFUL)
   )
 ```
 
-
 ```{r}
 all_seasons <- all_seasons %>%
   select(SUCCESSFUL, DN, SITUATION, PERSONNEL, `R/P`)
 ```
-
 
 ```{r}
 treeall <- rpart(SUCCESSFUL ~ `R/P` + PERSONNEL + SITUATION + DN, data = `all_seasons`, method = "class")
@@ -231,14 +223,16 @@ colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
 count.matrix
 ```
 
-
 *Bagging introduction stuff*
+
+
 
 ```{r}
 # football bagged model
 football_bag1 <- bagging(
   formula = SUCCESSFUL ~ `R/P` + PERSONNEL + SITUATION + DN,
   data = all_seasons,
+  #create 100 decision trees and 100 bootstrap samples
   nbagg = 100,  
   coob = TRUE,
   control = rpart.control(minsplit = 2, cp = 0)
@@ -246,11 +240,6 @@ football_bag1 <- bagging(
 
 football_bag1
 ```
-```{r}
-all_seasons <- all_seasons %>%
-  rename(RP = `R/P`)
-```
-
 
 
 ```{r}
@@ -259,6 +248,7 @@ football_bag2 <- train(
   data = all_seasons,
   method = "treebag",
   trControl = trainControl(method = "cv", number = 10),
+  # 200 bagged trees
   nbagg = 200,  
   control = rpart.control(minsplit = 2, cp = 0)
 )
@@ -266,7 +256,7 @@ football_bag2 <- train(
 football_bag2
 ```
 
-I am stuck herem cant't figure out what is wrong, can't figure out why the code won't work
+
 
 ```{r}
 # Create a parallel socket cluster
@@ -275,7 +265,7 @@ registerDoParallel(cl) # register the parallel backend
 
 # Fit trees in parallel and compute predictions on the test set
 predictions <- foreach(
-  icount(160), 
+  i = 1:160, 
   .packages = "rpart", 
   .combine = cbind
   ) %dopar% {
@@ -290,7 +280,7 @@ predictions <- foreach(
       data = football_train_boot
       ) 
     
-    predict(bagged_tree, newdata = all_seasons)
+    as.numeric(predict(bagged_tree, newdata = all_seasons) [, 2])
 }
 
 predictions[1:5, 1:7]
@@ -299,11 +289,39 @@ predictions[1:5, 1:7]
 
 
 ```{r}
+
+cl <- makeCluster(8) # use 8 workers
+registerDoParallel(cl) # register the parallel backend
+
+predictions <- foreach(i = 1:160, 
+                       .packages = "rpart", 
+                       .combine = cbind) %dopar% {
+  index <- sample(nrow(all_seasons), replace = TRUE)
+  football_train_boot <- all_seasons[index, ]
+
+  bagged_tree <- rpart(
+    SUCCESSFUL ~ ., 
+    control = rpart.control(minsplit = 2, cp = 0),
+    data = football_train_boot
+  )
+
+  predict(bagged_tree, newdata = all_seasons)[, 2]
+}
+
+
+```
+
+
+```{r}
+all_seasons$SUCCESSFUL <- as.numeric(all_seasons$SUCCESSFUL)
+
+
+
 predictions %>%
   as.data.frame() %>%
   mutate(
     observation = 1:n(),
-    actual = ames_test$Sale_Price) %>%
+    actual = all_seasons$SUCCESSFUL) %>%
   tidyr::gather(tree, predicted, -c(observation, actual)) %>%
   group_by(observation) %>%
   mutate(tree = stringr::str_extract(tree, '\\d+') %>% as.numeric()) %>%
@@ -318,6 +336,8 @@ predictions %>%
   xlab('Number of trees')
 ```
 
+Root Mean Squared Error, how well a model's predictions matching the actual data (how far off the predictons are on average)
+
 
 
 ```{r}
@@ -325,40 +345,98 @@ predictions %>%
 stopCluster(cl)
 ```
 
-
 *moving on to random forest*
 
-1.  Given a training data set
-2.  Select number of trees to build (n_trees)
-3.  for i = 1 to n_trees do
-4.  |  Generate a bootstrap sample of the original data
-5.  |  Grow a regression/classification tree to the bootstrapped data
-6.  |  for each split do
-7.  |  | Select m_try variables at random from all p variables
-8.  |  | Pick the best variable/split-point among the m_try
-9.  |  | Split the node into two child nodes
-10. |  end
-11. | Use typical tree model stopping criteria to determine when a 
-    | tree is complete (but do not prune)
-12. end
-13. Output ensemble of trees
+*random forest didn't like my column name so I changed it to get rid of the /*
+
+
+```{r}
+all_seasons_rename <- all_seasons %>%
+  rename(
+    RP = `R/P`  # replace slash with valid name
+  )
+
+```
+
+
+*Out of Bag RMSE Calculation using Random Forest*
 
 ```{r}
 # number of features
-n_features <- length(setdiff(names(all_seasons), "SUCCESSFUL"))
+n_features <- length(setdiff(names(all_seasons_rename), "SUCCESSFUL"))
 
 # train a default random forest model
 football_rf1 <- ranger(
   SUCCESSFUL ~ ., 
-  data = all_seasons,
+  data = all_seasons_rename,
   mtry = floor(n_features / 3),
   respect.unordered.factors = "order",
-  seed = 123
+  seed = 23
 )
 
-# get OOB RMSE
+# get OOB RMSE (out of bag rmse)
 (default_rmse <- sqrt(football_rf1$prediction.error))
+
 ```
+
+```{r}
+# set number of trees to check
+tree_seq <- seq(1, 500, by = 1)
+oob_rmse <- numeric(length(tree_seq))
+
+for (i in seq_along(tree_seq)) {
+  rf <- ranger(
+    SUCCESSFUL ~ ., 
+    data = all_seasons_rename,
+    mtry = floor(n_features / 3),
+    respect.unordered.factors = "order",
+    seed = 123,
+    num.trees = tree_seq[i]
+  )
+  
+  oob_rmse[i] <- sqrt(rf$prediction.error)
+}
+
+# put into a data frame
+rmse_df <- data.frame(
+  num_trees = tree_seq,
+  OOB_RMSE = oob_rmse
+)
+
+# plot
+ggplot(rmse_df, aes(x = num_trees, y = OOB_RMSE)) +
+  geom_line(color = "blue") +
+  xlab("Number of Trees") +
+  ylab("OOB RMSE") +
+  ggtitle("OOB RMSE vs Number of Trees")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
