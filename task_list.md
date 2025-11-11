@@ -1,5 +1,13 @@
 ## Task List
 
+### For November 13
+
+1. Fix the bagging and random forest to use a character or factor response.
+
+2. Make training data the same for each of the four methods.
+
+3. Find the classification rate for each of the four methods on the test data.
+
 ### For November 6
 
 1. Fix the bagging and random forest to use a character or factor response.
