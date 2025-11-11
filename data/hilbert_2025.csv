@@ -1,0 +1,50 @@
+PLAY #,GOOD EXAMPLE / TEACH TAPE,DN,DIST,YARD LN,HASH,GN/LS,R/P,HASH (SLU),O PERS,FORMATION FAMILY,FORMATION,OFF FORM,BACKFIELD,FIB,FORM ADJ,MOTION,FORMATION TAG,OFF PLAY,RUN TYPE,PASS CONCEPT,PASS TYPE,PROTECTION,PLAY RESULT,CARRIER/TARGET,PLAY DIR,TEAM,DC COMMENT,DL COACH COMMENT,LB COACH COMMENT,CB COACH COMMENT,SAF COACH COMMENT,DB COACH COMMENT,PERSONNEL
+1,,0,10,-37,R,11,P,,,,,TOP,G,,,,,,,,,SOLID,COMP.,,,SLU,,,,,,,11
+2,,1,10,-48,R,52,P,,,,,TOP,G,,,,,,,,,COLD,"COMP, TD",,,SLU,,,,,,,11
+3,,0,10,-27,L,73,P,,,,,SWEAT,UC,,,,STR SNUG / WK MID,,,,,CHARGER RT,COMP. TD,,,SLU,,,,,,,11
+4,,0,10,-25,L,17,P,,,,,EMPTY SPRINT,G,,,,,,,,,PHONE,COMP,,,SLU,,,,,,,1
+5,,1,10,-42,R,9,P,,,,,SPRINT,G,,,,,,,,,SOLID 6 LT ST,COMP,,,SLU,,,,,,,11
+6,,2,1,49,R,9,R,,,,,TOP,G,,,,,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+7,,1,10,40,L,12,P,,,,,EMPTY SPRINT,G,,,,,,,,,PHONE,SCRAMBLE,,,SLU,,,,,,,1
+8,,1,10,28,R,12,P,,,,,TOP,G,,,,,,,,,SOLID,COMP,,,SLU,,,,,,,11
+9,,1,10,16,L,10,P,,,,,SWEAT,G,,,,Z,,,,,SOLID SNAZ,COMP,,,SLU,,,,,,,11
+10,,1,10,6,L,0,P,,,FAR,,TEX,G,,,F FLIGHT,NEAR / WK MID,,,,,DASH RT,INC,,,SLU,,,,,,,11
+23,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+11,,2,6,6,L,6,R,,,,,TOP,G,,,,,,,,,,"GAIN, TD",,,SLU,,,,,,,11
+12,,0,10,-19,R,8,P,,,,,TRIPS,G,,,,Z / WIDE,,,,,SOLID,COMP.,,,SLU,,,,,,,10
+13,,2,2,-27,L,9,P,,,FAR,,SPILL,G,,,F FLIGHT,NEAR / WK MID,,,,,ROLL RT,COMP.,,,SLU,,,,,,,12
+14,,1,10,-36,R,64,P,,,,,SPREAD,G,,,,Z,,,,,CUP,"COMP, TD",,,SLU,,,,,,,10
+15,,0,10,13,R,-7,P,,,SPRINT,,TRIGGER,UC,,,H FLIGHT,,,,,,SOLID 6 LT ST,SACK,,,SLU,,,,,,,12
+16,,2,17,20,R,14,R,,,,,TOP,G,,,,,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+17,,3,2,6,L,-2,R,,,,,TIN,G,,,H RETURN,,,,,,,LOSS,,,SLU,,,,,,,12
+18,,0,10,-33,R,0,P,,,,,TOP,G,,,,,,,,,SOLID 6 LT ST,INC,,,SLU,,,,,,,11
+19,,2,10,-33,R,0,P,,,,,EMPTY SPRINT,G,,,,,,,,,PHONE,INC,,,SLU,,,,,,,1
+20,,3,10,-33,R,11,P,,,,,TOP,G,,,,,,,,,COLD,SCRAMBLE,,,SLU,,,,,,,11
+21,,1,10,41,L,10,P,,,,,TOP,G,,,,,,,,,SOLID,COMP.,,,SLU,,,,,,,11
+22,,0,10,-46,L,5,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+23,,2,5,49,L,6,R,,,,,SPRINT,G,,,,STR SNUG / WK WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+24,,1,10,43,L,43,R,,,,,TOP,G,,,,,,,,,,"PASS, COMP, TD",,,SLU,,,,,,,11
+25,,0,10,38,R,5,P,,,,,TOP,G,,,,,,,,,SOLID,COMP,,,SLU,,,,,,,11
+26,,2,5,33,L,23,R,,,,,TEX,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+27,,1,10,10,L,0,P,,,,,SWEAT,G,,,,Z,,,,,SOLID SNAZ,INC,,,SLU,,,,,,,11
+28,,2,10,10,L,6,R,,,,,TEX,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+29,,3,4,4,L,4,P,,,,,SPRINT,G,,,,,,,,,TEMP,"COMP , TD",,,SLU,,,,,,,11
+30,,1,5,-31,R,8,R,,,,,SPRINT,G,,,,STR SNUG / WK WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+31,,1,10,-39,M,5,R,,,,,SPRINT,G,,,,STR SNUG,,,,,,GAIN,,,SLU,,,,,,,11
+32,,2,5,-44,M,4,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+33,,3,1,-48,L,-10,P,,,,,EMPTY SPRINT,G,,,,,,,,,PHONE,SACK,,,SLU,,,,,,,1
+34,,0,10,-38,L,1,R,,,,,SPIKE,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+35,,2,9,-39,L,9,R,,,NEAR,,PRO,UC,,,F FLIGHT,FAR,,,,,,GAIN,,,SLU,,,,,,,21
+36,,1,10,-48,M,10,R,,,,,SPRINT,G,,,,STR SNUG / WK WIDE,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+37,,1,10,42,L,-2,R,,,,,PRO,UC,,,,NEAR,,,,,,LOSS,,,SLU,,,,,,,21
+38,,2,12,44,M,0,R,,,,,TOP,G,,,,,,,,,,"PASS,COMP,TD,PENALTY",,,SLU,,,,,,,11
+39,,2,17,49,M,8,P,,,,,TOP,G,,,,,,,,,COLD,COMP.,,,SLU,,,,,,,11
+40,,3,9,41,L,8,P,,,,,SPRINT,G,,,,,,,,,SOLID 6 RT ST,COMP.,,,SLU,,,,,,,11
+41,,4,1,33,M,10,R,,,,,TRIGGER,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+42,,1,10,23,L,8,R,,,,,SPRINT,G,,,,STR SNUG / WK WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+43,,2,2,15,L,-2,R,,,,,PRO,UC,,,,NEAR,,,,,,LOSS,,,SLU,,,,,,,21
+44,,3,9,22,M,0,P,,,,,SPRINT,G,,,,,,,,,COLD,INC,,,SLU,,,,,,,11
+45,,0,10,-49,L,9,R,,,NEAR,,PACK,UC,,,F FLIGHT,FAR,,,,,,GAIN,,,SLU,,,,,,,21
+46,,2,1,42,M,-3,R,,,,,SPIKE,UC,,,,,,,,,,LOSS,,,SLU,,,,,,,12
+47,,3,4,45,M,13,P,,,,,TOP,G,,,,,,,,,SOLID,COMP,,,SLU,,,,,,,11
+48,,1,10,32,L,-1,,,,,,,,,,,,,,,,,,,,,,,,,,,

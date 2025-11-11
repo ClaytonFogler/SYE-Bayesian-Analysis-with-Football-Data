@@ -1,0 +1,59 @@
+PLAY #,GOOD EXAMPLE / TEACH TAPE,DN,DIST,YARD LN,HASH,GN/LS,R/P,HASH (SLU),O PERS,FORMATION FAMILY,FORMATION,OFF FORM,BACKFIELD,FIB,FORM ADJ,MOTION,FORMATION TAG,OFF PLAY,RUN TYPE,PASS CONCEPT,PASS TYPE,PROTECTION,PLAY RESULT,CARRIER/TARGET,PLAY DIR,TEAM,DC COMMENT,DL COACH COMMENT,LB COACH COMMENT,CB COACH COMMENT,SAF COACH COMMENT,DB COACH COMMENT,PERSONNEL
+1,,0,10,-34,L,7,R,LM,,,,TUB,UC,,,,Z,,,,,,,,,SLU,,,,,,,21
+2,,2,3,-41,L,0,P,LM,,,,TOP,UC,,,,,,,,,,INCOMPLETE,,,SLU,,,,,,,11
+3,,3,3,-41,L,7,P,LM,,,,EMPTY SPRINT,GUN,,,,,,,,,PHONE,COMP,,,SLU,,,,,,,1
+4,,1,10,-48,L,2,R,L,,,,PACK,UC,,,,NEAR,,,,,,"GAIN, 2",,,SLU,,,,,,,21
+5,,2,8,50,L,-1,R,L,,,,SPRINT,UC,,,,,,,,,,"LOSS, 2",,,SLU,,,,,,,11
+6,,3,9,-49,L,-1,P,L,,,,SPRINT,GUN,,,,WK MID,,,,,SOLID 7,"GAIN, 3",,,SLU,,,,,,,11
+7,,0,10,-35,R,16,R,L,,,,TEX,GUN,,,,WIDE,,,,,,"GAIN, 16",,,SLU,,,,,,,11
+8,,1,10,49,L,3,R,LM,,,,TEX,GUN,,,,WIDE,,,,,,"GAIN, 3",,,SLU,,,,,,,11
+9,,2,7,46,R,2,R,RM,,,,SPILL,UC,,,,,,,,,,"GAIN, 1",,,SLU,,,,,,,21
+10,,3,5,44,R,-3,R,RM,,,,TUB,UC,,,,Z,,,,,,"LOSS, 2",,,SLU,,,,,,,21
+11,,0,5,5,R,0,R,RM,,,,PIG,GUN,,,F ACROSS,NEAR,,,,,,NO GAIN,,,SLU,,,,,,,PIG
+12,,2,5,5,R,0,P,RM,,,,PIG,GUN,,,,FAR,,,,,SUPER TEMP,INCOMPLETE,,,SLU,,,,,,,PIG
+13,,3,5,5,R,5,R,RM,,,,PIG,GUN,,,,FAR,,,,,,"GAIN, 5, TD",,,SLU,,,,,,,PIG
+14,,0,15,-15,R,-3,R,R,,,,TEX,GUN,,,,WIDE,,,,,,"GAIN, 2",,,SLU,,,,,,,11
+15,,2,13,-12,R,2,R,R,,,,TOP,UC,,,,STR MID,,,,,,"GAIN, 2",,,SLU,,,,,,,11
+16,,3,11,-14,L,16,R,LM,,,,PACK,UC,,,F - I,NEAR,,,,,,"GAIN , 4",,,SLU,,,,,,,21
+17,,0,10,-30,R,0,P,R,,,,TOP,GUN,,,,STR MID,,,,,SOLID 7,INCOMPLETE,,,SLU,,,,,,,11
+18,,2,10,-30,R,25,P,R,,,,PRO,UC,,,Z SOAR,NEAR,,,,,TURN LT,COMP. 26,,,SLU,,,,,,,21
+19,,1,10,45,L,3,R,L,,,,TUB,UC,,,,Z,,,,,,"GAIN, 3",,,SLU,,,,,,,21
+20,,2,7,32,L,-10,P,L,,SPILL,,TAIL,UC,,,Z FLIGHT,WK SNUG,,,,,,"LOSS, 9",,,SLU,,,,,,,21
+21,,3,17,-48,L,41,P,LM,,,,EMPTY TOP,GUN,,,,,,,,,SOLID 6 WILL,COMP. 42,,,SLU,,,,,,,1
+22,,1,10,11,L,3,R,L,,,,PIG,GUN,,,,NEAR,,,,,,"GAIN, 2",,,SLU,,,,,,,PIG
+23,,2,7,8,L,8,P,L,,,,PIG,GUN,,,,FAR,,,,,SUPER TEMP,"GAIN, 8, TD",,,SLU,,,,,,,PIG
+24,,0,10,50,L,-5,P,L,,TOP,,SPRINT,UC,,,Y TRADE,STR SNUG,,,,,,PENALTY,,,SLU,,,,,,,11
+25,,1,15,-45,L,5,R,L,,,,TUB,UC,,,,Z,,,,,,"GAIN, 5",,,SLU,,,,,,,21
+26,,2,10,50,L,0,P,L,,,,SPRINT,UC,,,,WK MID,,,,,DASH RT,INCOMPLETE,,,SLU,,,,,,,11
+27,,3,15,-45,L,-5,R,L,,,,SPILL,UC,,,,,,,,,,"LOSS, 1",,,SLU,,,,,,,21
+28,,0,10,-40,R,4,P,RM,,,,TOP,GUN,,,,,,,,,SOLID WOOD SAX,COMP. 5,,,SLU,,,,,,,11
+29,,2,6,-44,R,-1,P,R,,,,TOP,GUN,,,,,,,,,SOLID WOOD SAX,"LOSS, 9",,,SLU,,,,,,,11
+30,,0,10,-43,R,7,P,R,,,,TOP,GUN,,,,,,,,,,COMP. 8,,,SLU,,,,,,,11
+31,,2,3,50,R,-2,R,R,,,,TOP,GUN,,,,,,,,,,"LOSS, 1",,,SLU,,,,,,,11
+32,,3,5,-48,R,20,P,R,,,,EMPTY SPRINT,GUN,,,,,,,,,PHONE,SCRAMBLE,,,SLU,,,,,,,1
+33,,1,10,32,R,23,P,R,,,,PACK,UC,,,,NEAR,,,,,CHARGER LT,COMP,,,SLU,,,,,,,21
+34,,1,9,9,R,4,R,R,,,,PIG,GUN,,,,FAR,,,,,,"GAIN, 4",,,SLU,,,,,,,PIG
+35,,2,5,5,R,3,P,R,,,,PIG,GUN,,,,FAR,,,,,SUPER TEMP,INCOMPLETE,,,SLU,,,,,,,PIG
+36,,1,2,2,R,1,R,R,,,,PIG,GUN,,,,FAR,,,,,,"GAIN, 1",,,SLU,,,,,,,PIG
+37,,2,1,1,R,0,R,R,,,,PIG,GUN,,,,FAR,,,,,,NO GAIN,,,SLU,,,,,,,PIG
+38,,3,1,1,R,0,R,R,,,,TRIGGER,UC,,,,,,,,,,NO GAIN,,,SLU,,,,,,,12
+39,,4,1,1,R,0,R,R,,,,TRIGGER,UC,,,,,,,,,,NO GAIN,,,SLU,,,,,,,12
+40,,0,10,41,L,18,R,L,,,,TOP,GUN,,,,,,,,,,"GAIN, 16",,,SLU,,,,,,,11
+41,,1,10,23,L,3,R,L,,,,TOP,UC,,,,,,,,,,"GAIN, 5",,,SLU,,,,,,,11
+42,,2,7,20,R,-2,P,RM,,,,SPRINT,GUN,,,Z SOAR,STR SNUG,,,,,SOLID 6 WAX,"LOSS, 2",,,SLU,,,,,,,11
+43,,3,9,22,L,0,P,LM,,,,SPRINT,GUN,,,,,,,,,SOLID 6 ST,INCOMPLETE,,,SLU,,,,,,,11
+44,,0,10,-49,R,-6,P,R,,,,PRO,UC,,,,FAR,,,,,CHARGER RT,SACK,,,SLU,,,,,,,21
+45,,2,16,-43,R,0,P,RM,,,,EMPTY TOP,GUN,,,,,,,,,SOLID 6 WILL,INCOMPLETE,,,SLU,,,,,,,1
+46,,3,16,-43,R,7,P,RM,,,,TOP,GUN,,,,,,,,,,COMP. 6,,,SLU,,,,,,,11
+47,,0,10,-15,L,5,R,L,,,,SPILL,UC,,,,,,,,,,"GAIN, 3",,,SLU,,,,,,,21
+48,,2,6,-20,L,0,P,L,,,,PACK,UC,,,,NEAR,,,,,TURN LT,INCOMPLETE,,,SLU,,,,,,,21
+49,,3,5,-20,L,22,P,L,,,,TOP,GUN,,,,,,,,,,"COMP, 25",,,SLU,,,,,,,11
+50,,1,10,-42,L,7,R,L,,,,SPILL,UC,,,,,,,,,,"GAIN, 7",,,SLU,,,,,,,21
+51,,2,3,-49,R,5,R,R,,,,TRIGGER,UC,,,,,,,,,,"GAIN, 5",,,SLU,,,,,,,12
+52,,1,10,46,R,0,R,R,,,,PRO,UC,,,,NEAR,,,,,,"GAIN, 2",,,SLU,,,,,,,12
+53,,2,9,46,R,4,R,R,,,,SPRINT,UC,,,,OFF,,,,,,"GAIN, 4",,,SLU,,,,,,,11
+54,,3,6,42,R,15,P,R,,,,TOP,GUN,,,,,,,,,,PENALTY,,,SLU,,,,,,,11
+55,,1,10,27,R,2,R,R,,,,TAIL,UC,,,,Z,,,,,,"GAIN, 1",,,SLU,,,,,,,21
+56,,2,9,25,R,5,R,R,,,,PACK,UC,,,F - I,NEAR,,,,,,"GAIN, 9",,,SLU,,,,,,,21
+57,,3,6,20,L,9,R,,,,,PACK,UC,,,,NEAR,,,,,,"GAIN , 10",,,SLU,,,,,,,21
+58,,1,10,11,L,-1,R,,,,,,,,,,,,,,,,,,,SLU,,,,,,,VICTORY

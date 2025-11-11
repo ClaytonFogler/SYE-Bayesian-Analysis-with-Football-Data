@@ -1,0 +1,63 @@
+PLAY #,GOOD EXAMPLE / TEACH TAPE,DN,DIST,YARD LN,HASH,GN/LS,R/P,HASH (SLU),O PERS,FORMATION FAMILY,FORMATION,OFF FORM,BACKFIELD,FIB,FORM ADJ,MOTION,FORMATION TAG,OFF PLAY,RUN TYPE,PASS CONCEPT,PASS TYPE,PROTECTION,PLAY RESULT,CARRIER/TARGET,PLAY DIR,TEAM,DC COMMENT,DL COACH COMMENT,LB COACH COMMENT,CB COACH COMMENT,SAF COACH COMMENT,DB COACH COMMENT,PERSONNEL
+1,,0,10,-15,L,0,P,,,,,SWEAT,G,,,,H,,,,,DASH RT,INC,,,SLU,,,,,,,11
+2,,2,10,-15,L,7,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+3,,3,3,-22,R,40,R,,,,,SPRINT,G,,,,,,,,,CUP,GAIN,,,SLU,,,,,,,11
+4,,1,10,38,R,10,P,,,,,TOP,G,,,,WIDE,,,,,COLD,COMP.,,,SLU,,,,,,,11
+5,,2,10,38,L,10,R,,,TOP,,SWEAT,G,,,Y TRADE,WK WIDE,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+6,,1,10,28,R,3,R,,,SWEAT,,TOP,G,,,Y TRADE,WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+7,,2,7,25,R,0,P,,,,,TOP,G,,,,,,,,,SOLID 7 LT,INC,,,SLU,,,,,,,11
+8,,3,7,25,M,-8,P,,,,,SPREAD,G,,,,H,,,,,TEMP,SACK,,,SLU,,,,,,,10
+9,,4,15,33,R,,,,,,,TRIGGER,G,,,,,,,,,SUPER TEMP,QUICK KICK,,,SLU,,,,,,,12
+10,,0,10,34,L,12,R,,,,,BOMBER,G,,,,,,,,,BIG,"PASS , COMP",,,SLU,,,,,,,11
+11,,1,10,22,L,-2,R,,,SWEAT,,TOP,G,,,Y TRADE,WIDE,,,,,,LOSS,,,SLU,,,,,,,11
+12,,2,12,24,L,-9,P,,,,,SPRINT,G,,,Z SOAR,STR SNUG,,,,,SOLID 6 RT WAX,SACK,,,SLU,,,,,,,11
+13,,3,21,33,L,5,R,,,,,TEX,G,,,,Y / OPEN / WK X BUNCH,,,,,,GAIN,,,SLU,,,,,,,11
+14,,0,10,-20,L,28,P,,,,,BOMBER,G,,,,,,,,,CHARGER RT,"PASS , COMP",,,SLU,,,,,,,11
+15,,1,10,-48,M,0,R,,,,,SPRINT,G,,,X SPEED,T,,,,,,PENALTY NO PLAY,,,SLU,,,,,,,11
+16,,1,15,-43,M,-1,R,,,TOP,,SWEAT,G,,,Y TRADE,WK WIDE,,,,,,LOSS,,,SLU,,,,,,,11
+17,,2,16,-42,L,8,P,,,,,SPRINT,G,,,X SOAR,WK MID,,,,,CHARGER RT,"PASS , COMP",,,SLU,,,,,,,11
+18,,3,8,50,L,-2,P,,,TOP,,SWEAT,G,,,Y TRADE,,,,,,SOLID,"PASS , COMP",,,SLU,,,,,,,11
+19,,4,10,-48,L,,,,,,,TRIGGER,G,,,,,,,,,SUPER TEMP,QUICK KICK,,,SLU,,,,,,,12
+20,,0,10,-35,R,-1,R,,,,,TOP,G,,,,,,,,,,LOSS,,,SLU,,,,,,,11
+21,,2,11,-34,L,9,P,,,,,SPRINT,G,,,X SOAR,WK MID,,,,,CHARGER LT,"PASS , COMP",,,SLU,,,,,,,11
+22,,3,2,-43,L,7,R,,,,,SPREAD,G,,,,H,,,,,CUP,GAIN,,,SLU,,,,,,,10
+23,,1,10,50,L,4,R,,,,,BOMBER,G,,,,,,,,,BIG,"PASS , COMP",,,SLU,,,,,,,11
+24,,2,6,46,R,5,R,,,,,SPREAD,G,,,,H,,,,,CUP,"PASS , COMP",,,SLU,,,,,,,10
+25,,3,1,41,R,2,R,,,,,TRIGGER,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+26,,1,10,39,R,4,R,,,,,TOP,G,,,,,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+27,,2,6,35,L,35,P,,,,,BOMBER,G,,,,,,,,,CHARGER RT,"PASS , COMP , TD",,,SLU,,,,,,,11
+28,,0,10,-24,R,6,P,,,,,TOP,G,,,,,,,,,SOLID,"PASS , COMP",,,SLU,,,,,,,11
+29,,2,5,-30,R,0,R,,,,,SPREAD,G,,,,H,,,,,CUP,LOSS,,,SLU,,,,,,,10
+30,,1,10,-25,M,1,R,,,,,TOP,G,,,Y TRADE,WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+31,,2,9,-26,L,-16,P,,,,,SPRINT,G,,,,,,,,,SOLID 7 RT,THROW AWAY,,,SLU,,,,,,,11
+32,,3,25,-10,L,8,R,,,,,TOP,G,,,,,,,,,,"PASS , COMP",,,SLU,,,,,,,11
+33,,1,10,-33,L,2,R,,,SWEAT,,TOP,G,,,Y TRADE,WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+34,,2,8,-35,R,2,P,,,TOP,,SWEAT,G,,,Y TRADE,,,,,,SOLID,"PASS , COMP",,,SLU,,,,,,,11
+35,,3,6,-37,L,0,P,,,TOP,,SWEAT,G,,,Y TRADE / TAB,,,,,,SOLID SNAZ,INC,,,SLU,,,,,,,11
+36,,0,10,-22,L,5,P,,,,,TOP,G,,,,STR MID,,,,,RUN RT,"PASS , COMP",,,SLU,,,,,,,11
+37,,2,5,-27,R,4,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+38,,3,1,-31,R,3,R,,,,,TRIGGER,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+39,,1,10,-34,R,3,R,,,SWEAT,,TOP,G,,,Y TRADE,WIDE,,,,,,GAIN,,,SLU,,,,,,,11
+40,,2,7,-37,L,0,P,,,,,SPRINT,G,,,X SOAR,WK MID,,,,,CHARGER RT,INC,,,SLU,,,,,,,11
+41,,3,7,-37,L,4,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+42,,0,10,-22,L,0,R,,,,,TOP,G,,,,,,,,,,NO GAIN,,,SLU,,,,,,,11
+43,,2,10,-22,L,5,P,,,,,BOMBER STAY,G,,,,,,,,,SOLID 6 RT WAX,"PASS , COMP",,,SLU,,,,,,,11
+44,,3,5,-27,L,0,P,,,,,TOP,G,,,,WIDE,,,,,HOT,INC,,,SLU,,,,,,,11
+45,,0,10,-25,L,27,P,,,,,SPRINT,G,,,,,,,,,TEMP,"PASS , COMP",,,SLU,,,,,,,11
+46,,1,10,-48,L,0,R,,,,,BOMBER,G,,,,,,,,,BIG,THROW AWAY,,,SLU,,,,,,,11
+47,,2,10,-48,L,0,P,,,,,SPRINT,G,,,,,,,,,TEMP,INC,,,SLU,,,,,,,11
+48,,3,10,-48,L,5,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+49,,4,5,47,L,7,P,,,,,BOMBER,G,,,,,,,,,SOLID SNAZ,GAIN,,,SLU,,,,,,,11
+50,,1,10,39,L,0,P,,,,,BOMBER,G,,,,,,,,,CHARGER RT,INTERCEPTION,,,SLU,,,,,,,11
+51,,0,10,41,R,15,R,,,,,TOP,G,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+52,,1,10,26,L,-4,P,,,,,TOP,G,,,,,,,,,CHARGER LT,"PASS , COMP , TD , PENALTY",,,SLU,,,,,,,11
+53,,2,14,30,R,2,P,,,,,TOP,G,,,,WIDE,,,,,COLD,"PASS , COMP",,,SLU,,,,,,,11
+54,,3,12,28,L,0,R,,,,,TOP,G,,,,,,,,,,THROW AWAY,,,SLU,,,,,,,11
+55,,4,12,28,L,,P,,,,,SPRINT,G,,,,,,,,,SOLID 6 RT WILL,SACK,,,SLU,,,,,,,11
+56,,1,10,19,R,-1,R,,,,,BOMBER,G,,,,,,,,,BIG,NO GAIN,,,SLU,,,,,,,11
+57,,2,11,-19,R,1,P,,,,,TOP,G,,,,,,,,,SOLID,"PASS , COMP",,,SLU,,,,,,,11
+58,,3,10,-20,L,0,P,,,,,BOMBER STAY,G,,,,,,,,,SOLID 6 RT WAX,THROW AWAY,,,SLU,,,,,,,11
+59,,0,10,-25,L,0,P,,,,,TOP,G,,,,,,,,,SOLID,INC,,,SLU,,,,,,,11
+60,,2,10,-25,L,5,P,,,,,TOP,G,,,,,,,,,SOLID,"PASS , COMP",,,SLU,,,,,,,11
+61,,3,5,-30,M,-2,P,,,,,SPRINT,G,,,,,,,,,TEMP,SACK,,,SLU,,,,,,,11
+62,,4,7,-28,R,0,P,,,,,BOMBER,G,,,,,,,,,SOLID SNAZ,INC,,,SLU,,,,,,,11

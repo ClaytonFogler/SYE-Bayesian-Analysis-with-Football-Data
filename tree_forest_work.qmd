@@ -7,11 +7,13 @@ editor: visual
 
 \*Load in the packages the link said I needed
 
+
 ```{r}
 # Helper packages
 library(tidyverse)
 library(doParallel)
 library(foreach)
+library(Metrics)
 
 #Modeling packages
 library(caret)
@@ -114,7 +116,7 @@ ithaca_2025 <- ithaca_2025 |>
 ```{r}
 `all_seasons` <- `all_seasons` |>
   select(
-    OPPONENT, YEAR, "PLAY #", DN, DIST, "YARD LN", HASH, "GN/LS", "R/P", HASH, "FORMATION FAMILY", "OFF FORM", BACKFIELD, MOTION, "FORMATION TAG", PROTECTION, "PLAY RESULT", PERSONNEL
+   DN, DIST, "GN/LS", "R/P", "PLAY RESULT", PERSONNEL, `OFF FORM`
   )
 ```
 
@@ -161,6 +163,7 @@ ithaca_2025 <- ithaca_2025 |>
 ```{r}
 all_seasons <- all_seasons %>%
   filter(!is.na(`R/P`)) %>%
+  filter(!is.na(`OFF FORM`)) %>%
   filter(!is.na(PERSONNEL)) %>%
   filter(!is.na(SITUATION)) %>%
   filter(!is.na(DN)) %>%
@@ -176,17 +179,17 @@ library(rpart)
 ```
 
 ```{r}
- `all_seasons` <- `all_seasons` |>
-    mutate(
-      SUCCESSFUL = case_when(
-        DN == 0 & `GN/LS` >= (0.4 * DIST) ~ "YES",                     
-        DN == 1 & `GN/LS` >= (0.4 * DIST) ~ "YES",
-        DN == 2 & `GN/LS` >= (0.6 * DIST) ~ "YES",
-        DN == 3 & `GN/LS` >= (DIST) ~ "YES",
-        DN == 4 & `GN/LS` >= (DIST) ~ "YES",
-        TRUE ~ "NO"
-      )
-    )
+# `all_seasons` <- `all_seasons` |>
+    #mutate(
+      #SUCCESSFUL = case_when(
+       # DN == 0 & `GN/LS` >= (0.4 * DIST) ~ "YES",                     
+        #DN == 1 & `GN/LS` >= (0.4 * DIST) ~ "YES",
+        #DN == 2 & `GN/LS` >= (0.6 * DIST) ~ "YES",
+        #DN == 3 & `GN/LS` >= (DIST) ~ "YES",
+        #DN == 4 & `GN/LS` >= (DIST) ~ "YES",
+        #TRUE ~ "NO"
+      #)
+    #)
 ```
 
 ```{r}
@@ -200,8 +203,10 @@ table(`all_seasons`$SUCCESSFUL)
     `R/P` = as.factor(`R/P`),
     PERSONNEL = as.factor(PERSONNEL),
     SITUATION = as.factor(SITUATION),
-    DN = as.factor(DN)
-    
+    DN = as.factor(DN),
+    `PLAY RESULT` = as.factor(`PLAY RESULT`),
+    `OFF FORM` = as.factor(`OFF FORM`)
+  
   )
 ```
 
@@ -225,13 +230,40 @@ count.matrix
 
 *Bagging introduction stuff*
 
+```{r}
+all_seasons_bagging <- all_seasons %>%
+  select(SUCCESSFUL, DN, SITUATION, PERSONNEL, `R/P`)
+```
+
+```{r}
+all_seasons_bagging <- all_seasons_bagging %>%
+  rename(
+    RP = `R/P`  # replace slash with valid name
+  )
+```
+
+```{r}
+all_seasons <- all_seasons %>%
+  rename(
+    RP = `R/P`  # replace slash with valid name
+  )
+```
+
+
+
+```{r}
+#all_seasons` <-`all_seasons` |>
+  #mutate(
+    #SUCCESSFUL = as.factor(SUCCESSFUL)
+```
+
 
 
 ```{r}
 # football bagged model
 football_bag1 <- bagging(
-  formula = SUCCESSFUL ~ `R/P` + PERSONNEL + SITUATION + DN,
-  data = all_seasons,
+  formula = SUCCESSFUL ~ `RP` + PERSONNEL + SITUATION + DN,
+  data = all_seasons_bagging,
   #create 100 decision trees and 100 bootstrap samples
   nbagg = 100,  
   coob = TRUE,
@@ -242,12 +274,14 @@ football_bag1
 ```
 
 
+
+
 ```{r}
 football_bag2 <- train(
   SUCCESSFUL ~ .,
-  data = all_seasons,
+  data = all_seasons_bagging,
   method = "treebag",
-  trControl = trainControl(method = "cv", number = 10),
+  trControl = trainControl(method = "cv", number = 5),
   # 200 bagged trees
   nbagg = 200,  
   control = rpart.control(minsplit = 2, cp = 0)
@@ -255,7 +289,6 @@ football_bag2 <- train(
 
 football_bag2
 ```
-
 
 
 ```{r}
@@ -270,8 +303,8 @@ predictions <- foreach(
   .combine = cbind
   ) %dopar% {
     # bootstrap copy of training data
-    index <- sample(nrow(all_seasons), replace = TRUE)
-    football_train_boot <- all_seasons[index, ]  
+    index <- sample(nrow(all_seasons_bagging), replace = TRUE)
+    football_train_boot <- all_seasons_bagging[index, ]  
   
     # fit tree to bootstrap copy
     bagged_tree <- rpart(
@@ -280,63 +313,64 @@ predictions <- foreach(
       data = football_train_boot
       ) 
     
-    as.numeric(predict(bagged_tree, newdata = all_seasons) [, 2])
+    as.numeric(predict(bagged_tree, newdata = all_seasons_bagging) [, 2])
 }
 
 predictions[1:5, 1:7]
 ```
 
-
-
 ```{r}
-
-cl <- makeCluster(8) # use 8 workers
-registerDoParallel(cl) # register the parallel backend
-
-predictions <- foreach(i = 1:160, 
-                       .packages = "rpart", 
-                       .combine = cbind) %dopar% {
-  index <- sample(nrow(all_seasons), replace = TRUE)
-  football_train_boot <- all_seasons[index, ]
-
-  bagged_tree <- rpart(
-    SUCCESSFUL ~ ., 
-    control = rpart.control(minsplit = 2, cp = 0),
-    data = football_train_boot
-  )
-
-  predict(bagged_tree, newdata = all_seasons)[, 2]
-}
+all_seasons_bagging$SUCCESSFUL <- ifelse(all_seasons_bagging$SUCCESSFUL == "YES", 1, 0) 
 
 
+predictions %>% 
+  as.data.frame() %>% 
+  mutate(observation = 1:n(), 
+         actual = all_seasons_bagging$SUCCESSFUL) %>% 
+  pivot_longer(cols = starts_with("result"), names_to = "tree", values_to = "predicted") %>% 
+  mutate(tree = as.numeric(gsub("result\\.", "", tree))) %>% 
+  group_by(observation) %>% 
+  arrange(tree) %>% 
+  mutate(avg_prediction = cummean(predicted)) %>% 
+  ungroup() %>% 
+  group_by(tree) %>% 
+  summarize(RMSE = Metrics::rmse(actual, avg_prediction)) %>% 
+  ggplot(aes(x = tree, y = RMSE)) + 
+  geom_line() + xlab("Number of trees") + 
+  ylab("RMSE") + 
+  theme_minimal()
 ```
 
 
-```{r}
-all_seasons$SUCCESSFUL <- as.numeric(all_seasons$SUCCESSFUL)
 
-
-
-predictions %>%
-  as.data.frame() %>%
-  mutate(
-    observation = 1:n(),
-    actual = all_seasons$SUCCESSFUL) %>%
-  tidyr::gather(tree, predicted, -c(observation, actual)) %>%
-  group_by(observation) %>%
-  mutate(tree = stringr::str_extract(tree, '\\d+') %>% as.numeric()) %>%
-  ungroup() %>%
-  arrange(observation, tree) %>%
-  group_by(observation) %>%
-  mutate(avg_prediction = cummean(predicted)) %>%
-  group_by(tree) %>%
-  summarize(RMSE = RMSE(avg_prediction, actual)) %>%
-  ggplot(aes(tree, RMSE)) +
-  geom_line() +
-  xlab('Number of trees')
-```
 
 Root Mean Squared Error, how well a model's predictions matching the actual data (how far off the predictons are on average)
+
+
+
+```{r}
+# Convert predictions to a matrix for easy row-wise averaging
+pred_matrix <- as.matrix(predictions)  # each column = tree
+actual <- all_seasons_bagging$SUCCESSFUL
+
+# Compute RMSE for 1,2,...,n trees
+rmse_df <- data.frame(
+  tree = 1:ncol(pred_matrix),
+  RMSE = sapply(1:ncol(pred_matrix), function(n_trees) {
+    avg_pred <- rowMeans(pred_matrix[, 1:n_trees, drop = FALSE])
+    Metrics::rmse(actual, avg_pred)
+  })
+)
+
+# Plot
+ggplot(rmse_df, aes(x = tree, y = RMSE)) +
+  geom_line(color = "steelblue", size = 1) +
+  theme_minimal() +
+  xlab("Number of trees") +
+  ylab("RMSE") +
+  ggtitle("Bagging: RMSE vs Number of Trees")
+```
+
 
 
 
@@ -347,28 +381,27 @@ stopCluster(cl)
 
 *moving on to random forest*
 
-*random forest didn't like my column name so I changed it to get rid of the /*
 
 
-```{r}
-all_seasons_rename <- all_seasons %>%
-  rename(
-    RP = `R/P`  # replace slash with valid name
-  )
 
-```
+
 
 
 *Out of Bag RMSE Calculation using Random Forest*
 
 ```{r}
+all_seasons_bagging$SUCCESSFUL <- as.factor(as.numeric(all_seasons_bagging$SUCCESSFUL))
+```
+
+
+```{r}
 # number of features
-n_features <- length(setdiff(names(all_seasons_rename), "SUCCESSFUL"))
+n_features <- length(setdiff(names(all_seasons), "SUCCESSFUL"))
 
 # train a default random forest model
 football_rf1 <- ranger(
   SUCCESSFUL ~ ., 
-  data = all_seasons_rename,
+  data = all_seasons,
   mtry = floor(n_features / 3),
   respect.unordered.factors = "order",
   seed = 23
@@ -387,7 +420,7 @@ oob_rmse <- numeric(length(tree_seq))
 for (i in seq_along(tree_seq)) {
   rf <- ranger(
     SUCCESSFUL ~ ., 
-    data = all_seasons_rename,
+    data = all_seasons ,
     mtry = floor(n_features / 3),
     respect.unordered.factors = "order",
     seed = 123,
@@ -412,7 +445,7 @@ ggplot(rmse_df, aes(x = num_trees, y = OOB_RMSE)) +
 
 ```
 
-
+*Out of Bag RMSE Calculation using Random Forest*
 
 
 

@@ -7,7 +7,7 @@ editor: visual
 
 ## Introduction
 
-In this decade, we have seen major advancements in the use of analytics in sports. Whether it is used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiencies, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stat keeping is kept on a basic level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
+In this decade, we have seen major advancements in the use of analytics in sports. Whether it is used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiency, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stat keeping is kept on a basic level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
 
 The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics and Bayesian analysis to improve our offensive efficiency. By studying the play by play data from both past seasons and our current one, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations. and potentially develop a program that simulates our drives. Later in the paper, we will define what we call a successful play and go into details about our methods.
 
@@ -36,5 +36,36 @@ With numbered personnel's, the two numbers are used to tell the offense how many
 For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field.
 
 With named personnel's, this usually refers to a specific game plan package that is unique to certain players. Maybe talk to puck about what exactly is in ALPHA, BEEF, JET, PIG, PORK, and VICTORY. 
+
+
+-------------------------------------------------------------------------------
+
+Outline For How I Want to Set My Paper Up:
+
+*Introduction*
+- Introduce project
+- have a section dedicated to explaining just the football terminology used - INtroduce the idea that we are going to use 4 different methods to see which is best for trying to predict success in offense
+
+*Data Gathering*
+- Explained how I gathered my data
+- Explain hudl
+- how i transfered it from google sheets into a csv file
+
+*Exploratory Research*
+- introduce our first steps in exploring the data
+- use the exploratory plots that Ive created to continue introducing our data 
+
+*Method 1: Logistic Regression Models*
+
+*Method 2: Interaction Testing*
+
+*Method 3: Classification Trees*
+
+*Method 4: Bagging / Random Forest*
+
+*Compare and Contrast the 4 methods*
+
+*Conclusion*
+
 
 
