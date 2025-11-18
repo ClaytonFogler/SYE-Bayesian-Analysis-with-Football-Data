@@ -1,0 +1,260 @@
+---
+title: "Section_Exploratory"
+author: "Clayton Fogler"
+format: html
+editor: visual
+---
+
+
+*To start off with exploratory research, we looked at different success rates, bassed off our SUCCESSFUL variable, across our different variables*
+
+```{r}
+library(tidyverse)
+```
+
+
+
+*tendencies of success,based on down and situation.*
+
+```{r}
+success_by_situation <- all_seasons |>
+  group_by(DN, SITUATION) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  arrange(DN, desc(`Success Rate`))
+
+success_by_situation
+```
+
+*Tendencies of success, based on run pass.*
+
+```{r}
+success_by_run_pass <- all_seasons |>
+  group_by(RP) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  arrange(`Success Rate`)
+
+success_by_run_pass
+```
+
+*Tendencies of success, based on formation.*
+
+```{r}
+success_by_formation <- all_seasons |>
+  group_by(`FORMATION`) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  arrange(desc(plays))
+  
+success_by_formation  
+  
+```
+
+*Tendencies of success, based on combining formation and situation.*
+
+```{r}
+success_by_situation_formation <- all_seasons |>
+  group_by(`FORMATION`, SITUATION) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %"),
+    .groups = "drop"
+  ) |>
+  arrange(FORMATION)
+
+success_by_situation_formation
+```
+
+*Tendencies of success, based on personnel.*
+
+```{r}
+success_by_personnel <- all_seasons |>
+  group_by(PERSONNEL) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  arrange(desc(plays))
+  
+success_by_personnel  
+  
+```
+
+*Tendencies of success, based on combining personnel and situation.*
+
+```{r}
+success_by_situation_personnel <- all_seasons |>
+  group_by(PERSONNEL, SITUATION) |>
+  summarise(
+    plays = n(),
+    `Success Rate` = paste0(round(mean(SUCCESSFUL, na.rm = TRUE) * 100, 1), " %"),
+    .groups = "drop"
+  ) |>
+  arrange(PERSONNEL)
+
+success_by_situation_personnel
+```
+
+
+
+
+
+
+
+```{r}
+#ADD IN A COUNT VARIABLE geom text, also do more heat maps with proportions of failures and successes instead of just success rate
+
+success_map <- all_seasons |>
+  mutate(DN = as.factor(DN),
+         SITUATION = as.factor(SITUATION)) |>
+  group_by(DN, SITUATION, .drop = FALSE) |>
+  summarise(
+    SUCCESS = mean(SUCCESSFUL),
+    n = n()) |>
+  ungroup() |>
+  mutate(
+    # recode situation for nicer labels
+    SITUATION = fct_recode(SITUATION,
+                           "Short (1-3)" = "1",
+                           "Medium (4-6)" = "2",
+                           "Long (7-10)" = "3",
+                           "Very Long (11+)" = "4"),
+    # order downs from 1st to 4th
+    DN = fct_relevel(DN, c("0","1","2","3","4"))
+  )
+success_map
+# heatmap
+ggplot(success_map, aes(x = DN, y = SITUATION, fill = SUCCESS)) +
+  geom_tile(colour = "grey") +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(name = "Success Rate", labels = scales::percent) +
+  theme_minimal() +
+  scale_x_discrete(position = "top")
+```
+
+```{r}
+failure_map_rp <- all_seasons |>
+  mutate(
+    DN = as.factor(DN),
+    RP = as.factor(RP)   # make R/P into a factor
+  ) |>
+  group_by(DN, RP, .drop = FALSE) |>
+  summarise(
+    FAILURE = 1 - mean(SUCCESSFUL, na.rm = TRUE),  # proportion of failures,  # proportion successful
+    n = n()                                    # count of plays
+  ) |>
+  ungroup() |>
+  mutate(
+    # order downs from 1st to 4th
+    DN = fct_relevel(DN, c("0","1","2","3","4"))
+  )
+
+failure_map_rp
+
+ggplot(failure_map_rp, aes(x = DN, y = RP, fill = FAILURE)) +
+  geom_tile(colour = "grey") +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(
+    name = "Failure Rate", 
+    labels = scales::percent
+  ) +
+  theme_minimal() +
+  scale_x_discrete(position = "top") +
+  labs(x = "Down", y = "Run / Pass")
+```
+
+```{r}
+success_map_sit_rp <- all_seasons |>
+  mutate(
+    SITUATION = as.factor(SITUATION),
+    RP = as.factor(RP)
+  ) |>
+  group_by(SITUATION, RP, .drop = FALSE) |>
+  summarise(
+    SUCCESS = mean(SUCCESSFUL, na.rm = TRUE),  # proportion of successes
+    n = n()                                    # count of plays
+  ) |>
+  ungroup() |>
+  mutate(
+    # recode situations for nicer labels
+    SITUATION = fct_recode(SITUATION,
+                           "Short (1-3)" = "1",
+                           "Medium (4-6)" = "2",
+                           "Long (7-10)" = "3",
+                           "Very Long (11+)" = "4")
+  )
+
+success_map_sit_rp
+
+ggplot(success_map_sit_rp, aes(x = SITUATION, y = RP, fill = SUCCESS)) +
+  geom_tile(colour = "grey") +
+  geom_text(aes(label = n), color = "white", fontface = "bold") +
+  scale_fill_viridis_c(
+    name = "Success Rate",
+    labels = scales::percent
+  ) +
+  theme_minimal() +
+  scale_x_discrete(position = "top") +
+  labs(x = "Situation", y = "Run / Pass")
+```
+
+Exploratory bar plots
+
+```{r}
+# situation, success rate
+ggplot(all_seasons |> 
+         group_by(SITUATION) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = SITUATION, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Situation", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# down, success rate
+ggplot(all_seasons |> 
+         group_by(DN) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = DN, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Down", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# run/pass, success rate
+ggplot(all_seasons |> 
+         group_by(RP) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = RP, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Run/Pass", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+
+# Personnel, success rate
+ggplot(all_seasons |> 
+         group_by(`PERSONNEL`) |> 
+         summarise(success_rate = mean(SUCCESSFUL, na.rm = TRUE)),
+       aes(x = PERSONNEL, y = success_rate)) +
+  geom_col(fill = "blue") +
+  theme_minimal() +
+  labs(x = "Personnel", y = "Success Rate") +
+  scale_y_continuous(labels = scales::percent)
+```
+
+
+
+
+
+
+
+
+
+

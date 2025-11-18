@@ -1,0 +1,76 @@
+---
+title: "Method3_ClassificationTrees"
+author: "Clayton Fogler"
+format: html
+editor: visual
+---
+
+Starting a new section or even new project almost, instead of log we are going to do classification trees:
+
+Just for easy access and simplicity, just going to recode the data down here:
+
+```{r}
+library(rpart.plot)
+library(rpart)
+```
+
+```{r}
+ successful_yesno <- all_seasons |>
+    mutate(
+      SUCCESSFUL = case_when(
+        DN == 0 & GL >= (0.4 * DIST) ~ "YES",                     
+        DN == 1 & GL >= (0.4 * DIST) ~ "YES",
+        DN == 2 & GL >= (0.6 * DIST) ~ "YES",
+        DN == 3 & GL >= (DIST) ~ "YES",
+        DN == 4 & GL >= (DIST) ~ "YES",
+        TRUE ~ "NO"
+      )
+    )
+```
+
+```{r}
+table(`successful_yesno`$SUCCESSFUL)
+```
+
+```{r}
+successful_yesno <- successful_yesno |>
+  mutate(
+    SUCCESSFUL = as.factor(SUCCESSFUL),
+    RP = as.factor(RP),
+    PERSONNEL = as.factor(PERSONNEL),
+    SITUATION = as.factor(SITUATION),
+    DN = as.factor(DN)
+  )
+```
+
+
+```{r}
+treeall <- rpart(SUCCESSFUL ~ RP + SITUATION + DIST + DN + PERSONNEL, data = successful_yesno, method = "class")
+treeall
+rpart.plot(treeall, extra = 104)
+```
+
+```{r}
+count.matrix <- table(successful_yesno$SUCCESSFUL, predict(treeall, type = "class"))
+rownames(count.matrix) <- c("Actual Fails", "Actual Successes")
+colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
+count.matrix
+```
+
+```{r}
+
+# predicted class for Success: 
+pred_class_tree <- predict(treeall, type = "class")
+
+
+# Now we grab our actual values to compare to the predicted values we just found
+
+actual_yesno <- successful_yesno$SUCCESSFUL
+
+# classification rate calculation:
+classification_rate_tree <- mean(pred_class_tree == actual_yesno)
+classification_rate_tree
+
+```
+
+Classification Rate for our Classification Tree is 0.652 or 65.2%, which is better than both our base logistic regression model (63.2%), and our logistic regression model with interaction (63.8%). 

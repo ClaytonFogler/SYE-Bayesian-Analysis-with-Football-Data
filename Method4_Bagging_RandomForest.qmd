@@ -1,0 +1,454 @@
+---
+title: "Tree_Forest_Work"
+author: "Clayton Fogler"
+format: html
+editor: visual
+---
+
+\*Load in the packages the link said I needed
+
+
+```{r}
+# Helper packages
+library(tidyverse)
+library(doParallel)
+library(foreach)
+library(Metrics)
+
+#Modeling packages
+library(rpart.plot)
+library(caret)
+library(rpart)
+library(ipred)
+
+library(ranger)
+library(h2o)
+```
+
+
+removing all rows that have NAs in them
+
+```{r}
+all_seasons_bagging <- all_seasons |>
+  filter(!is.na(RP)) |>
+  filter(!is.na(PERSONNEL)) |>
+  filter(!is.na(SITUATION)) |>
+  filter(!is.na(DN)) |>
+  filter(!is.na(SUCCESSFUL)) |>
+  filter(!is.na(DIST)) 
+```
+
+
+
+```{r}
+all_seasons_bagging <- all_seasons_bagging |>
+    mutate(
+      SUCCESSFUL = case_when(
+        DN == 0 & GL >= (0.4 * DIST) ~ "YES",                     
+        DN == 1 & GL >= (0.4 * DIST) ~ "YES",
+        DN == 2 & GL >= (0.6 * DIST) ~ "YES",
+        DN == 3 & GL >= (DIST) ~ "YES",
+        DN == 4 & GL >= (DIST) ~ "YES",
+        TRUE ~ "NO"
+      )
+    )
+```
+
+```{r}
+table(`all_seasons`$SUCCESSFUL)
+```
+
+```{r}
+`all_seasons_bagging` <-`all_seasons_bagging` |>
+  mutate(
+    SUCCESSFUL = as.factor(SUCCESSFUL),
+    RP = as.factor(RP),
+    PERSONNEL = as.factor(PERSONNEL),
+    SITUATION = as.factor(SITUATION),
+    DN = as.factor(DN),
+  ) |>
+  select(
+    SUCCESSFUL, RP, PERSONNEL, SITUATION, DN, DIST
+  )
+```
+
+
+*Bagging introduction stuff*
+
+
+
+
+Bagging (Bootstrap Aggregating): Basically, makes a bunch of random samples with replacement. Think of each sample as its own tree. Bagging then combines all of these predictions from the trees and averages them out to give a more accurate prediction than just 1 tree normally would. 
+
+
+```{r}
+# football bagged model
+football_bag1 <- bagging(
+  SUCCESSFUL ~ `RP` + SITUATION + DIST + DN + PERSONNEL,
+  data = all_seasons_bagging,
+  nbagg = 200, #create 100 decision trees and 100 bootstrap samples 
+  coob = TRUE,
+  control = rpart.control(minsplit = 2, cp = 0) # means you need at least 2 observations to split a node, cp = 0 stops pruning 
+)
+
+football_bag1
+```
+
+Variable Importance: is a measure of how much a predictor variable contributes to the predictions of the model (high value means it strongly influences the models predictions) ~ from ChatGPT, find a more official definition for write up
+
+
+```{r}
+# Get variable importance
+var_imp <- varImp(football_bag1)
+print(var_imp)
+
+var_imp$Variable <- rownames(var_imp)
+
+# Plot variable importance
+ggplot(var_imp, aes(x = Variable, y = Overall)) +
+  geom_col(fill = "skyblue") +           # use geom_col() for precomputed heights
+  labs(title = "Variable Importance", y = "Importance", x = "Variable") +
+  theme_minimal()
+
+
+```
+
+
+
+```{r}
+# predicted class
+pred_class_bag1 <- predict(football_bag1, type = "class")
+
+# actual outcomes
+actual_bagging <- all_seasons_bagging$SUCCESSFUL
+
+# classification rate
+classification_rate_bag1 <- mean(pred_class_bag1 == actual_bagging)
+classification_rate_bag1
+
+```
+
+classification Rate of 62.8 (the worst of all our methods yet)
+
+
+
+
+This bag uses the caret package, which is still bagging, but automatically uses cross validation and ocerall gives you more ability to tweek what the bootstrap is doing
+```{r}
+football_bag2 <- train( # train uses the caret package
+  SUCCESSFUL ~ `RP` + SITUATION + DIST + DN + PERSONNEL, # same formula as  football_bag1
+  data = all_seasons_bagging, # same data as football_bag1 
+  method = "treebag", # tells the model to use bagging
+  trControl = trainControl(method = "cv", number = 5), # cv = cross validation, number is amount of folds
+  # think of having a list of ingredients for a cookie, you make 5 cookies and then taste test the 6th one, you then tweak the recipe a bunch of times and keep testing the 6th time. At the end you average the recopies if the 6th taste test to get the best cookie 
+  # 200 bagged trees
+  nbagg = 200,  #the number of trees being built
+  control = rpart.control(minsplit = 2, cp = 0) # same as football_bag2
+)
+
+football_bag2
+```
+
+```{r}
+# Get variable importance
+var_imp2 <- varImp(football_bag2)
+print(var_imp2)
+
+var_imp2$Variable <- rownames(var_imp2)
+
+# Plot variable importance
+ggplot(var_imp2, aes(x = Variable, y = Overall)) +
+  geom_col(fill = "skyblue") +           # use geom_col() for precomputed heights
+  labs(title = "Variable Importance", y = "Importance", x = "Variable") +
+  theme_minimal()
+
+
+```
+
+
+```{r}
+# predicted class
+pred_class_bag2 <- predict(football_bag2, type = "raw")
+
+# actual outcomes
+actual_bagging <- all_seasons_bagging$SUCCESSFUL
+
+# classification rate
+classification_rate_bag2 <- mean(pred_class_bag2 == actual_bagging)
+classification_rate_bag2
+
+
+```
+
+Classification Rate Football Bagging 2: 73.3%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+# Create a parallel socket cluster
+cl <- makeCluster(8) # use 8 workers
+registerDoParallel(cl) # register the parallel backend
+
+# Fit trees in parallel and compute predictions on the test set
+predictions <- foreach(
+  i = 1:160, 
+  .packages = "rpart", 
+  .combine = cbind
+  ) %dopar% {
+    # bootstrap copy of training data
+    index <- sample(nrow(all_seasons_bagging), replace = TRUE)
+    football_train_boot <- all_seasons_bagging[index, ]  
+  
+    # fit tree to bootstrap copy
+    bagged_tree <- rpart(
+      SUCCESSFUL ~ ., 
+      control = rpart.control(minsplit = 2, cp = 0),
+      data = football_train_boot
+      ) 
+    
+    as.numeric(predict(bagged_tree, newdata = all_seasons_bagging) [, 2])
+}
+
+predictions[1:5, 1:7]
+```
+
+```{r}
+#all_seasons_bagging$SUCCESSFUL <- ifelse(all_seasons_bagging$SUCCESSFUL #== "YES", 1, 0) 
+
+predictions %>% 
+  as.data.frame() %>% 
+  mutate(observation = 1:n(), 
+         actual = all_seasons_bagging$SUCCESSFUL) %>% 
+  pivot_longer(cols = starts_with("result"), names_to = "tree", values_to = "predicted") %>% 
+  mutate(tree = as.numeric(gsub("result\\.", "", tree))) %>% 
+  group_by(observation) %>% 
+  arrange(tree) %>% 
+  mutate(avg_prediction = cummean(predicted)) %>% 
+  ungroup() %>% 
+  group_by(tree) %>% 
+  summarize(RMSE = Metrics::rmse(actual, avg_prediction)) %>% 
+  ggplot(aes(x = tree, y = RMSE)) + 
+  geom_line() + xlab("Number of trees") + 
+  ylab("RMSE") + 
+  theme_minimal()
+```
+
+
+
+
+Root Mean Squared Error, how well a model's predictions matching the actual data (how far off the predictons are on average)
+
+*classification rate on the y axis*
+
+```{r}
+# Convert predictions to a matrix for easy row-wise averaging
+pred_matrix <- as.matrix(predictions)  # each column = tree
+actual <- all_seasons_bagging$SUCCESSFUL
+
+# Compute RMSE for 1,2,...,n trees
+rmse_df <- data.frame(
+  tree = 1:ncol(pred_matrix),
+  RMSE = sapply(1:ncol(pred_matrix), function(n_trees) {
+    avg_pred <- rowMeans(pred_matrix[, 1:n_trees, drop = FALSE])
+    Metrics::rmse(actual, avg_pred)
+  })
+)
+
+# Plot
+ggplot(rmse_df, aes(x = tree, y = RMSE)) +
+  geom_line(color = "steelblue", size = 1) +
+  theme_minimal() +
+  xlab("Number of trees") +
+  ylab("RMSE") +
+  ggtitle("Bagging: RMSE vs Number of Trees")
+```
+
+
+
+
+```{r}
+# Shutdown parallel cluster
+stopCluster(cl)
+```
+
+*moving on to random forest*
+
+
+
+
+
+
+
+*using Random Forest*
+
+```{r}
+# number of features
+n_features <- length(setdiff(names(all_seasons), "SUCCESSFUL"))
+
+# train a default random forest model
+football_rf1 <- ranger(
+  SUCCESSFUL ~ ., 
+  data = all_seasons_bagging,
+  mtry = floor(n_features / 3),
+  respect.unordered.factors = "order"
+)
+```
+
+
+
+```{r}
+# predicted class
+pred_class_forest <- predict(football_rf1, data = all_seasons_bagging)$predictions
+pred_class_forest
+
+# actual outcomes
+actual_forest <- all_seasons_bagging$SUCCESSFUL
+
+# classification rate
+classification_rate_rf1 <- mean(pred_class_forest == actual_forest)
+classification_rate_rf1
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+# number of features
+n_features <- length(setdiff(names(all_seasons), "SUCCESSFUL"))
+
+# train a default random forest model
+football_rf1 <- ranger(
+  SUCCESSFUL ~ ., 
+  data = all_seasons_bagging,
+  mtry = floor(n_features / 3),
+  respect.unordered.factors = "order",
+  seed = 23
+)
+
+# get OOB RMSE (out of bag rmse)
+(default_rmse <- sqrt(football_rf1$prediction.error))
+
+```
+
+
+
+
+
+
+
+
+
+```{r}
+# set number of trees to check
+tree_seq <- seq(1, 500, by = 1)
+oob_rmse <- numeric(length(tree_seq))
+
+for (i in seq_along(tree_seq)) {
+  rf <- ranger(
+    SUCCESSFUL ~ ., 
+    data = all_seasons ,
+    mtry = floor(n_features / 3),
+    respect.unordered.factors = "order",
+    seed = 123,
+    num.trees = tree_seq[i]
+  )
+  
+  oob_rmse[i] <- sqrt(rf$prediction.error)
+}
+
+# put into a data frame
+rmse_df <- data.frame(
+  num_trees = tree_seq,
+  OOB_RMSE = oob_rmse
+)
+
+# plot
+ggplot(rmse_df, aes(x = num_trees, y = OOB_RMSE)) +
+  geom_line(color = "blue") +
+  xlab("Number of Trees") +
+  ylab("OOB RMSE") +
+  ggtitle("OOB RMSE vs Number of Trees")
+
+```
+
+*Out of Bag RMSE Calculation using Random Forest*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

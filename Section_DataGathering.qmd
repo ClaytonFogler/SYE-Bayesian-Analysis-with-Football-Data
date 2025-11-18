@@ -1,0 +1,169 @@
+---
+title: "Section_DataGathering"
+author: "Clayton Fogler"
+format: html
+editor: visual
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+*Go back and add all of this years games (missing the last 4 games)*
+
+```{r}
+endicott_2024 <- read_csv(here::here("data/endicott_2024.csv"))
+norwich_2024 <- read_csv(here::here("data/norwich_2024.csv"))
+wne_2024 <- read_csv(here::here("data/wne_2024.csv"))
+union_2024 <- read_csv(here::here("data/union_2024.csv"))
+rpi_2024 <- read_csv(here::here("data/rpi_2024.csv"))
+hobart_2024 <- read_csv(here::here("data/hobart_2024.csv"))
+rochester_2024 <- read_csv(here::here("data/rochester_2024.csv"))
+ithaca_2024 <- read_csv(here::here("data/ithaca_2024.csv"))
+buffstate_2024 <- read_csv(here::here("data/buffstate_2024.csv"))
+
+norwich_2025 <- read_csv(here::here("data/norwich_2025.csv"))
+fisher_2025 <- read_csv(here::here("data/fisher_2025.csv"))
+alfred_2025 <- read_csv(here::here("data/alfred_2025.csv"))
+union_2025 <- read_csv(here::here("data/union_2025.csv"))
+hilbert_2025 <- read_csv(here::here("data/hilbert_2025.csv"))
+ithaca_2025 <- read_csv(here::here("data/ithaca_2025.csv"))
+```
+
+*Clean up our data in each set before joining them all together.*
+
+```{r}
+union_2024 <- union_2024 |>
+  select(-YEAR)
+
+endicott_2024 <- endicott_2024[-46, ]
+
+```
+
+*Add an opponent and year column.*
+
+```{r}
+endicott_2024 <- endicott_2024 |>
+  mutate(OPPONENT = "endicott", YEAR = "2024") 
+  
+norwich_2024 <- norwich_2024 |>
+  mutate(OPPONENT = "norwich", YEAR = "2024") 
+
+wne_2024 <- wne_2024 |>
+  mutate(OPPONENT = "wne", YEAR = "2024") 
+
+union_2024 <- union_2024 |>
+  mutate(OPPONENT = "union", YEAR = "2024") 
+
+rpi_2024 <- rpi_2024 |>
+  mutate(OPPONENT = "rpi", YEAR = "2024") 
+
+hobart_2024 <- hobart_2024 |>
+  mutate(OPPONENT = "hobart", YEAR = "2024") 
+
+rochester_2024 <- rochester_2024 |>
+  mutate(OPPONENT = "rochester", YEAR = "2024") 
+
+ithaca_2024 <- ithaca_2024|>
+  mutate(OPPONENT = "ithaca", YEAR = "2024") 
+
+buffstate_2024 <- buffstate_2024 |>
+  mutate(OPPONENT = "buffstate", YEAR = "2024") 
+
+norwich_2025 <- norwich_2025 |>
+  mutate(OPPONENT = "norwich", YEAR = "2025")
+
+fisher_2025 <- fisher_2025 |>
+  mutate(OPPONENT = "fisher", YEAR = "2025")
+
+alfred_2025 <- alfred_2025 |>
+  mutate(OPPONENT = "alfred", YEAR = "2025")
+
+union_2025 <- union_2025 |>
+  mutate(OPPONENT = "union", YEAR = "2025")
+
+hilbert_2025 <- hilbert_2025 |>
+  mutate(OPPONENT = "hilbert", YEAR = "2025")
+
+ithaca_2025 <- ithaca_2025 |>
+  mutate(OPPONENT = "ithaca", YEAR = "2025")
+
+```
+
+*Combine all of the different data sets into one, get rid of formation variable (it is an empty column and we want to rename the `off form` variable later*
+
+```{r}
+all_seasons <- rbind(endicott_2024, norwich_2024, wne_2024, union_2024, rpi_2024, hobart_2024, rochester_2024, ithaca_2024, buffstate_2024, norwich_2025, fisher_2025, alfred_2025, union_2025, hilbert_2025, ithaca_2025)
+
+all_seasons <- all_seasons |>
+  select(-FORMATION)
+```
+
+
+*Create our "Success" variable, a binary variable that will be a 1 for successful and a 0 for not successful. A Successful play will be determined as followed:*
+
+*First down play is successful if the offense gains 40% or more of the yards to go. (Gaining 4 yards on 1st and 10 is successful, 3 yards is not).*
+
+*Second down play is successful if the offense gains 60% or more of the yards to go. (Gaining 6 yards on a 2nd and 10 is successful, 5 yards is not).*
+
+*Third and Fourth down plays are successful if the play gains 100% or more of the yards to go. (Gaining 4 yards on a 3rd and 4 is successful, 3 yards is not).*
+
+#find my source i used to be able to cite
+
+```{r}
+ all_seasons <- all_seasons |>
+    mutate(
+      SUCCESSFUL = case_when(
+        DN == 0 & `GN/LS` >= (0.4 * DIST) ~ 1,                     
+        DN == 1 & `GN/LS` >= (0.4 * DIST) ~ 1,
+        DN == 2 & `GN/LS` >= (0.6 * DIST) ~ 1,
+        DN == 3 & `GN/LS` >= (DIST) ~ 1,
+        DN == 4 & `GN/LS` >= (DIST) ~ 1,
+        TRUE ~ 0
+      )
+    )
+```
+
+*We will also create down and distance bins to group the distances to be more usable.*
+
+```{r}
+all_seasons <- all_seasons |>
+  mutate(
+    SITUATION = case_when(
+      DIST <= 3 ~ "Short (1-3)",
+      DIST <= 6 ~ "Medium (4-6)",
+      DIST <= 10 ~ "Long (7-10)",
+      TRUE ~ "Very Long (11+)"
+    )
+  ) 
+```
+
+
+*Rename some columns quick to make things easier in the long run:*
+
+```{r}
+all_seasons <- all_seasons |>
+  rename(
+    RP = `R/P`,
+    GL = `GN/LS`,
+    FORMATION = `OFF FORM`,
+    RESULT = `PLAY RESULT`
+  )
+```
+
+
+*Last thing to do before exploring: get rid of completely useless columns to make things easier and less clustered:*
+
+```{r}
+
+all_seasons <- all_seasons |>
+  select(
+    DN, DIST, HASH, GL, RP, FORMATION, BACKFIELD, RESULT, PERSONNEL, OPPONENT, YEAR, SUCCESSFUL, SITUATION
+  )
+```
+
+
+*From here on out, we will only make copies and different versions of our all_seasons data, a.k.a we will use all_seasons as our `base` data set.*
+

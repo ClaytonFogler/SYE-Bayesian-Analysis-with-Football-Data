@@ -1,0 +1,117 @@
+---
+title: "2024_Season"
+author: "Fogler"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+```
+
+
+
+*Our first method of data analysis: Logistic Regression:*
+
+*We will build a ton of models and use AIC (expain the AIC here a little bit and why we are using AIC) to pick our best model. At the end, we will find a classification rate to make it comparable to our other methods to come*
+
+
+*First, we will make a version of our `all_seasons` data that makes sure to factor the right variables:*
+
+```{r}
+all_seasons_logit <- all_seasons |>
+  mutate(
+    RP = factor(RP),
+    SITUATION = factor(SITUATION),
+    DN = factor(DN),
+    PERSONNEL = factor(PERSONNEL),
+    SUCCESSFUL = factor(SUCCESSFUL)
+  ) |>
+  
+  drop_na(
+    RP, SITUATION, DIST, DN, PERSONNEL
+    ) |>
+  
+  select(
+    SUCCESSFUL, RP, SITUATION, DIST, DN, PERSONNEL
+  )
+```
+
+*Start with 5 simple models, predicting successful based individually on our 4 selected variables: RP, SITUATION, DN, PERSONNEL, DIST*
+
+```{r}
+logRP <- glm(SUCCESSFUL ~ RP, data = all_seasons_logit, family = binomial)
+summary(logRP)
+
+logSITUATION <- glm(SUCCESSFUL ~ SITUATION, data = all_seasons_logit, family = binomial)
+summary(logSITUATION)
+
+logDIST <- glm(SUCCESSFUL ~ DIST, data = all_seasons_logit, family = binomial)
+summary(logDIST)
+
+logDN <- glm(SUCCESSFUL ~ DN, data = all_seasons_logit, family = binomial)
+summary(logDN)
+
+logPERSONNEL <- glm(SUCCESSFUL ~ PERSONNEL, data = all_seasons_logit, family = binomial)
+summary(logPERSONNEL)
+```
+
+*With out basic models, we find that the model with the best AIC was a logistic regression model predicting success based on SITUATION (with an AIC of 1113.7). Now, lets build more complex logistic regression models with multiple predictors in each model. 
+
+
+```{r}
+logALL <- glm(SUCCESSFUL ~ RP + SITUATION + DIST + DN + PERSONNEL, data = all_seasons_logit, family = binomial)
+summary(logALL)
+```
+
+*Now, we can use the stepwise function to sort through all of the combinations of our 5 variables to see which model would be best:*
+
+```{r}
+logBEST <- step(logALL, direction = "both", trace = TRUE)
+summary(logBEST)
+```
+
+*It seems that the best possible model using our 5 variables to predict success, based on AIC, is a model with RP, DIST, and DN (AIC of 1095.1).*
+
+Before we start using interaction terms, lets see what the classification rate is for our model we just found:
+
+```{r}
+
+# predicted probabilities for Success: 
+pred_probs_logit <- predict(logBEST, type = "response")
+
+# Converting the predicted probabilities to either successful or not successful 
+# (turning a predicted probability of 0.51 to a 1 for successful, or a 0.49 to 0 for not successful)
+pred_class_logit <- ifelse(pred_probs_logit > 0.5, 1, 0)
+
+# Now we grab our actual values to compare to the predicted values we just found
+actual <- all_seasons_logit$SUCCESSFUL
+# classification rate calculation:
+classification_rate_logit <- mean(pred_class_logit == actual)
+classification_rate_logit
+
+```
+
+
+Our logistic Regression Model using DN (Down), DIST (Distance to go), and RP (whether the play was a run or pass) resulted in a classification rate of 0.632, meaning our model correctly predicted 63.2% of the plays.
+
+
+For fun and visualization, we can graph our predicted values based off our logistic regression model:
+
+```{r}
+regression_plot <- all_seasons_logit |>
+  mutate(
+    pred_probs_logit = pred_probs_logit
+  )
+```
+
+```{r}
+graph_logit <- ggplot(regression_plot, aes(x = DIST, y = pred_probs_logit, color = RP)) +
+  geom_point() + # each predicted observation
+  geom_smooth() + # smooth line
+  labs(y = "Predicted Probability of Success", x = "Down", color = "Run/Pass") +
+  theme_minimal()
+
+graph_logit
+```
