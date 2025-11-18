@@ -1,5 +1,17 @@
 ## Task List
 
+### For December 4
+
+1. Remove situation from models.
+
+2. Tweak logistic regression plots to have one probability per distance.
+
+3. Change the classification to do 5-fold cross-validation.
+
+4. Add more games.
+
+5. Work on combining things into a write-up.
+
 ### For November 13
 
 1. Fix the bagging and random forest to use a character or factor response.
