@@ -1,5 +1,16 @@
 ## Task List
 
+### For December 11
+
+1. Have a rough draft of the write-up written (push by 12:30 pm on Thursday).
+
+2. On Thursday, make some edits based on what we talk about might be missing (get those to me by Friday at noon).
+
+3. MH: reads in detail on Friday, gives comments by end-of-day Friday.
+
+4. CF: Incorporate comments into final version and send by end-of-day Monday.
+
+
 ### For December 4
 
 1. Remove situation from models.
