@@ -5,6 +5,9 @@ format: html
 editor: visual
 ---
 
+*remove situation bins from tree, bagging, forest sections and see what happens
+
+
 Starting a new section or even new project almost, instead of log we are going to do classification trees:
 
 Just for easy access and simplicity, just going to recode the data down here:

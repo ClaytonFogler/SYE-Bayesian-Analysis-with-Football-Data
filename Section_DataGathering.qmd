@@ -30,6 +30,10 @@ alfred_2025 <- read_csv(here::here("data/alfred_2025.csv"))
 union_2025 <- read_csv(here::here("data/union_2025.csv"))
 hilbert_2025 <- read_csv(here::here("data/hilbert_2025.csv"))
 ithaca_2025 <- read_csv(here::here("data/ithaca_2025.csv"))
+hobart_2025 <- read_csv(here::here("data/hobart_2025.csv"))
+rpi_2025 <- read_csv(here::here("data/rpi_2025.csv"))
+buffstate_2025 <- read_csv(here::here("data/buffstate_2025.csv"))
+rochester_2025 <- read_csv(here::here("data/rochester_2025.csv"))
 ```
 
 *Clean up our data in each set before joining them all together.*
@@ -90,12 +94,24 @@ hilbert_2025 <- hilbert_2025 |>
 ithaca_2025 <- ithaca_2025 |>
   mutate(OPPONENT = "ithaca", YEAR = "2025")
 
+hobart_2025 <- hobart_2025 |>
+  mutate(OPPONENT = "hobart", YEAR = "2025")
+
+rpi_2025 <- rpi_2025 |>
+  mutate(OPPONENT = "rpi", YEAR = "2025")
+
+buffstate_2025 <- buffstate_2025 |>
+  mutate(OPPONENT = "buffstate", YEAR = "2025")
+
+rochester_2025 <- rochester_2025 |>
+  mutate(OPPONENT = "rochester", YEAR = "2025")
+
 ```
 
 *Combine all of the different data sets into one, get rid of formation variable (it is an empty column and we want to rename the `off form` variable later*
 
 ```{r}
-all_seasons <- rbind(endicott_2024, norwich_2024, wne_2024, union_2024, rpi_2024, hobart_2024, rochester_2024, ithaca_2024, buffstate_2024, norwich_2025, fisher_2025, alfred_2025, union_2025, hilbert_2025, ithaca_2025)
+all_seasons <- rbind(endicott_2024, norwich_2024, wne_2024, union_2024, rpi_2024, hobart_2024, rochester_2024, ithaca_2024, buffstate_2024, norwich_2025, fisher_2025, alfred_2025, union_2025, hilbert_2025, ithaca_2025, hobart_2025, rpi_2025, buffstate_2025, rochester_2025)
 
 all_seasons <- all_seasons |>
   select(-FORMATION)

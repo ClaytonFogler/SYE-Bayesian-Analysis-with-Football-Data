@@ -133,7 +133,7 @@ classification Rate of 62.8 (the worst of all our methods yet)
 
 
 
-This bag uses the caret package, which is still bagging, but automatically uses cross validation and ocerall gives you more ability to tweek what the bootstrap is doing
+This bag uses the caret package, which is still bagging, but automatically uses cross validation and overall gives you more ability to tweek what the bootstrap is doing
 ```{r}
 football_bag2 <- train( # train uses the caret package
   SUCCESSFUL ~ `RP` + SITUATION + DIST + DN + PERSONNEL, # same formula as  football_bag1
@@ -341,7 +341,7 @@ classification_rate_rf1
 
 
 ```
-
+0.7326389
 
 
 

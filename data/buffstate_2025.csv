@@ -1,0 +1,67 @@
+PLAY #,GOOD EXAMPLE / TEACH TAPE,DN,DIST,YARD LN,HASH,GN/LS,R/P,HASH (SLU),O PERS,FORMATION FAMILY,FORMATION,OFF FORM,BACKFIELD,FIB,FORM ADJ,MOTION,FORMATION TAG,OFF PLAY,RUN TYPE,PASS CONCEPT,PASS TYPE,PROTECTION,PLAY RESULT,CARRIER/TARGET,PLAY DIR,TEAM,DC COMMENT,DL COACH COMMENT,LB COACH COMMENT,CB COACH COMMENT,SAF COACH COMMENT,DB COACH COMMENT,PERSONNEL
+2,,0,10,-27,R,0,P,,,,,TEX,GUN,,,,,,,,,TEMP,INC,,,SLU,,,,,,,11
+3,,2,10,-27,R,0,R,,,,,SPILL,GUN,,,,,,,,,,NO GAIN,,,SLU,,,,,,,12
+4,,3,10,-27,R,58,P,,,,,TEX,GUN,,,,DOWN,,,,,CUP,"PASS , COMP",,,SLU,,,,,,,11
+5,,1,10,15,L,8,R,,,,,SPILL,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,12
+6,,2,2,7,L,7,R,,,,,TAP,GUN,,,Y SOAR,OFF,,,,,,"GAIN , TD",,,,,,,,,,11
+24,,0,10,-8,R,0,P,,,,,SPRINT,GUN,,,,DOWN,,,,,SOLID 7 LT,INC,,,,,,,,,,11
+25,,2,10,-8,R,3,R,,,,,SPILL,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,12
+26,,3,7,-11,R,8,R,,,,,TEX,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,11
+27,,1,10,-19,R,0,P,,,,,SPILL,GUN,,,,DOWN,,,,,DASH LT,THROW AWAY,,,SLU,,,,,,,12
+28,,2,10,-19,R,16,P,,,,,TOP,GUN,,,,UP,,,,,COLD,COMP,,,SLU,,,,,,,11
+29,,1,10,-35,L,5,P,,,,,TEX,GUN,,,,DOWN,,,,,SOLID,COMP,,,SLU,,,,,,,11
+30,,2,5,-40,R,-1,R,,,,,SPRINT,GUN,,,,,,,,,,LOSS,,,SLU,,,,,,,11
+31,,3,6,-39,R,10,P,,,,,SPRINT,GUN,,,X SOAR,,,,,,CHARGER LT,COMP,,,SLU,,,,,,,11
+32,,1,10,-49,R,6,R,,,TRIGGER,,SPILL,GUN,,,H FLIGHT,,,,,,,GAIN,,,SLU,,,,,,,12
+33,,2,4,45,R,9,R,,,,,TAP,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,11
+34,,1,10,36,R,1,R,,,,,TAP,GUN,,,,,,,,,,LOSS,,,SLU,,,,,,,11
+35,,2,9,35,L,0,P,,,,,SPRINT,GUN,,,,UP,,,,,CUP,INC,,,SLU,,,,,,,11
+36,,3,9,35,L,7,P,,,,,SPRINT,GUN,,,,DOWN,,,,,CUP,SCRAMBLE,,,SLU,,,,,,,11
+37,,4,2,28,R,8,R,,,,,TRIGGER,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+38,,1,10,20,R,-5,,,,,,TOP,GUN,,,Y SOAR,OFF,,,,,,FUMBLE,,,SLU,,,,,,,11
+39,,2,15,25,R,4,P,,,,,SPILL,GUN,,,,,,,,,CHARGER LT,"SCRAMBLE , GAIN",,,SLU,,,,,,,12
+40,,3,11,21,R,13,P,,,,,SPRINT,GUN,,,,DOWN,,,,,SOLID,COMP,,,SLU,,,,,,,11
+41,,1,8,8,R,3,R,,,,,SPILL,GUN,,,H SOAR,,,,,,,GAIN,,,SLU,,,,,,,12
+42,,2,5,5,R,-2,P,,,,,TOP,GUN,,,,,,,,,SOLID,THROW AWAY,,,SLU,,,,,,,11
+43,,3,12,12,R,9,R,,,,,TAP,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,11
+44,,4,3,3,L,0,P,,,,,TIN,GUN,,,,NEARISH,,,,,,INC,,,,,,,,,,12
+52,,0,10,-24,R,29,P,,,,,TOP,GUN,,,,UP,,,,,RUN LT,COMP,,,,,,,,,,11
+53,,1,10,47,L,16,P,,,,,TOP,GUN,,,,,,,,,,COMP,,,SLU,,,,,,,11
+54,,1,10,31,L,0,P,,,,,TEX,GUN,,,,DOWN,,,,,CUP,"PASS , INC",,,SLU,,,,,,,11
+55,,2,10,31,L,26,P,,,TRIGGER,,SPILL,GUN,,,H TRADE,,,,,,CHARGER LT H CHUNK,COMP,,,SLU,,,,,,,12
+56,,1,5,5,L,5,R,,,,,SPILL,GUN,,,H SOAR,,,,,,,"GAIN , TD",,,,,,,,,,12
+68,,0,10,-46,L,-3,P,,,,,TEX,GUN,,,,DOWN,,,,,SOLID,"SACK , FUMBLE",,,,,,,,,,11
+69,,2,13,-43,R,0,,,,,,,,,,,,,,,,,NO PLAY,,,,,,,,,,
+78,,0,10,36,L,3,P,,,,,SPILL,GUN,,,T FLARE,UP,,,,,,"PASS , COMP",,,,,,,,,,12
+79,,2,7,33,R,-2,R,,,,,SPILL,GUN,,,,,,,,,,LOSS,,,SLU,,,,,,,12
+80,,3,9,35,R,8,R,,,,,SPRINT,GUN,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+81,,4,1,27,R,7,R,,,,,TRIGGER,UC,,,,,,,,,,GAIN,,,SLU,,,,,,,12
+82,,1,10,20,R,6,R,,,,,TUB,GUN,,,,Z,,,,,,GAIN,,,SLU,,,,,,,12
+83,,2,4,14,L,-6,R,,,,,SPILL,GUN,,,,,,,,,,LOSS,,,SLU,,,,,,,12
+84,,3,10,20,L,-5,P,,,,,TEX,GUN,,,,DOWN,,,,,CUP,LOSS,,,,,,,,,,11
+92,,0,3,3,L,3,R,,,,,TRIGGER,UC,,,,,,,,,,"GAIN , TD",,,,,,,,,,12
+97,,0,10,-35,R,7,P,,,,,TOP,GUN,,,,DOWN,,,,,CUP,COMP,,,,,,,,,,11
+98,,2,3,-42,L,3,R,,,,,SPRINT,GUN,,,,,,,,,,GAIN,,,SLU,,,,,,,11
+99,,1,10,-45,L,0,P,,,,,TOP,GUN,,,,DOWN,,,,,,THROW AWAY,,,SLU,,,,,,,11
+100,,2,10,-45,L,7,R,,,,,SPILL,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,12
+101,,3,3,48,L,6,P,,,TRIGGER,,SPILL,GUN,,,H FLIGHT,DOWN,,,,,DASH RT,COMP,,,SLU,,,,,,,12
+102,,1,10,42,R,10,R,,,,,SPRINT,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,11
+103,,1,10,32,R,3,R,,,,,SPILL,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,12
+104,,2,7,29,R,13,P,,,,,SPRINT,GUN,,,,DOWN,,,,,SOLID 7 LT,COMP,,,SLU,,,,,,,11
+105,,1,10,16,R,-2,R,,,,,TOP,GUN,,,Y SOAR,OFF,,,,,,LOSS,,,SLU,,,,,,,11
+106,,2,12,18,R,0,P,,,,,TOP,GUN,,,,UP,,,,,COLD,INC,,,SLU,,,,,,,11
+107,,3,18,18,R,3,P,,,,,SPRINT,GUN,,,X SOAR,,,,,,CHARGER LT,COMP,,,,,,,,,,11
+116,,0,10,46,L,8,P,,,,,TEX,GUN,,,,UP,,,,,SOLID,COMP,,,,,,,,,,11
+117,,2,4,38,R,2,R,,,,,TEX,GUN,,,,UP,,,,,,NO GAIN,,,SLU,,,,,,,11
+118,,3,2,36,R,2,R,,,,,SPILL,GUN,,,T FLARE,UP,,,,,,GAIN,,,SLU,,,,,,,12
+119,,1,10,34,R,0,R,,,,,SPRINT,GUN,,,,,,,,,,NO GAIN,,,SLU,,,,,,,11
+120,,2,10,34,R,0,P,,,,,SPRINT,GUN,,,,DOWN,,,,,CUP,"COMP , FUMBLE",,,,,,,,,,11
+129,,0,10,10,L,0,R,,,,,TOP,GUN,,,,UP,,,,,,"GAIN , FUMBLE",,,,,,,,,,11
+134,,0,10,-25,R,5,P,,,,,TEX,GUN,,,,DOWN,,,,,SOLID,COMP,,,,,,,,,,11
+135,,2,5,-30,L,6,R,,,,,SPRINT,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,11
+136,,1,10,-36,L,-1,R,,,,,SPILL,GUN,,,,UP,,,,,,LOSS,,,SLU,,,,,,,12
+137,,2,11,-35,L,3,P,,,,,SPILL,GUN,,,H FLIGHT,DOWN,,,,,DASH RT,THROW AWAY,,,SLU,,,,,,,12
+138,,3,8,-38,R,12,P,,,,,TOP,GUN,,,,DOWN,,,,,CUP,COMP,,,SLU,,,,,,,11
+139,,1,10,50,R,4,R,,,,,TRIGGER,GUN,,,,UP,,,,,,GAIN,,,SLU,,,,,,,12
+140,,2,6,46,R,9,R,,,,,TRIGGER,GUN,,,,DOWN,,,,,,GAIN,,,SLU,,,,,,,12
+141,,0,10,37,R,,,,,,,VICTORY,,,,,,,,,,,,,,,,,,,,,

@@ -5,6 +5,8 @@ format: html
 editor: visual
 ---
 
+*Add cross validation for both logistic regression and the interaction model
+
 In our first method, we used logistic regression to find our best-fit model for predicting success based on RP, SITUATION, DN, DIST, and PERSONNEL. We found that a logistic Regression Model using DN (Down), DIST (Distance to go), and RP (whether the play was a run or pass) was our best model based on AIC (resulted in an AIC of 1095.1). This model (called logBEST), resulted in a classification rate of 0.632, meaning our model correctly predicted 63.2% of the plays.
 
 Our next method is going to be introducing interaction terms to our models to see if they can yield a higher classification rate. 
@@ -12,7 +14,7 @@ Our next method is going to be introducing interaction terms to our models to se
 Just like we did with the original logistic regression models, we will build a model with all our terms that include pairwise interactions for all 5 variables:
 
 ```{r}
-logALL_inter <- glm(SUCCESSFUL ~ (RP + SITUATION + DIST + DN + PERSONNEL)^2, data = all_seasons_logit, family = binomial)
+logALL_inter <- glm(SUCCESSFUL ~ (RP  + DIST + DN + PERSONNEL)^2, data = all_seasons_logit, family = binomial)
 summary(logALL_inter)
 ```
 
@@ -24,12 +26,88 @@ logBEST_inter <- step(logALL_inter, direction = "both", trace = FALSE)
 summary(logBEST_inter)
 ```
 
-*It seems that the best possible model using our 5 variables to predict success, based on AIC and using interaction terms, is a model with RP, DIST,DN, RP:DIST interaction, and DIST:DN interaction (AIC = 1090.6)*
 
 
-*It seems that the best possible model using our 5 variables to predict success, based on AIC, is a model with RP, DIST, and DN (AIC of 1095.1).*
+*It seems that the best possible model using our 5 variables to predict success, based on AIC and using interaction terms, is a model with RP, DIST,DN, RP:DIST interaction, and DIST:DN interaction (AIC = 1088.3)*
 
-The AIC of our model including interaction (1090.6) was better than the model without interaction (1095.1), but lets see if its classification rate was also better. 
+
+
+
+The AIC of our model including interaction (1088.3) was better than the model without interaction (1092.9), but lets see if its classification rate was also better. 
+
+
+```{r}
+all_seasons_logit$SUCCESSFUL <- factor(all_seasons_logit$SUCCESSFUL,
+                                       levels = c(0, 1),
+                                       labels = c("No", "Yes"))
+
+```
+
+
+glm(formula = SUCCESSFUL ~ RP + DIST + DN + RP:DIST + DIST:DN, 
+
+```{r}
+LOGINTERACTION <- train(
+  SUCCESSFUL ~ RP + DIST + DN + RP*DIST + DIST*DN,  # your formula
+  data = all_seasons_logit,                 # dataset
+  method = "glm",                           # logistic regression
+  family = binomial,                        # logistic model
+  trControl = trainControl(
+    method = "cv",                          # k-fold cross-validation
+    number = 5,                             # 5 folds
+    savePredictions = "final",              # save predictions for held-out folds
+    classProbs = TRUE                       # get predicted probabilities
+  )
+)
+
+```
+
+```{r}
+# Extract cross-validated predictions
+cv_preds2 <- LOGINTERACTION$pred
+
+# Convert probability of "Yes" to predicted class
+cv_preds2$pred_class <- ifelse(cv_preds$Yes > 0.5, "Yes", "No")
+
+# Actual outcomes
+actual2 <- cv_preds2$obs
+
+# Compute classification rate
+classification_rate2 <- mean(cv_preds2$pred_class == actual2)
+classification_rate2
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 
@@ -63,6 +141,8 @@ regression_plot <- all_seasons_logit |>
 ```
 
 ```{r}
+# add facet so its only 1 point per distance
+
 graph_interaction <- ggplot(regression_plot, aes(x = DIST, y = pred_probs_inter, color = RP)) +
   geom_point() + # each predicted observation
   geom_smooth() + # smooth line
