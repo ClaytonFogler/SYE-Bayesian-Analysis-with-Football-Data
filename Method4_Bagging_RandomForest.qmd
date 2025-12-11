@@ -7,7 +7,6 @@ editor: visual
 
 \*Load in the packages the link said I needed
 
-
 ```{r}
 # Helper packages
 library(tidyverse)
@@ -25,7 +24,6 @@ library(ranger)
 library(h2o)
 ```
 
-
 removing all rows that have NAs in them
 
 ```{r}
@@ -37,8 +35,6 @@ all_seasons_bagging <- all_seasons |>
   filter(!is.na(SUCCESSFUL)) |>
   filter(!is.na(DIST)) 
 ```
-
-
 
 ```{r}
 all_seasons_bagging <- all_seasons_bagging |>
@@ -64,22 +60,16 @@ table(`all_seasons`$SUCCESSFUL)
     SUCCESSFUL = as.factor(SUCCESSFUL),
     RP = as.factor(RP),
     PERSONNEL = as.factor(PERSONNEL),
-    SITUATION = as.factor(SITUATION),
     DN = as.factor(DN),
   ) |>
   select(
-    SUCCESSFUL, RP, PERSONNEL, SITUATION, DN, DIST
+    SUCCESSFUL, RP, PERSONNEL, DN, DIST
   )
 ```
 
-
 *Bagging introduction stuff*
 
-
-
-
-Bagging (Bootstrap Aggregating): Basically, makes a bunch of random samples with replacement. Think of each sample as its own tree. Bagging then combines all of these predictions from the trees and averages them out to give a more accurate prediction than just 1 tree normally would. 
-
+Bagging (Bootstrap Aggregating): Basically, makes a bunch of random samples with replacement. Think of each sample as its own tree. Bagging then combines all of these predictions from the trees and averages them out to give a more accurate prediction than just 1 tree normally would.
 
 ```{r}
 # football bagged model
@@ -94,8 +84,7 @@ football_bag1 <- bagging(
 football_bag1
 ```
 
-Variable Importance: is a measure of how much a predictor variable contributes to the predictions of the model (high value means it strongly influences the models predictions) ~ from ChatGPT, find a more official definition for write up
-
+Variable Importance: is a measure of how much a predictor variable contributes to the predictions of the model (high value means it strongly influences the models predictions) \~ from ChatGPT, find a more official definition for write up
 
 ```{r}
 # Get variable importance
@@ -112,8 +101,6 @@ ggplot(var_imp, aes(x = Variable, y = Overall)) +
 
 
 ```
-
-
 
 ```{r}
 # predicted class
@@ -133,10 +120,26 @@ classification Rate of 62.8 (the worst of all our methods yet)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This bag uses the caret package, which is still bagging, but automatically uses cross validation and overall gives you more ability to tweek what the bootstrap is doing
+
 ```{r}
 football_bag2 <- train( # train uses the caret package
-  SUCCESSFUL ~ `RP` + SITUATION + DIST + DN + PERSONNEL, # same formula as  football_bag1
+  SUCCESSFUL ~ `RP` + DIST + DN + PERSONNEL, # same formula as  football_bag1
   data = all_seasons_bagging, # same data as football_bag1 
   method = "treebag", # tells the model to use bagging
   trControl = trainControl(method = "cv", number = 5), # cv = cross validation, number is amount of folds
@@ -165,7 +168,6 @@ ggplot(var_imp2, aes(x = Variable, y = Overall)) +
 
 ```
 
-
 ```{r}
 # predicted class
 pred_class_bag2 <- predict(football_bag2, type = "raw")
@@ -180,36 +182,7 @@ classification_rate_bag2
 
 ```
 
-Classification Rate Football Bagging 2: 73.3%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Classification Rate Football Bagging 2: 72.3%
 
 
 
@@ -264,9 +237,6 @@ predictions %>%
   theme_minimal()
 ```
 
-
-
-
 Root Mean Squared Error, how well a model's predictions matching the actual data (how far off the predictons are on average)
 
 *classification rate on the y axis*
@@ -294,21 +264,30 @@ ggplot(rmse_df, aes(x = tree, y = RMSE)) +
   ggtitle("Bagging: RMSE vs Number of Trees")
 ```
 
-
-
-
 ```{r}
 # Shutdown parallel cluster
 stopCluster(cl)
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 *moving on to random forest*
-
-
-
-
-
-
 
 *using Random Forest*
 
@@ -318,30 +297,74 @@ n_features <- length(setdiff(names(all_seasons), "SUCCESSFUL"))
 
 # train a default random forest model
 football_rf1 <- ranger(
-  SUCCESSFUL ~ ., 
+  SUCCESSFUL ~ `RP` + DIST + DN + PERSONNEL, 
   data = all_seasons_bagging,
   mtry = floor(n_features / 3),
   respect.unordered.factors = "order"
 )
 ```
 
+```{r}
+library(caret)
+library(parallel)
+library(doParallel)
+stopImplicitCluster()
+```
+
+
+```{r}
+ctrl2 <- trainControl(
+  method = "cv",
+  number = 5,
+  classProbs = TRUE,
+  summaryFunction = twoClassSummary,
+  allowParallel = FALSE   # <-- this is the fix
+)
+
+
+set.seed(123)
+
+football_rf <- train(
+  SUCCESSFUL ~ RP + DIST + DN + PERSONNEL,
+  data = all_seasons_bagging,
+  method = "ranger",
+  trControl = ctrl2,
+  metric = "ROC",
+  tuneLength = 10
+)
+
+```
+
 
 
 ```{r}
 # predicted class
-pred_class_forest <- predict(football_rf1, data = all_seasons_bagging)$predictions
-pred_class_forest
+pred_forest <- predict(football_rf, data = all_seasons_bagging)
 
 # actual outcomes
 actual_forest <- all_seasons_bagging$SUCCESSFUL
 
 # classification rate
-classification_rate_rf1 <- mean(pred_class_forest == actual_forest)
-classification_rate_rf1
+classification_rate_rf <- mean(pred_forest == actual_forest)
+classification_rate_rf
 
 
 ```
-0.7326389
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -383,14 +406,6 @@ football_rf1 <- ranger(
 
 ```
 
-
-
-
-
-
-
-
-
 ```{r}
 # set number of trees to check
 tree_seq <- seq(1, 500, by = 1)
@@ -425,30 +440,3 @@ ggplot(rmse_df, aes(x = num_trees, y = OOB_RMSE)) +
 ```
 
 *Out of Bag RMSE Calculation using Random Forest*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

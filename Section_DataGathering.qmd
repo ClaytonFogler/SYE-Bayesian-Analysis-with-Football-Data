@@ -5,11 +5,9 @@ format: html
 editor: visual
 ---
 
-
 ```{r}
 library(tidyverse)
 ```
-
 
 *Go back and add all of this years games (missing the last 4 games)*
 
@@ -117,7 +115,6 @@ all_seasons <- all_seasons |>
   select(-FORMATION)
 ```
 
-
 *Create our "Success" variable, a binary variable that will be a 1 for successful and a 0 for not successful. A Successful play will be determined as followed:*
 
 *First down play is successful if the offense gains 40% or more of the yards to go. (Gaining 4 yards on 1st and 10 is successful, 3 yards is not).*
@@ -142,7 +139,7 @@ all_seasons <- all_seasons |>
     )
 ```
 
-*We will also create down and distance bins to group the distances to be more usable.*
+*We will also create down and distance bins to group the distances to be more usable, more for the exploratory research*
 
 ```{r}
 all_seasons <- all_seasons |>
@@ -156,7 +153,6 @@ all_seasons <- all_seasons |>
   ) 
 ```
 
-
 *Rename some columns quick to make things easier in the long run:*
 
 ```{r}
@@ -169,7 +165,6 @@ all_seasons <- all_seasons |>
   )
 ```
 
-
 *Last thing to do before exploring: get rid of completely useless columns to make things easier and less clustered:*
 
 ```{r}
@@ -180,6 +175,4 @@ all_seasons <- all_seasons |>
   )
 ```
 
-
 *From here on out, we will only make copies and different versions of our all_seasons data, a.k.a we will use all_seasons as our `base` data set.*
-

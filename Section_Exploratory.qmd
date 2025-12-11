@@ -5,14 +5,11 @@ format: html
 editor: visual
 ---
 
-
 *To start off with exploratory research, we looked at different success rates, bassed off our SUCCESSFUL variable, across our different variables*
 
 ```{r}
 library(tidyverse)
 ```
-
-
 
 *tendencies of success,based on down and situation.*
 
@@ -101,12 +98,6 @@ success_by_situation_personnel <- all_seasons |>
 
 success_by_situation_personnel
 ```
-
-
-
-
-
-
 
 ```{r}
 #ADD IN A COUNT VARIABLE geom text, also do more heat maps with proportions of failures and successes instead of just success rate
@@ -248,13 +239,3 @@ ggplot(all_seasons |>
   labs(x = "Personnel", y = "Success Rate") +
   scale_y_continuous(labels = scales::percent)
 ```
-
-
-
-
-
-
-
-
-
-

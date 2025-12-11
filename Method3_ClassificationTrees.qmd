@@ -5,8 +5,7 @@ format: html
 editor: visual
 ---
 
-*remove situation bins from tree, bagging, forest sections and see what happens
-
+\*remove situation bins from tree, bagging, forest sections and see what happens
 
 Starting a new section or even new project almost, instead of log we are going to do classification trees:
 
@@ -17,63 +16,117 @@ library(rpart.plot)
 library(rpart)
 ```
 
-```{r}
- successful_yesno <- all_seasons |>
-    mutate(
-      SUCCESSFUL = case_when(
-        DN == 0 & GL >= (0.4 * DIST) ~ "YES",                     
-        DN == 1 & GL >= (0.4 * DIST) ~ "YES",
-        DN == 2 & GL >= (0.6 * DIST) ~ "YES",
-        DN == 3 & GL >= (DIST) ~ "YES",
-        DN == 4 & GL >= (DIST) ~ "YES",
-        TRUE ~ "NO"
-      )
-    )
-```
 
 ```{r}
-table(`successful_yesno`$SUCCESSFUL)
-```
-
-```{r}
-successful_yesno <- successful_yesno |>
+all_seasons_trees <- all_seasons |>
   mutate(
-    SUCCESSFUL = as.factor(SUCCESSFUL),
-    RP = as.factor(RP),
-    PERSONNEL = as.factor(PERSONNEL),
-    SITUATION = as.factor(SITUATION),
-    DN = as.factor(DN)
+    RP = factor(RP),
+    DN = factor(DN),
+    PERSONNEL = factor(PERSONNEL),
+    SUCCESSFUL = factor(SUCCESSFUL)
+  ) |>
+  
+  drop_na(
+    RP, DIST, DN, PERSONNEL
+    ) |>
+  
+  select(
+    SUCCESSFUL, RP, DIST, DN, PERSONNEL
   )
 ```
 
 
 ```{r}
-treeall <- rpart(SUCCESSFUL ~ RP + SITUATION + DIST + DN + PERSONNEL, data = successful_yesno, method = "class")
-treeall
-rpart.plot(treeall, extra = 104)
+all_seasons_trees$SUCCESSFUL <- factor(all_seasons_trees$SUCCESSFUL,
+                                       levels = c(0, 1),
+                                       labels = c("No", "Yes"))
+
+```
+
+
+```{r}
+table(all_seasons_trees$SUCCESSFUL)
+```
+
+
+
+```{r}
+count.matrix <- table(all_seasons_trees$SUCCESSFUL, predict(tree, type = "raw"))
+rownames(count.matrix) <- c("Actual Fails", "Actual Successes")
+colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
+count.matrix
+```
+
+
+```{r}
+ctrl <- trainControl(
+  method = "cv",    # cross-validation
+  number = 5,       # 5 folds
+  classProbs = TRUE, # needed if you want predicted probabilities
+  summaryFunction = twoClassSummary # optional, for ROC etc.
+)
+
 ```
 
 ```{r}
-count.matrix <- table(successful_yesno$SUCCESSFUL, predict(treeall, type = "class"))
+set.seed(123) # for reproducibility
+
+tree <- train(
+  SUCCESSFUL ~ RP + DIST + DN + PERSONNEL,
+  data = all_seasons_trees,
+  method = "rpart",
+  trControl = ctrl,
+  metric = "ROC", # could also use "ROC"
+  tuneLength = 10      # lets caret try different tree sizes
+)
+
+```
+
+```{r}
+count.matrix <- table(all_seasons_trees$SUCCESSFUL, predict(tree, type = "raw"))
 rownames(count.matrix) <- c("Actual Fails", "Actual Successes")
 colnames(count.matrix) <- c("Predicted Fails", "Predicted Successes")
 count.matrix
 ```
 
 ```{r}
-
-# predicted class for Success: 
-pred_class_tree <- predict(treeall, type = "class")
-
-
-# Now we grab our actual values to compare to the predicted values we just found
-
-actual_yesno <- successful_yesno$SUCCESSFUL
-
-# classification rate calculation:
-classification_rate_tree <- mean(pred_class_tree == actual_yesno)
-classification_rate_tree
+tree
+plot(tree)
+rpart.plot(tree$finalModel, extra = 104)
 
 ```
 
-Classification Rate for our Classification Tree is 0.652 or 65.2%, which is better than both our base logistic regression model (63.2%), and our logistic regression model with interaction (63.8%). 
+```{r}
+pred_tree <- predict(tree, newdata = all_seasons_trees)
+
+actual_tree <- all_seasons_trees$SUCCESSFUL
+
+classification_rate3 <- mean(pred_tree == actual_tree)
+
+classification_rate3
+
+```
+
+Classification Rate for our Classification Tree is 0.665 or 66.5%, which is better than both our base logistic regression model, and our logistic regression model with interaction.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

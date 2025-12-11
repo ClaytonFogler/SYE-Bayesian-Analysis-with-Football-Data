@@ -31,42 +31,59 @@ Different Kinds of Personnel used in our dataset:
 
 10, 11, 12, 20, 21, 22, ALPHA, BEEF, JET, PIG, PORK, and VICTORY
 
-With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers. 
+With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers.
 
 For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field.
 
-With named personnel's, this usually refers to a specific game plan package that is unique to certain players. Maybe talk to puck about what exactly is in ALPHA, BEEF, JET, PIG, PORK, and VICTORY. 
+With named personnel's, this usually refers to a specific game plan package that is unique to certain players. Maybe talk to puck about what exactly is in ALPHA, BEEF, JET, PIG, PORK, and VICTORY.
 
-
--------------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 Outline For How I Want to Set My Paper Up:
 
-*Introduction*
-- Introduce project
-- have a section dedicated to explaining just the football terminology used - INtroduce the idea that we are going to use 4 different methods to see which is best for trying to predict success in offense
+*Introduction* - Introduce project - have a section dedicated to explaining just the football terminology used - Introduce the idea that we are going to use 4 different methods to see which is best for trying to predict success in offense
 
-*Data Gathering*
-- Explained how I gathered my data
-- Explain hudl
-- how i transfered it from google sheets into a csv file
+*Data Gathering* - Explained how I gathered my data - Explain hudl - how i transfered it from google sheets into a csv file
+- explain all of the different formations
+- explain how i tidy the data to make it easier to work with
 
-*Exploratory Research*
-- introduce our first steps in exploring the data
-- use the exploratory plots that Ive created to continue introducing our data 
+*Exploratory Research* - introduce our first steps in exploring the data - use the exploratory plots that Ive created to continue introducing our data
 
 *Method 1: Logistic Regression Models*
+- Started off by making 4 models with just one predictor to see which predictor was the strongest (dist)
+- Then made a model with all 4 of my predictors in it and used step wise to narrow down the best model which ended up being DIST, DN, and RP
+- Put the model through a 5 fold cross validation, then found the classifcation rate: 
+- insert graph of predicted values
+
 
 *Method 2: Interaction Testing*
+- Made a model with all 4 of my predictors in it along with interactiont term for all of them
+- Used step wise to narrow down the best model which ended up being:
+- Put the model through a 5 fold cross validation, then found the classifcation rate: 
+- insert graph of predicted values
 
 *Method 3: Classification Trees*
+- what are classification trees
+- how classification trees are helpful
+- Created a classification tree
+- classification rate: 
 
 *Method 4: Bagging / Random Forest*
+- what is bagging
+- how is bagging helpful
+- Created a bagging model
+- classification rate: 
+
+repeat the process for random forest
 
 *Compare and Contrast the 4 methods*
+-Using the classification rates, paste all classifcation rates and compare them
+- which is the best model? Which was the worst?
+- What makes the model the best model or worst model. 
+
+
+
 
 *Conclusion*
 
 End with any sources i may have used throughout my work
-
-
