@@ -122,7 +122,7 @@ Before we start using interaction terms, lets see what the classification rate i
 
 ```{r}
 # Extract cross-validated predictions
-cv_preds <- LOGBEST$pred
+cv_preds <- logFinal$pred
 
 # Convert probability of "Yes" to predicted class
 cv_preds$pred_class <- ifelse(cv_preds$Yes > 0.5, "Yes", "No")
@@ -136,7 +136,7 @@ classification_rate
 
 ```
 
-Our logistic Regression Model using DN (Down), DIST (Distance to go), and RP (whether the play was a run or pass) resulted in a classification rate of 0.618, meaning our model correctly predicted 61.8% of the plays.
+Our logistic Regression Model using DN (Down), DIST (Distance to go), and RP (whether the play was a run or pass) resulted in a classification rate of 0.606, meaning our model correctly predicted 61.8% of the plays.
 
 
 For fun and visualization, we can graph our predicted values based off our logistic regression model:
@@ -156,7 +156,7 @@ dist_grid <- expand.grid(
 )
 
 # Use caret's predict method
-dist_grid$pred_prob <- predict(LOGBEST, newdata = dist_grid, type = "prob")[, "Yes"]
+dist_grid$pred_prob <- predict(logFinal, newdata = dist_grid, type = "prob")[, "Yes"]
 
 # Plot
 ggplot(dist_grid, aes(x = DIST, y = pred_prob, color = RP)) +
@@ -165,7 +165,7 @@ ggplot(dist_grid, aes(x = DIST, y = pred_prob, color = RP)) +
     x = "Distance",
     y = "Predicted Probability of Success",
     color = "RP Level",
-    title = "Logistic Regression Predicted Probability by DIST and RP"
+    title = "Predicted Probability of Success by DIST and RP"
   ) +
   theme_minimal()
 

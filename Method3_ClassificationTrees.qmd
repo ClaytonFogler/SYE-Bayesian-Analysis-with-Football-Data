@@ -92,6 +92,7 @@ count.matrix
 ```{r}
 tree
 plot(tree)
+rpart.plot(tree$finalModel, snip = TRUE)
 rpart.plot(tree$finalModel, extra = 104)
 
 ```

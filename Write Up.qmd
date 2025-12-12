@@ -5,85 +5,192 @@ format: html
 editor: visual
 ---
 
-## Introduction
+#Cover page for the paper, still need to figure out formatting
 
-In this decade, we have seen major advancements in the use of analytics in sports. Whether it is used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiency, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stat keeping is kept on a basic level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
+#TITLE OF THE PAPER
 
-The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics and Bayesian analysis to improve our offensive efficiency. By studying the play by play data from both past seasons and our current one, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations. and potentially develop a program that simulates our drives. Later in the paper, we will define what we call a successful play and go into details about our methods.
+Clayton Fogler
 
-This research will directly help the team as identifying our tendencies and efficiencies will tell us our strengths and weaknesses, improving our play designs, playbook, and player development. By using Bayesian methods, along with exploratory statistics, we will be able to build models that can be updated as the season moves on to see if our changes are working. This will help our coaching staff handle uncertainties when trying to game plan for the game.
+Advisor: Dr. Matt Higham
+
+St.Lawrence University
+
+Department of Math, Computer Science, Statistics, and Data Science
+
+December 15th, 2025
+
+
+Table of contents: pg.2
+
+Will be able to complete contents once paper is otganized and finalized
+
+## Abstract : Add an Abstract section here at the end
+
+
+## Introduction : Section 1
+
+In this decade, we have seen major advancements in the use of analytics in sports. Whether it is used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiency, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stats are kept on a very minimal level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
+
+The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics, logistic regression analysis, classification trees, bagging, and random forest to improve our offensive efficiency. By studying the play by play data from both past and current seasons, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations. and potentially develop a program that simulates our drives. 
+
+Throughout this paper, I will use the term SUCCESS as the response variable. The variable SUCCESS refers to whether or not the offensive football play was successful or not. To figure out how to measure success, I went online and found multiple sources that defined success similarly. One website, titled Football Study Hall, defined success rate as "at least 40 - 50% of the yards to go on 1st down, at least 50-70% of yards to go on second down, and first down achievement on third and fourth down" (https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com). To get a first down achievement on third and first down, an offense must gain 100% of the yards to go. For the purpose of my paper, I defined success as needing 40% of the yards to go on 1st Down, 60% of the yards to go on second down, and 100% of the yards to go on third down. 
+
+This research will directly help the team as identifying our tendencies and efficiencies will tell us our strengths and weaknesses, improving our play designs, playbook, and player development. By using our different model methods, along with our exploratory research, we will be able to build future models that can be updated as the season moves on to see if our changes are working. This will help our coaching staff handle uncertainties when trying to game plan for the game.
 
 My project will begin with basic exploratory data analysis based off last years games to get an understanding for the offense and find early trends. Things we will look at include success rates based on formation, play type, situation, and more. We will then use these findings to build some logistic regression models before building our priors for our Bayesian analysis. Finally, we will use data from this years games to update our beliefs and find ways to improve our offensive efficiency.
 
-## Explanatory Tables and Descriptions
-
-Before we can go into the research, we must first understand how we are gathering our data. Like most teams in division 3 football, we use a software called Hudl. It is a subscription-based website in which teams can upload film from games and practices and input data such as down, distance, personnel, and more. After recording our plays and updating them to hudl, the coaching staff goes through the film to write down the stats for each play.
-
-*maybe add a screen shot or two of hudl here to show what it looks like, what the data looks like on hudl*
-
-After downloading the data from hudl as an excel file, all I do is convert it into a csv and load the file into r studio.
-
-After getting the data into r studio,
-
-link for success rates: https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com
-
-Different Kinds of Personnel used in our dataset:
-
-10, 11, 12, 20, 21, 22, ALPHA, BEEF, JET, PIG, PORK, and VICTORY
-
-With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers.
-
-For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field.
-
-With named personnel's, this usually refers to a specific game plan package that is unique to certain players. Maybe talk to puck about what exactly is in ALPHA, BEEF, JET, PIG, PORK, and VICTORY.
-
-------------------------------------------------------------------------
-
-Outline For How I Want to Set My Paper Up:
-
-*Introduction* - Introduce project - have a section dedicated to explaining just the football terminology used - Introduce the idea that we are going to use 4 different methods to see which is best for trying to predict success in offense
-
-*Data Gathering* - Explained how I gathered my data - Explain hudl - how i transfered it from google sheets into a csv file
-- explain all of the different formations
-- explain how i tidy the data to make it easier to work with
-
-*Exploratory Research* - introduce our first steps in exploring the data - use the exploratory plots that Ive created to continue introducing our data
-
-*Method 1: Logistic Regression Models*
-- Started off by making 4 models with just one predictor to see which predictor was the strongest (dist)
-- Then made a model with all 4 of my predictors in it and used step wise to narrow down the best model which ended up being DIST, DN, and RP
-- Put the model through a 5 fold cross validation, then found the classifcation rate: 
-- insert graph of predicted values
 
 
-*Method 2: Interaction Testing*
+## Data Gathering and Tidying 
+
+Before discussing how we tidied our data, we must begin explain how it was gathered. Like most team at the division 3 football level, we used a software called Hudl to keep track of game film and statistics. It is a subscription-based website in which teams can upload film from games and practice, along with data such as down, distance (distance to go), personnel, and more. After recording plays and uploading them to hudl, the coaching staff will then go in and enter all of the information related to each play. Thankfully, hudl has an option for coaches to download the statistics as an excel file, that can then be transformed into a csv file. 
+
+After uploading each game, I combined all the data into one data set called `all_seasons`. This data set includes a lot of variables, however, the main variables that are used throughout the paper inlude:
+ 
+- DN (stands for what down the play is. 0  stands for the first down to begin a drive, 1 for 1st down, 2 for 2nd down, 3 for 3rd down, and 4 for 4th down.)
+- DIST (stands for the distance to go)
+
+- RP (whether the play was a run or a pass. R for run and P for pass.)
+
+- PERSONNEL (what players were on the field. With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers. For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field. With named personnel's, this usually refers to a specific game plan package that is unique to certain players.)
+
+- SUCCESSFUL (whether or not the play was successful. We defined SUCCESSFUl in the introduction).
+
+- SITUATION (Situation was used in our exploratory section to help look at the distances to go a little easier. Short means the DIST was between 1-3 yards. Medium meant 4-7 yards, Long meant 8-10 yards, and very long meant 11+ yards). 
+
+
+With our data collected and gathered, it was time to begin some exploratory research to see if we notice any early patterns in SUCCESS.
+ 
+ 
+## Exploratory Research 
+ 
+ This Section is super easy to write up, save this for later so I can focus on the different methods used for now:
+ 
+ 
+## Method 1: Logistic Regression
+
+To start off our model building, I wanted to use a logistic regression model. Logistic regression models are nice because they allow us to look at the relationship between a response variable and however many predictor variables we want to use. Because we are modeling SUCCESS, a categorical variable, we use Logistic Regression instead of Linear. My first step was to build 4 models, one for each variable that I am interested in using: DN, DIST, PERSONNEL, and RP:
+
+```{r}
+logRP <- glm(SUCCESSFUL ~ RP, data = all_seasons_logit, family = binomial)
+AIC(logRP)
+
+logDIST <- glm(SUCCESSFUL ~ DIST, data = all_seasons_logit, family = binomial)
+AIC(logDIST)
+
+logDN <- glm(SUCCESSFUL ~ DN, data = all_seasons_logit, family = binomial)
+AIC(logDN)
+
+logPERSONNEL <- glm(SUCCESSFUL ~ PERSONNEL, data = all_seasons_logit, family = binomial)
+AIC(logPERSONNEL)
+```
+With these starter models, the model with the lowest AIC was logDIST (AIC = 1442.7), which uses the DIST variable to predict SUCCESSFUL. We saw a strong relationship with DIST and SUCCESS in our exploratory section, so it makes sense as to why that model had the best AIC. However, we know as we begin to add more variables, we will probably start to see better models. The best way to find the best combination of variables for a logistic regression model would be to create a model with all of our variables, and then use the `step()` function to find which model is the best. 
+
+```{r}
+logALL <- glm(SUCCESSFUL ~ RP + DIST + DN + PERSONNEL, data = all_seasons_logit, family = binomial)
+
+logBEST <- step(logALL, direction = "backward")
+
+summary(logBEST)
+```
+
+LogBEST returned back a model with all four variables with an AIC of 1414.8, which was better than our logDIST model. However, I noticed in the coding output that a model with DN, DIST, and RP (no PERSONNEL) got the same AIC of 1414.8. To decide whether or not to keep the PERSONNEL term, I compared the two models BIC and found that the model without PERSONNEL resulted in a lower BIC. Because of this, my final predictor variables are DN, DIST, and RP. 
+
+Next, I used the `train()` function to build the model again, but added 5 fold cross validation. The biggest reason for doing this was to be able to put every model I build through the same validation proccess to make them easy to compare. 
+
+```{r}
+logFinal <- train(
+  SUCCESSFUL ~ RP + DIST + DN,  # your formula
+  data = all_seasons_logit,                 # dataset
+  method = "glm",                           # logistic regression
+  family = binomial,                        # logistic model
+  trControl = trainControl(
+    method = "cv",                          # k-fold cross-validation
+    number = 5,                             # 5 folds
+    savePredictions = "final",              # save predictions for held-out folds
+    classProbs = TRUE                       # get predicted probabilities
+  )
+)
+
+```
+
+I then calculated the classification rate for this model. Using DN (Down), DIST (Distance to go), and RP (whether the play was a run or pass) to predict SUCCESS resulted in a classification rate of 0.606, meaning our model correctly predicted 60.6% of the actual plays. I wanted to also visualize this model so I built the following graph. 
+
+```{r}
+
+most_common_DN <- names(sort(table(all_seasons_logit$DN), decreasing = TRUE))[1]
+
+dist_values <- sort(unique(all_seasons_logit$DIST))
+RP_levels <- levels(all_seasons_logit$RP)
+
+dist_grid <- expand.grid(
+  DIST = dist_values,
+  RP = RP_levels,
+  DN = most_common_DN
+)
+
+# Use caret's predict method
+dist_grid$pred_prob <- predict(logFinal, newdata = dist_grid, type = "prob")[, "Yes"]
+
+# Plot
+ggplot(dist_grid, aes(x = DIST, y = pred_prob, color = RP)) +
+  geom_line(size = 1) +
+  labs(
+    x = "Distance",
+    y = "Predicted Probability of Success",
+    color = "RP Level",
+    title = "Predicted Probability of Success by DIST and RP"
+  ) +
+  theme_minimal()
+
+```
+
+
+
+To be correct 60% of the time is fairly good, however, there are many methods that can be used to predict outcomes. Lets now try Logistic Regression Models that include interaction terms.
+ 
+ 
+## Method 2: Logstic Regression with Interaction  
 - Made a model with all 4 of my predictors in it along with interactiont term for all of them
 - Used step wise to narrow down the best model which ended up being:
 - Put the model through a 5 fold cross validation, then found the classifcation rate: 
-- insert graph of predicted values
-
-*Method 3: Classification Trees*
+- insert graph of predicted values 
+ 
+ 
+## Method 3: Classification Trees
 - what are classification trees
 - how classification trees are helpful
 - Created a classification tree
 - classification rate: 
 
-*Method 4: Bagging / Random Forest*
+
+## Method 4: Bagging and Random Forest
 - what is bagging
 - how is bagging helpful
 - Created a bagging model
-- classification rate: 
-
-repeat the process for random forest
-
-*Compare and Contrast the 4 methods*
--Using the classification rates, paste all classifcation rates and compare them
+- classification rate:  
+- what are random forest
+- how can it be helpful
+- Created a random forest model
+- Classification Rate
+ 
+ 
+## Compare and Contrast the 4 methods*
+- create a table will all 4 classification rates for each method
 - which is the best model? Which was the worst?
 - What makes the model the best model or worst model. 
+- what to take away from the `winning model` 
+ 
+ 
+## Conclusion
+
+
+## References
+
+- https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com
+
+
+## Apendix: this is where i will put all of the coding to my paper so it doesn't interupt with the flow of paper
 
 
 
-
-*Conclusion*
-
-End with any sources i may have used throughout my work
