@@ -138,15 +138,13 @@ classification Rate of 62.8 (the worst of all our methods yet)
 This bag uses the caret package, which is still bagging, but automatically uses cross validation and overall gives you more ability to tweek what the bootstrap is doing
 
 ```{r}
-football_bag2 <- train( # train uses the caret package
-  SUCCESSFUL ~ `RP` + DIST + DN + PERSONNEL, # same formula as  football_bag1
-  data = all_seasons_bagging, # same data as football_bag1 
-  method = "treebag", # tells the model to use bagging
+football_bag2 <- train( 
+  SUCCESSFUL ~ `RP` + DIST + DN + PERSONNEL,
+  data = all_seasons_bagging, 
+  method = "treebag", 
   trControl = trainControl(method = "cv", number = 5), # cv = cross validation, number is amount of folds
-  # think of having a list of ingredients for a cookie, you make 5 cookies and then taste test the 6th one, you then tweak the recipe a bunch of times and keep testing the 6th time. At the end you average the recopies if the 6th taste test to get the best cookie 
-  # 200 bagged trees
   nbagg = 200,  #the number of trees being built
-  control = rpart.control(minsplit = 2, cp = 0) # same as football_bag2
+  control = rpart.control(minsplit = 2, cp = 0) #
 )
 
 football_bag2
