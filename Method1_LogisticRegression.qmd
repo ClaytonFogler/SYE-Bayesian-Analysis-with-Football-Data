@@ -8,6 +8,9 @@ editor: visual
 ```{r}
 library(tidyverse)
 library(patchwork)
+library(knitr)
+
+library(kableExtra)
 ```
 
 ```{r}
@@ -42,10 +45,6 @@ all_seasons_logit <- all_seasons |>
     PERSONNEL = factor(PERSONNEL),
     SUCCESSFUL = factor(SUCCESSFUL)
   ) |>
-  
-  drop_na(
-    RP, DIST, DN, PERSONNEL
-    ) |>
   
   select(
     SUCCESSFUL, RP, DIST, DN, PERSONNEL

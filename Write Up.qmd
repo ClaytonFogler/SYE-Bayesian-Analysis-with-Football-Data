@@ -1,8 +1,25 @@
 ---
-title: "Write Up"
-author: "C.Fogler"
-format: html
-editor: visual
+title: "Data Driven Offensive Insights: Using Analytics to Improve Offensive Success Rates"
+author: "Clayton Fogler"
+date: ""
+format:
+  pdf:
+    toc: true
+    urlcolor: blue
+    include-in-header:
+        text: |
+          \usepackage{lipsum}
+          \usepackage{setspace}
+          \onehalfspacing
+          \linespread{2}
+    include-before-body: titleblock.tex
+# format:
+#   html:
+#     embed-resources: true
+#     toc: true
+execute: 
+  echo: false
+  warning: false
 ---
 
 #Cover page for the paper, still need to figure out formatting
@@ -60,6 +77,8 @@ With our data collected and gathered, it was time to begin some exploratory rese
 ## Exploratory Research
 
 This Section is super easy to write up, save this for later so I can focus on the different methods used for now:
+
+### Modeling Methods:
 
 ## Method 1: Logistic Regression
 
@@ -288,7 +307,7 @@ football_rf <- train(
 
 For our random forest model, we found a classification rate of 0.667. This means our model correctly predicted 72.4% of the actual plays.
 
-## Compare and Contrast the 4 methods\*
+## Compare and Contrast the 4 methods
 
 To easily compare our 5 classification rates we have found, I created the following table:
 
