@@ -16,7 +16,7 @@ research, we will be able to build future models that can be updated as the seas
 moves on to see if our changes are working. This will help our coaching staff handle 
 uncertainties when trying to game plan for the game.
 
-For more information on this project and the findings, please check my full [paper.](file:///C:/Users/Clayton/Desktop/SYEProject/FinalDraft.pdf)
+For more information on this project and the findings, please check my full [paper(file:///C:/Users/Clayton/Desktop/SYEProject/FinalDraft.pdf)
 
 ##Method 1: Logistic Regression
 
