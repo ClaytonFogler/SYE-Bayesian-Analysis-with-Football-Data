@@ -48,7 +48,7 @@ Classification Rate: 0.667
 
 ##Comparing the Four Methods
 
-![Classification Rate Comparison Graph][Screenshot_18-12-2025_141630_localhost.jpeg]
+![Classification Rate Comparison Graph](Screenshot_18-12-2025_141630_localhost.jpeg)
 
 As you can see, the far away best model we built was our bagging model. We notice
 that logistic regression, with or without interaction, were the worst two models. 
