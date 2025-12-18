@@ -172,6 +172,9 @@ all_seasons <- all_seasons |>
 all_seasons <- all_seasons |>
   select(
     DN, DIST, HASH, GL, RP, FORMATION, BACKFIELD, RESULT, PERSONNEL, OPPONENT, YEAR, SUCCESSFUL, SITUATION
+  ) |>
+  drop_na(
+    RP, DIST, DN, PERSONNEL
   )
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Data Driven Offensive Insights: Using Analytics to Improve Offensive Success Rates"
+title: "Data-Driven Offensive Insights: Using Analytics to Improve Offensive Success Rates"
 author: "Clayton Fogler"
 advisor: "Dr. Matt Higham"
 institution: "St. Lawrence University"  
@@ -12,7 +12,6 @@ execute:
   echo: false
   warning: false
 ---
-
 
 ```{r SETUP}
 #| include: false
@@ -45,27 +44,25 @@ library(h2o)
 
 \clearpage
 
-
 ## Abstract
 
-There are a lot of factors that go into winning football games. One of the biggest factors is an efficient offense, and at the core of an efficient offense is an offense with high success rate on plays. This paper will investigate how a certain Division 3 football team can maximize their offensive success rates. Using data collected from their past two seasons, this study aims to examine how variables like Distance and Down can impact the chances of a successful play. After cleaning and organizing over 1,000 football plays, I created many models, using multiple methods, to determine the best way to predict success rates in the team's offense. Five models were built throughout the paper that each predict Success rate based on a combination of the following variables: RP (run pass), DN (Down), DIST (Distance to go), and Personnel (Offensive Personnel). To compare the models, I calculate a classification rate for each to see which model best predicts the teams success rates on offense. By identifying the most effective model, I will be able to highlight the most important factors that give the best chances for an successful play. This will provide further insights that can be used in live game play calling to create a more efficient offense. 
+There are a lot of factors that go into winning football games. One of the biggest factors is an efficient offense, and at the core of an efficient offense is an offense with high success rates on their plays. This paper will investigate how a certain Division 3 football team can maximize their offensive success rates. Using data collected from their past two seasons, this study aims to examine how variables like Distance and Down can impact the chances of a successful play. After cleaning and organizing over 1,000 football plays, I created many models, using multiple methods, to determine the best way to predict success rates in the team's offense. Five models were built throughout the paper that each predict success rate based on a combination of the following variables: RP (run pass), DN (Down), DIST (Distance to go), and PERSONNEL (Offensive Personnel). To compare the models, I calculate a classification rate for each to see which model best predicts the team's success rates on offense. By identifying the most effective model, I will be able to highlight the most important factors that give the best chances for a successful play. This will provide further insights that can be used in live game-play calling to create a more efficient offense.
 
+## Introduction
 
-## Introduction:
+In this decade, we have seen major advancements in the use of analytics in sports. Whether used from a business perspective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a team's playing schemes, measuring their efficiency, and finding a way to get the upper edge on the field. As a kicker on a small Division 3 football school, the use of analytics is small as stats are kept on a very minimal level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
 
-In this decade, we have seen major advancements in the use of analytics in sports. Whether used from a business prospective, player development prospective, or game play prospective, there are so many cool ways to use analytics to improve your team. In football, one of the greatest uses of analytics is finding tendencies in a teams playing schemes, measuring their efficiency, and finding a way to get the upper edge off the field. As a kicker on a small division 3 football school, the use if analytics is very minimal as stats are kept on a very minimal level. However, just because very little data is recorded, doesn't mean we can't find ways to use the data to improve our success.
+The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics, logistic regression analysis, classification trees, bagging, and random forest to improve our offensive efficiency. By studying the play by play data from both past and current seasons, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations, and potentially develop a program that simulates our drives.
 
-The goal for my Senior Year Experience is to evaluate my teams' offensive success rates using both exploratory statistics, logistic regression analysis, classification trees, bagging, and random forest to improve our offensive efficiency. By studying the play by play data from both past and current seasons, I will be able to find patterns in both our play calling tendencies, our efficiency in specific situations. and potentially develop a program that simulates our drives.
-
-Throughout this paper, I will use the term SUCCESS as the response variable. The variable SUCCESS refers to whether or not the offensive football play was successful or not. To figure out how to measure success, I went online and found multiple sources that defined success similarly. One website, titled Football Study Hall, defined success rate as "at least 40 - 50% of the yards to go on 1st down, at least 50-70% of yards to go on second down, and first down achievement on third and fourth down" (https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com). To get a first down achievement on third and first down, an offense must gain 100% of the yards to go. For the purpose of my paper, I defined success as needing 40% of the yards to go on 1st Down, 60% of the yards to go on second down, and 100% of the yards to go on third down.
+Throughout this paper, I will use the term SUCCESS as the response variable. The variable SUCCESS refers to whether or not the offensive football play was successful or not. To figure out how to measure success, I went online and found multiple sources that defined success similarly. One website, titled Football Study Hall, defined success rate as "at least 40 - 50% of the yards to go on 1st down, at least 50-70% of yards to go on second down, and first down achievement on third and fourth down" (C, 2012). To get a first down achievement on third and fourth down, an offense must gain 100% of the yards to go. For the purpose of my paper, I defined success as needing 40% of the yards to go on 1st Down, 60% of the yards to go on second down, and 100% of the yards to go on third and fourth down.
 
 This research will directly help the team as identifying our tendencies and efficiency levels will tell us our strengths and weaknesses, improving our play designs, playbook, and player development. By using our different model methods, along with our exploratory research, we will be able to build future models that can be updated as the season moves on to see if our changes are working. This will help our coaching staff handle uncertainties when trying to game plan for the game.
 
-My project will begin with basic exploratory data analysis based off the last two years of games to get an understanding for the offense and find early trends. Things we will look at include success rates based on run/pass, distance, down, and personnel. We will then use these findings to build some logistic regression models before diving into classification trees, bagging, and random forests. In the end, we will compare our models to determine which one is the best at predicting successful football plays. 
+My project will begin with basic exploratory data analysis based off the last two years of games to get an understanding for the offense and find early trends. Things we will look at include success rates based on run/pass, distance, down, and personnel. We will then use these findings to build some logistic regression models before diving into classification trees, bagging, and random forests. In the end, we will compare our models to determine which one is the best at predicting successful football plays.
 
-## Data Gathering and Tidying:
+## Data Gathering and Tidying
 
-Before discussing how we tidied our data, we must begin explain how it was gathered. Like most team at the division 3 football level, we used a software called Hudl to keep track of game film and statistics. It is a subscription-based website in which teams can upload film from games and practice, along with data such as down, distance (distance to go), personnel, and more. After recording plays and uploading them to hudl, the coaching staff will then go in and enter all of the information related to each play. Thankfully, hudl has an option for coaches to download the statistics as an excel file, that can then be transformed into a csv file.
+Before discussing how we tidied our data, we must begin to explain how it was gathered. Like most teams at the division 3 football level, we used a software called Hudl to keep track of game film and statistics. It is a subscription-based website in which teams can upload film from games and practice, along with data such as down, distance (distance to go), personnel, and more. After recording plays and uploading them to hudl, the coaching staff will then go in and enter all of the information related to each play. Thankfully, Hudl has an option for coaches to download the statistics as an Excel file, that can then be transformed into a csv file.
 
 After uploading each game, I combined all the data into one data set called `all_seasons`. This data set includes a lot of variables, however, the main variables that are used throughout the paper include:
 
@@ -75,9 +72,9 @@ After uploading each game, I combined all the data into one data set called `all
 
 -   RP (whether the play was a run or a pass. R for run and P for pass.)
 
--   PERSONNEL (what players were on the field. With numbered personnel's, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means their are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers. For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field. With named personnel's, this usually refers to a specific game plan package that is unique to certain players.)
+-   PERSONNEL (what players were on the field. With numbered personnel, the two numbers are used to tell the offense how many tight ends and running backs will be on the field. After factoring 5 offensive lineman and 1 quarterback, this means there are 5 remaining players allowed on the field. The first digit refers to the number of Tight Ends on the field. The second digit refers to the number of running backs on the field. Finally, if those two digits do not add to 5, the remaining number of players are wide receivers. For example, 12 personnel means their is 1 tight end, 2 running backs, and 2 wide receivers on the field. 11 personnel means their is 1 tight end, 1 running back, and 3 wide receivers on the field. With named personnel's, this usually refers to a specific game plan package that is unique to certain players.)
 
--   SUCCESSFUL (whether or not the play was successful. We defined SUCCESSFUl in the introduction).
+-   SUCCESSFUL (whether or not the play was successful. We defined SUCCESSFUL in the introduction).
 
 -   SITUATION (Situation was used in our exploratory section to help look at the distances to go a little easier. Short means the DIST was between 1-3 yards. Medium meant 4-7 yards, Long meant 8-10 yards, and very long meant 11+ yards).
 
@@ -217,7 +214,6 @@ all_seasons <- all_seasons |>
     ) 
 ```
 
-
 To begin my exploratory research, I wanted to create an assortment of graphs and charts to help visualize my data and see if any early trends arise. I created a chart for each one of my predictors to see how success related to each of them:
 
 Success based on RP
@@ -236,7 +232,6 @@ success_by_rp
 
 Our offense appeared to have a little more success passing the ball then running, however, it is not by much. This shows potential signs of RP not being the strongest predictor, especially on its own.
 
-
 Success based on DN
 
 ```{r success by DN}
@@ -251,8 +246,7 @@ success_by_dn <- all_seasons |>
 success_by_dn
 ```
 
-Success rate on Third Downs seems to be a lot less compared to the other Downs. This Shows that downs has the potential to be a strong predictor. 
-
+Success rate on Third Downs seems to be a lot less compared to the other Downs. This shows that downs has the potential to be a strong predictor.
 
 Success based on DIST
 
@@ -270,7 +264,6 @@ success_by_dist
 
 Because there are so many different Distances that occurred over the past two seasons, I created the variable `SITUATION` to help visualize the effect of distance on success. Situation is broken into 4 categories: Short (distance = 1-3 yards), Medium (distance = 4-6 yards), Long (distance = 7-10 yards), and Very Long (distance = 11+ yards). We see above that distance has a huge impact on the success rate, with an over 20% decrease between Long and Very Long. Early on, DIST seems to be the strongest predictor of SUCCESS.
 
-
 Success based on PERSONNEL
 
 ```{r success by personnel}
@@ -285,7 +278,7 @@ success_by_personnel <- all_seasons |>
 success_by_personnel
 ```
 
-We notice that there are some large jumps in success rate between personnel groupings, however, there is also a large difference in play count for each. 11 personnel (1 running back, 1 tight end, 3 wide receivers) was used 747 times, with the next closest being 12 personnel (1 running back, 2 tight ends, 2 wide receivers) with 153 plays. The lack of even plays will probably limit the effect personnel has on predicting success. 
+We notice that there are some large jumps in success rate between personnel groupings, however, there is also a large difference in play count for each. 11 personnel (1 running back, 1 tight end, 3 wide receivers) was used 747 times, with the next closest being 12 personnel (1 running back, 2 tight ends, 2 wide receivers) with 153 plays. The lack of even plays will probably limit the effect personnel has on predicting success.
 
 We can also visualize multiple variables at once, using various heat maps to try to find some correlation between variables. Because we have early evidence that DIST will be our strongest predictor, lets compare the other 3 variables with Situation (our modified distance variable).
 
@@ -383,7 +376,7 @@ ggplot(success_map, aes(x = SITUATION, y = PERSONNEL, fill = SUCCESS)) +
   scale_x_discrete(position = "top")
 ```
 
-The least effective graph above was our graph displaying the relationship between personnel and situation. Again, this isn't a surprise as there were 14 different personnel groupings recorded over the last two seasons, will 11 personnel being used over 700 times. However, this doesn't mean it will be a bad or ineffective variable. We will learn more later on in our model building if personnel is worth having. While a RP and DN definitely have relationships with Success Rate, it is clear to see with these graphs that the strongest relationship is the relationship between SITUATION and SUCCESS. After doing some exploratory research, it is time to dive into our model building. 
+The least effective graph above was our graph displaying the relationship between personnel and situation. Again, this isn't a surprise as there were 14 different personnel groupings recorded over the last two seasons, with 11 personnel being used over 700 times. However, this doesn't mean it will be a bad or ineffective variable. We will learn more later on in our model building if personnel is worth having. While a RP and DN definitely have relationships with Success Rate, it is clear to see with these graphs that the strongest relationship is the relationship between SITUATION and SUCCESS. After doing some exploratory research, it is time to dive into our model building.
 
 ## Modeling Methods
 
@@ -457,7 +450,7 @@ logFinal <- train(
 
 ```
 
-```{r classification rate calc 1}
+```{r classification rate calc 1, echo=TRUE}
 # Extract cross-validated predictions
 cv_preds <- logFinal$pred
 
@@ -503,11 +496,12 @@ ggplot(dist_grid, aes(x = DIST, y = pred_prob, color = RP)) +
   theme_minimal()
 
 ```
-In the graph, we notice that run and pass are fairly parallel, as they begin to get closer as  we approach a distance greater than 15 yards. It is important to note that there is no overlap in the two slopes (this will be important to remember for later).
+
+In the graph, we notice that run and pass are fairly parallel, as they begin to get closer as we approach a distance greater than 15 yards. It is important to note that there is no overlap in the two slopes (this will be important to remember for later).
 
 To be correct 60.2% of the time is fairly good, however, there are many methods that can be used to predict outcomes. Lets now try Logistic Regression Models that include interaction terms.
 
-### Method 2: Logstic Regression with Interaction
+### Method 2: Logistic Regression with Interaction
 
 ```{r re-setting our dataset}
 all_seasons_logit <- all_seasons |>
@@ -522,11 +516,12 @@ all_seasons_logit <- all_seasons |>
   )
 ```
 
-To begin our logistic regression model with interaction, we again build a model with not only all the predictors, but all of the possible interactions as well. 
+To begin our logistic regression model with interaction, we again build a model with not only all the predictors, but all of the possible interactions as well.
 
 ```{r building an glm model including interaction, echo=TRUE}
 logALL_inter <- glm(SUCCESSFUL ~ (RP  + DIST + DN + PERSONNEL)^2, data = all_seasons_logit, family = binomial)
 ```
+
 We then use the step function to find the best possible model.
 
 ```{r step function to find best model, echo=FALSE}
@@ -563,7 +558,7 @@ LOGINTERACTION <- train(
 
 ```
 
-```{r cross validation 2}
+```{r cross validation 2, echo=TRUE}
 # Extract cross-validated predictions
 cv_preds_int <- LOGINTERACTION$pred
 
@@ -612,9 +607,7 @@ ggplot(dist_grid, aes(x = DIST, y = pred_prob, color = RP)) +
 
 ```
 
-The biggest different between our first two methods so far is our graph of the predicted probabilities of success. In our graph with interaction, we see that the slopes of the lines actually cross around 5 yards. This means our interaction model is seeing a shift in which pass plays are more successful in longer distances. 
-
-We will do more comparisons at the end, however, we do begin to see that a model with interaction is a little better at predicting success than our model without interaction.
+The biggest different between our first two methods so far is our graph of the predicted probabilities of success. In our graph with interaction, we see that the fitted curves of run and pass cross when distance is at about 5 yards. This means our interaction model is seeing a shift in which pass plays are more successful in longer distances. We will do more comparisons at the end, however, we do begin to see that a model with interaction is a little better at predicting success than our model without interaction.
 
 ### Method 3: Classification Trees
 
@@ -638,7 +631,7 @@ all_seasons_trees$SUCCESSFUL <- factor(all_seasons_trees$SUCCESSFUL,
 
 ```
 
-Logistic regression is not the only method that can be used in this scenario. Another effective method that can be used are classification trees. Classification trees is a kind of model that starts with one yes or no question that then breaks off into branches of yes or no questions that best predict what your model is trying to predict. For this paper, the classifcation tree is trying to find what pathways the data best follows to predict whether a play was successful or not. Our model is as follows:
+Logistic regression is not the only method that can be used in this scenario. Another effective method that can be used are classification trees. Classification trees is a kind of model that starts with one yes or no question that then breaks off into branches of yes or no questions that best predict what your model is trying to predict. For this paper, the classification tree is trying to find what pathways the data best follows to predict whether a play was successful or not. Our model is as follows:
 
 ```{r 5 fold cross validation, echo=TRUE}
 ctrl <- trainControl(
@@ -664,7 +657,7 @@ tree <- train(
 
 ```
 
-To help further understand what a classification tree looks like, here is the classification tree for my mode. Note that this isn'y my exact classification tree as my tree has too many branches to understand what is going on. I created a second version of my model that caps the tree depth to make the chart easier to see and understand. 
+To help further understand what a classification tree looks like, here is the classification tree for my model. Note that this isn't my exact classification tree as my tree has too many branches to understand what is going on. I created a second version of my model that caps the tree depth to make the chart easier to see and understand.
 
 ```{r partial classification tree, echo=FALSE}
 set.seed(123) 
@@ -683,9 +676,9 @@ rpart.plot(partialtree$finalModel, extra = 104)
 
 ```
 
-In our partial tree, you see that the first partition is distance, showing that distance was the strongest predictor out of our variables. It is also interesting to note that personnel ranks higher than some of the other variables, which is not something I would've predicted based on our exploratory research.  
+In our partial tree, you see that the first partition is distance, showing that distance was the strongest predictor out of our variables. It is also interesting to note that personnel ranks higher than some of the other variables, which is not something I would've predicted based on our exploratory research.
 
-```{r classification rate 3}
+```{r classification rate 3, echo=TRUE}
 pred_tree <- predict(tree, newdata = all_seasons_trees)
 
 actual_tree <- all_seasons_trees$SUCCESSFUL
@@ -727,7 +720,7 @@ all_seasons_bagging <- all_seasons |>
   )
 ```
 
-Classification trees can be really effective, however,they can sometimes be very sensitive to changes in the training data. That is where bootstrapping comes in. Bootstrapping repeatedly re-samples with replacement your original data, and creates new test data. Then, it runs a new classification tree based on the new test data. It will do this as many times as you would like, helping reduce the variance in your model. Our bootstrapping model is as follows:
+Classification trees can be really effective, however, they can sometimes be very sensitive to changes in the training data, as well as overfitting. That is where bootstrapping comes in. Bootstrapping repeatedly re-samples with replacement your original data, and creates new training data. Then, it runs a new classification tree based on the training data. It will do this as many times as you would like, helping reduce the variance in your model. Our bagging model is as follows:
 
 ```{r building our bagging model, echo=TRUE}
 set.seed(123)
@@ -743,7 +736,7 @@ football_bagging <- train(
 
 ```
 
-```{r classification rate 4}
+```{r classification rate 4, echo=TRUE}
 # predicted class
 pred_class_bagging <- predict(football_bagging, type = "raw")
 
@@ -798,11 +791,11 @@ classification_rate_rf
 
 For our random forest model, we found a classification rate of 0.667. This means our model correctly predicted 66.7% of the actual plays.
 
-## Compare and Contrast the 4 methods
+## Comparing the Four Methods
 
-To easily compare our 5 classification rates we have found, I created the following table:
+To easily compare our 5 classification rates we have found, I created the following graph:
 
-```{r}
+```{r classifcation table with all our rates}
 classification_table <- data.frame(
   Method = c(
     "Logistic Regression",
@@ -823,34 +816,28 @@ classification_table <- data.frame(
 ggplot(classification_table,
        aes(x = reorder(Method, Classification_Rate),
            y = Classification_Rate)) +
-  geom_col(fill = "red") +
+  geom_col(fill = "purple1") +
   coord_flip() +
-  scale_y_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
   labs(
     x = "",
     y = "Classification Rate",
-    title = "Comparison of Model Classification Accuracy"
+    title = "Comparing CR by Model"
   ) +
   theme_minimal(base_size = 12)
 
 ```
 
-As you can see, the far away best model we built was our bagging model. This makes a lot of sense as bagging uses re sampling and mass testing to help eliminate variance in the data. We notice that logistic regression, with or without interaction, were the worst two models. The models were not horrible, however, they do not have the re sampling powers that bagging and random Forrest do. Bagging and random forest each undergo re sampling and hundreds of simulations to lower the variance. GLM models have a fixed variance that can not be changed and therefore cannot outperform bagging. 
+As you can see, the far away best model we built was our bagging model. We notice that logistic regression, with or without interaction, were the worst two models. This isn't because GLM models are not as good as bagging and random forest, but instead means that the data is not best fit for a linear model. Because we have a strong interaction between RP and DIST, as well as non-linear patterns in the log-odds for success, a linear model like our logistic regression model does not best fit our data. Instead, re-sampling methods like classification trees, bagging, and random forest will have more success capturing the complexities of our data.
 
 ## Conclusion
 
-Throughout this model, we see time and again Distance be the strongest predictor of success. This makes a ton of sense as a shorter distance to go is much more obtainable than a longer distance to go. While this project is done based on a singular teams data, Dist should be the strongest or one of the strongest predictors of success with whatever school you applied this research too. We also saw downs, specifically 3rd down, be one of the stronger predictors of success. 3rd downs are a pivotal part of a game, as third downs can either extend your drives and bring more chances for successful drives, or end your drives and kill the momentum. A model built using bagging had the greatest success of predicting success. With its re sampling and simulation ability, the bagging model strongly outperformed the others. The model correctly predicted 72.4% of the plays, which is a very successful rate. Using this model and my research, I hope to communicate with the coaches of the team about a plan for next season to incorporate our findings. As a staff, the team needs to find a way to focus on creating short down situations, especially on 3rd downs. 
+Throughout this model, we see time and again Distance be the strongest predictor of success. This makes a ton of sense as a shorter distance to go is much more obtainable than a longer distance to go. While this project is done based on a single team's data, Dist should be the strongest or one of the strongest predictors of success with whatever school you applied this research to. We also saw downs, specifically 3rd down, be one of the stronger predictors of success. 3rd downs are a pivotal part of a game, as third downs can either extend your drives and bring more chances for successful drives, or end your drives and kill the momentum. A model built using bagging had the greatest success of predicting success. With its re-sampling and simulation ability, the bagging model better fit the data strongly outperformed the others. The model correctly predicted 72.4% of the plays, which is a very successful rate. Using this model and my research, I hope to communicate with the coaches of the team about a plan for next season to incorporate our findings. As a staff, the team needs to find a way to focus on creating short down situations, especially on 3rd downs.
 
 ## References
 
--   https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-rates?utm_source=chatgpt.com
-
-## Apendix: this is where i will put all of the coding to my paper so it doesn't interupt with the flow of paper
-
-Hi Professor Higham, If you look on the qmd file, you will see I incorporated all of my code througout the paper. Should I still have an apendix section and get rid of the echo=FALSE so you can see all of the coding?
-
-
-
-
+C, B. (2012, February 16). In Defense Of Success Rates. Football Study Hall.        
+    https://www.footballstudyhall.com/2012/2/16/2798555/in-defense-of-success-ra
+    tes?utm_source=chatgpt.com
 
 
