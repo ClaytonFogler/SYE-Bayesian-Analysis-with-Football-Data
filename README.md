@@ -16,7 +16,7 @@ research, we will be able to build future models that can be updated as the seas
 moves on to see if our changes are working. This will help our coaching staff handle 
 uncertainties when trying to game plan for the game.
 
-For more information on this project and the findings, please check my full [paper(file:///C:/Users/Clayton/Desktop/SYEProject/FinalDraft.pdf)
+For more information on this project and the findings, please check my full [paper](FinalDraft.pdf)
 
 ##Method 1: Logistic Regression
 
@@ -48,7 +48,7 @@ Classification Rate: 0.667
 
 ##Comparing the Four Methods
 
-![Classification Rate Comparison Graph][C:/Users/Clayton/Downloads/Screenshot_18-12-2025_141630_localhost.jpeg]
+![Classification Rate Comparison Graph][Screenshot_18-12-2025_141630_localhost.jpeg]
 
 As you can see, the far away best model we built was our bagging model. We notice
 that logistic regression, with or without interaction, were the worst two models. 
